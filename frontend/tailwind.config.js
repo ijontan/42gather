@@ -22,6 +22,9 @@ export default {
         'pinkLight': '#FEDFFF',
         'yellowAcc': '#C3AF00',
         'yellowLight': '#FFFDEA',
+      },
+      boxShadow:{
+        'large':  '15px 50px 150px rgba(0, 0, 0, 0.1)',
       }
     },
     fontFamily:{
