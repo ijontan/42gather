@@ -24,4 +24,8 @@
     p {
         @apply tracking-wide font-medium text-black;
     }
+
+    span {
+        @apply tracking-wide font-medium text-black;
+    }
 }
