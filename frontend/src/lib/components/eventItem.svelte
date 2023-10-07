@@ -1,4 +1,6 @@
 <script>
+	import { goto } from "$app/navigation";
+
 	// @ts-ignore
 	import EventData, { ColorType } from "$lib/model/event";
 	import ChipList from "./chips/chipList.svelte";
@@ -99,7 +101,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class={`z-30  flex flex-col gap-2  px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
         on:click={() => {
-            hover = !hover;
+            goto(`/gathering/${item.id}`);
         }}
     >
         <h1 class={`z-30  ${textColor} capitalize`}>{item.title}</h1>

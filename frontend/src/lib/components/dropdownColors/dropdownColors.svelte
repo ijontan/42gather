@@ -5,7 +5,9 @@
     /** @type {number[]} */
     let options = Object.entries(ColorType).map(([key, value]) => value);
     /** @type {number} */
-    let selected = 0;
+    export let selected = 0;
+    /** @type {boolean}*/
+    export let disabled = false;
 
     /**
      * 
@@ -34,8 +36,8 @@
 
 <div class="flex flex-col items-start tracking-wide gap-1">
     <label for={title} class="px-5 capitalize text-black/50">{title}:</label>
-    <div class=" relative group-button z-0">
-        <div class=" absolute top-0 left-0 -z-10 right-0 bg-white rounded-[24px] group-button-hover:h-60 h-12 shadow-light transition-all p-5 overflow-y-scroll">
+    <div class={` relative ${disabled?"":"group-button"} z-0`}>
+        <div class={` absolute top-0 left-0 -z-10 right-0 bg-white rounded-[24px] group-button-hover:h-60 h-12 ${disabled?"":"shadow-light"} transition-all p-5 overflow-y-scroll`}>
             <div class="gap-1 flex flex-col mt-10">
                 {#each options as option}
                     <button class={`w-full h-6 rounded-md hover:scale-125 transition-transform ${getColor(option)}`} on:click={() => selected = option} />

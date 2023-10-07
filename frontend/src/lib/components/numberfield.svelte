@@ -10,7 +10,7 @@
     <label for={title} class="px-5 capitalize text-black/50">{title}:</label>
     <input 
         id="title" 
-        class="w-full outline-none bg-gray rounded-full py-3 px-5 shadow-light"
+        class={`w-full outline-none bg-gray rounded-full py-3 px-5 ${disabled?"":"shadow-light"} tracking-wide transition-all`}
         bind:value
         {disabled}
         type='number'

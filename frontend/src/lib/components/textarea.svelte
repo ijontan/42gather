@@ -10,7 +10,7 @@
     <label for={title} class="px-5 capitalize tracking-wide text-black/50">{title}:</label>
     <textarea 
         id="title" 
-        class="w-full outline-none bg-gray rounded-[25px] py-3 px-5 shadow-light tracking-wide"
+        class={`w-full outline-none bg-gray rounded-[25px] py-3 px-5 ${disabled?"":"shadow-light"} tracking-wide transition-all`}
         bind:value
         {disabled}
         rows="3"

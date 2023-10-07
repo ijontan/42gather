@@ -17,11 +17,11 @@
         try {
             /** @type string */
             const data = await api.get('/auth')
-            goto('home')
+            goto('/home')
         } catch (error) {
             console.log(error)
             localStorage.removeItem('accessToken')
-            goto('login')
+            goto('/login')
         }
     }
 </script>
