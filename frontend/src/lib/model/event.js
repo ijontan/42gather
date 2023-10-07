@@ -3,14 +3,25 @@
  * @enum {number}
  */
 export const TagsType ={
-    abc: 1
+    evaluation: 0,
+    activity: 1,
+    rush: 2,
+    dinner: 3,
+    badminton: 4,
+    jogging: 5,
+    gaming: 6,
+    movie: 7,
 }
 
 /**
  * @enum {number}
  */
 export const RemindersType ={
-    abc: 1
+    "5 mins": 0,
+    "15 mins": 1,
+    "1 hour": 3,
+    "1 day": 4,
+    "1 week": 5,
 }
 
 /**

@@ -26,6 +26,7 @@ export default {
       boxShadow:{
         'large':  '15px 50px 150px rgba(0, 0, 0, 0.1)',
         'medium': '5px 5px 30px rgba(0, 0, 0, 0.1)',
+        'light': '5px 5px 10px rgba(0, 0, 0, 0.1)',
         'heavy': '5px 5px 30px rgba(0, 0, 0, 0.3)',
       }
     },

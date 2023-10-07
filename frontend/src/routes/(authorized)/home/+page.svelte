@@ -13,5 +13,5 @@
         <EventList title='Suggested'/>
         <EventList title='joining && upcoming'/>
     </div>
+    <NewEvent />
 </div>
-<NewEvent />

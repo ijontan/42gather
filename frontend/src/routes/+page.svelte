@@ -14,10 +14,11 @@
      */
     async function authCheck(code) {
         if (typeof window === 'undefined') return;
-        if (code === null)
+        if (code === null && !localStorage.getItem('accessToken'))
             return setTimeout(()=>goto("login"), 0);
         try {
             /** @type {any} */
+            console.log(code)
             const authToken = await api.post('auth', {code});
             localStorage.setItem('accessToken', authToken.data);
             window.location.replace('/')

@@ -1,7 +1,7 @@
 <script>
     /** @type {string} */
     export let title;
-    /** @type {string} */
+    /** @type {number | string} */
     export let value = '';
     /** @type {boolean}*/
     export let disabled = false;
@@ -13,6 +13,6 @@
         class="w-full outline-none bg-gray rounded-full py-3 px-5 shadow-light"
         bind:value
         {disabled}
-        type='text'
+        type='number'
     />
 </div>
