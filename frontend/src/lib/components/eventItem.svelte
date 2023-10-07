@@ -1,9 +1,11 @@
 <script>
 	// @ts-ignore
 	import EventData, { ColorType } from "$lib/model/event";
+	import ChipList from "./chips/chipList.svelte";
 	import MyButton from "./myButton.svelte";
 	import Textarea from "./textarea.svelte";
 	import Textfield from "./textfield.svelte";
+	import TextfieldNoBg from "./textfieldNoBG.svelte";
 
 
     /** @type boolean */
@@ -76,9 +78,10 @@
     <div class={`  bg-white absolute top-0 box-border flex flex-col gap-2 pt-[25%] left-0 right-0 overflow-clip rounded-[50px] shadow-medium ${hover? ' h-[500px] -z-10' : 'h-0 -z-20'} transition-all`}>
         <div class="flex flex-col p-5 justify-evenly h-full">
 
-            <Textarea title='Descriptions' value={item.description} disabled/>
-            <Textfield title='vanue' value={item.vanue} disabled/>
-            <Textfield title='date' value={item.datetime.toDateString() + item.datetime.toLocaleTimeString()} disabled/>
+            <TextfieldNoBg title='Descriptions' value={item.description}/>
+            <TextfieldNoBg title='vanue' value={item.vanue}/>
+            <TextfieldNoBg title='date' value={item.datetime.toDateString() + item.datetime.toLocaleTimeString()}/>
+            <ChipList title='tags' color={item.color} values={item.tags}/>
             <div class="flex flex-row justify-end">
                 <MyButton name='close' color={item.color} noBackground
                     on:click={() => {
