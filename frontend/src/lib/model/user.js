@@ -44,4 +44,13 @@ export default class UserData{
             imageLink: imageLink ?? this.imageLink
         });
     }
+
+
+    static empty(){
+        return new UserData({
+            intraID: "--",
+            name: "--",
+            imageLink: "--"
+        });
+    }
 }

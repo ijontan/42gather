@@ -3,8 +3,20 @@
 	import { page } from "$app/stores";
 	import Logo from "$lib/components/sidebar/logo.svelte";
 	import SidebarButton from "$lib/components/sidebar/sidebarButton.svelte";
+	import { onMount } from "svelte";
+	import userData from "./userData";
+	import { api } from "$lib/api";
 
     $: currentDir = $page.route.id?.split('/')[2]
+
+    onMount(() => {
+        getProfile(); 
+    })
+
+    async function getProfile() {
+        const res = await api.get('/user')
+        userData.set(res.data)
+    }
 
     function logout() {
         localStorage.removeItem('accessToken')
