@@ -5,9 +5,12 @@ import { IntraValidationCodeDTO } from "src/dto/auth.dto";
 @Injectable()
 export class AuthService{
 	async validate(): Promise<any>{
-		const code = "c298c0024ea61eae7e4375c4096896714f1ee10f81032f1bcfa2d596ef9d7983"
+		//Validate user data
+	}
 
-		let data = new IntraValidationCodeDTO(code);
+	//Use the code to get the access token
+	async getToken(body: any): Promise<any>{
+		let data = new IntraValidationCodeDTO(body.code);
 		console.log("data", data);
 		let apiResponse = await fetch("https://api.intra.42.fr/oauth/token", {
 			method: "POST",
@@ -20,6 +23,25 @@ export class AuthService{
 		let token = ret.access_token;
 		
 		console.log("token", token);
-		
+
+		//Get user data from token
+		let userData = await fetch("https://api.intra.42.fr/v2/me", {
+			method: "GET",
+			headers:{
+				"Authorization": "Bearer " + token,
+			},
+		});
+		if (userData.status != 200){
+			return "Error";
+		}
+		let log = await userData.json();
+		let intraId = log.login;
+		let name = log.displayname;
+		console.log("intraId", intraId);
+		console.log("name", name);
+		// console.log("userData", log);
+		//check whether the user data is in database
+		//return the user full name
+		return name;
 	}
 }
