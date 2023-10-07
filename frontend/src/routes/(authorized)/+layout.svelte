@@ -19,7 +19,7 @@
         <SidebarButton name="Discover" selected={currentDir === "discover"} on:click={()=>goto('discover')}/>
     </div>
     <div class="flex flex-col">
-        <SidebarButton name="Settings" selected={currentDir === "settings"} on:click={()=>goto('settings')}/>
+        <SidebarButton name="Profile" selected={currentDir === "profile"} on:click={()=>goto('profile')}/>
         <SidebarButton name="Logout" on:click={logout} />
     </div>
 </div>
