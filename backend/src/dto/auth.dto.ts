@@ -7,7 +7,7 @@ export class IntraValidationCodeDTO{
 		this.client_id = process.env.UID;
 		this.client_secret = process.env.SECRET;
 		this.code = code;
-		this.redirect_uri = "http://localhost:" + process.env.FE_PORT;
+		this.redirect_uri = process.env.FE_IP + ":" + process.env.FE_PORT;
 	}
 
 	grant_type: string;
