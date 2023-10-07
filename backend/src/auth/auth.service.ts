@@ -7,9 +7,8 @@ export class AuthService{
 	private tokens: string[] = [];
 
 	async validate(token: any): Promise<any>{
-		console.log("token", token);
-		console.log("All tokens", this.tokens)
-		if (this.tokens.includes(token)){
+		let tokenCode = token.split(" ")[1];
+		if (this.tokens.includes(tokenCode)){
 			return 200;
 		}
 		else{
@@ -32,27 +31,6 @@ export class AuthService{
 		let token = ret.access_token;
 
 		this.tokens.push(token);
-		return token;
-		console.log("new token", token);
-
-		//Get user data from token
-		let userData = await fetch("https://api.intra.42.fr/v2/me", {
-			method: "GET",
-			headers:{
-				"Authorization": token,
-			},
-		});
-		if (userData.status != 200){
-			return "Error";
-		}
-		let log = await userData.json();
-		let intraId = log.login;
-		let name = log.displayname;
-		console.log("intraId", intraId);
-		console.log("name", name);
-		// console.log("userData", log);
-		//check whether the user data is in database
-		//return the user full name
-		// return {name: name, token: token};
+		return token;		
 	}
 }
