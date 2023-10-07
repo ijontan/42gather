@@ -28,12 +28,28 @@
     span {
         @apply tracking-wide font-medium text-black;
     }
-}
 
-::-moz-selection {
-    @apply bg-cyanLight text-cyanDark;
-}
+    ::-moz-selection {
+        @apply bg-cyanLight text-cyanDark;
+    }
 
-::selection {
-    @apply bg-cyanLight text-cyanDark;
+    ::selection {
+        @apply bg-cyanLight text-cyanDark;
+    }
+
+    ::-webkit-scrollbar-button {
+        @apply hidden;
+    }
+
+    ::-webkit-scrollbar {
+        @apply hidden transition-opacity w-3 h-3;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-slate-200 rounded-full;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-gray
+    }
 }

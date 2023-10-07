@@ -33,6 +33,12 @@
 </script>
 
 
-<h1>
-    Good <span class={`${style} text-blueAcc`}>{tod}</span>, <span class="text-[70px]">{name}</span>
-</h1>
+<div class="h-full grid items-center">
+
+    <div class=" sticky pb-10 top-10">
+
+        <h1>
+            Good <span class={`${style} text-blueAcc`}>{tod}</span>, <span class="text-[70px]">{name}</span>
+        </h1>
+    </div>
+</div>
