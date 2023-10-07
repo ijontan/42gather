@@ -16,6 +16,6 @@
         <SidebarButton name="Logout" />
     </div>
 </div>
-<div class=" p-[300px]">
+<div class=" pl-[300px]">
     <slot />
 </div>

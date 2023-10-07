@@ -17,9 +17,10 @@
         if (code === null)
             return setTimeout(()=>goto("login"), 0);
         try {
-            /** @type string */
+            /** @type {any} */
             const authToken = await api.post('auth', {code});
-            localStorage.setItem('accessToken', authToken);
+            console.log("ok:",authToken.data);
+            localStorage.setItem('accessToken', authToken.data);
             window.location.replace('/')
         } catch (error) {
             console.log(error)    

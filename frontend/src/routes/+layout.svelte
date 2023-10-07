@@ -10,12 +10,14 @@
 
     async function checkAccessToken() {
         if (typeof window === 'undefined') return;
+        if (!localStorage.getItem('accessToken')) return;
         try {
             /** @type string */
             const data = await api.get('/auth')
             goto('home')
         } catch (error) {
             console.log(error)
+            localStorage.removeItem('accessToken')
             goto('login')
         }
     }

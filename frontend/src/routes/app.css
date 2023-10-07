@@ -29,3 +29,11 @@
         @apply tracking-wide font-medium text-black;
     }
 }
+
+::-moz-selection {
+    @apply bg-cyanLight text-cyanDark;
+}
+
+::selection {
+    @apply bg-cyanLight text-cyanDark;
+}
