@@ -19,11 +19,11 @@
         try {
             /** @type {any} */
             const authToken = await api.post('auth', {code});
-            console.log("ok:",authToken.data);
             localStorage.setItem('accessToken', authToken.data);
             window.location.replace('/')
         } catch (error) {
-            console.log(error)    
+            console.log(error)
+            goto('login')
         }
     }
 </script>
