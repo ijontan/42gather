@@ -2,6 +2,7 @@
 	import EventItem from "$lib/components/eventItem.svelte";
 	import EventList from "$lib/components/eventList.svelte";
 	import HomeGreeting from "$lib/components/homeGreeting.svelte";
+	import NewEvent from "$lib/components/newEvent.svelte";
 	import EventData from "$lib/model/event";
 
 </script>
@@ -13,3 +14,4 @@
         <EventList title='joining && upcoming'/>
     </div>
 </div>
+<NewEvent />

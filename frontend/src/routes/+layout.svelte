@@ -16,7 +16,7 @@
         if (code !== null) return;
         try {
             /** @type string */
-            // const data = await api.get('/auth')
+            const data = await api.get('/auth')
             goto('home')
         } catch (error) {
             console.log(error)
