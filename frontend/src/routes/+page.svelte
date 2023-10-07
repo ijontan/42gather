@@ -18,7 +18,7 @@
             return setTimeout(()=>goto("login"), 0);
         try {
             /** @type string */
-            const authToken = await api.post('auth', code);
+            const authToken = await api.post('auth', {code});
             localStorage.setItem('accessToken', authToken);
             window.location.replace('/')
         } catch (error) {
