@@ -6,9 +6,9 @@
 
 </script>
 
-<div class=" w-full h-[calc(100vh+400px)] flex flex-col p-12 overflow-visible justify-between">
+<div class=" w-full h-[calc(100vh+300px)] flex flex-col p-12 overflow-visible justify-between">
     <HomeGreeting name="Ijon Tan"/>
-    <div class="flex flex-col-reverse gap-7 pb-[400px]">
+    <div class="flex flex-col-reverse gap-7 pb-[300px]">
         <EventList title='Suggested'/>
         <EventList title='joining && upcoming'/>
     </div>

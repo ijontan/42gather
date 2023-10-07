@@ -2,6 +2,7 @@
 	// @ts-ignore
 	import EventData, { ColorType } from "$lib/model/event";
 	import MyButton from "./myButton.svelte";
+	import Textarea from "./textarea.svelte";
 	import Textfield from "./textfield.svelte";
 
 
@@ -75,7 +76,7 @@
     <div class={`  bg-white absolute top-0 box-border flex flex-col gap-2 pt-[25%] left-0 right-0 overflow-clip rounded-[50px] shadow-medium ${hover? ' h-[500px] -z-10' : 'h-0 -z-20'} transition-all`}>
         <div class="flex flex-col p-5 justify-evenly h-full">
 
-            <Textfield title='Descriptions'/>
+            <Textarea title='Descriptions'/>
             <Textfield title='vanue'/>
             <Textfield title='date'/>
             <div class="flex flex-row justify-end">
