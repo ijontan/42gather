@@ -5,7 +5,6 @@ import { UserService } from "src/user/user.service";
 @Injectable()
 export class AuthService{
 	constructor (private readonly UserService: UserService){}
-	private tokens: string[] = [];
 
 	/**
 	 * Validate the token in header
@@ -38,32 +37,42 @@ export class AuthService{
 		});
 		let res = await apiResponse.json();
 		let token = res.access_token;
-
-		try{
-			let intraID = await this.UserService.getIntraIDFromToken(token);
-			//Check whether the user is in database
-			const user_present = await this.UserService.FindUserByIntraID(intraID);
-			//If yes, check the access token and update if needed
-			if (user_present){
-				if (await this.UserService.CheckTokenPresent(token)){
-					console.log("Token present");
+		
+		if (token){
+			console.log("In getToken, token presnet")
+			try{
+				let intraID = await this.UserService.getIntraIDFromToken(token);
+				//Check whether the user is in database
+				const user_present = await this.UserService.FindUserByIntraID(intraID);
+				//If yes, check the access token and update if needed
+				if (user_present){
+					if (await this.UserService.CheckTokenPresent(token)){
+						console.log("Token still valid");
+					}
+					else{
+						console.log("Token not identical. Updating ...");
+						let ret = await this.UserService.UpdateUserToken(intraID, token);
+						console.log("ret:", ret);
+						// await this.UserService.UpdateUserToken(intraID, token);
+					}
 				}
-				else{
-					console.log("Token not present. Updating ...");
-					await this.UserService.UpdateUserToken(intraID, token);
+				//If not, add the user to database
+				else {
+					console.log("User not present.Adding ...");
+					await this.UserService.AddUser(token);
 				}
+				console.log("Token: " + token);
+				return token;
 			}
-			//If not, add the user to database
-			else {
-				console.log("User not present.Adding ...");
-				await this.UserService.AddUser(token);
+			catch(e){
+				console.log("Bad token");
+				throw new Error("Bad token");
 			}
-			console.log("Token: " + token);
-			return token;
 		}
-		catch(e){
-			console.log("Bad token");
-			throw new Error("Bad token");
+		else{
+			console.log("empty token");
+			throw new Error("Empty token");
 		}
 	}
 }
+

@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEventDto } from './dto/create-event.dto';
-import { UpdateEventDto } from './dto/update-event.dto';
+import { DatabaseService } from 'src/database/database.service';
+import { UserService } from 'src/user/user.service';
+import { eventDataDTO, eventHoverDTO, eventCreationDTO } from 'src/dto/event.dto';
 
 @Injectable()
 export class EventsService {
-  create(createEventDto: CreateEventDto) {
-    return 'This action adds a new event';
-  }
+	constructor(private db: DatabaseService, private userService: UserService) {}
 
-  findAll() {
-    return `This action returns all events`;
-  }
+	async createEvent(eventCreationDTO: eventCreationDTO, token: string): Promise<any> {
+		let tokenCode = token.split(' ')[1];
+		let userID = await this.userService.getIDFromToken(tokenCode);
+		console.log(userID);
+		const { title, description, venue, time, color, maxParticipants, tags,reminder } = eventCreationDTO;
+		let event = await this.db.event.create({
+			data: {
+				title: title,
+				description: description,
+				venue: venue,
+				time: time,
+				color: color,
+				maxParticipants: maxParticipants,
+				tags: tags,
+				reminder: reminder,
+				creator: {
+					connect: {id: userID},
+				},
+			},
+		});
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
-  }
 
-  update(id: number, updateEventDto: UpdateEventDto) {
-    return `This action updates a #${id} event`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} event`;
-  }
+	}
 }
+
+
+

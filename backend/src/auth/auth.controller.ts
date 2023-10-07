@@ -8,6 +8,7 @@ export class AuthController {
 
 	@Get()
 	async Validate(@Headers("Authorization") token: any, @Res() res: Response): Promise<void>{
+		console.log("Get auth");
 		const statusCode = await this.AuthService.validate(token);
 		if (statusCode == 200){
 			res.status(200).send();
@@ -21,6 +22,7 @@ export class AuthController {
 
 	@Post()
 	async getToken(@Body() body: any): Promise<any>{
+		console.log("Post auth");
 		return (await this.AuthService.getToken(body));
 	}
 

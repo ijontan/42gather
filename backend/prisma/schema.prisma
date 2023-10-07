@@ -11,20 +11,42 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  intraID   String  @unique
-  name      String
-  token     String
-  imageLink String
-  discordID String?
+  id           Int     @id @default(autoincrement())
+  intraID      String  @unique
+  name         String
+  token        String
+  imageLink    String
+  discordID    String?
+  discordToken String?
+
+  createdEvents     Event[]             @relation("creator")
+  joinedEvents      Event[]
+  EventParticipants EventParticipants[]
 }
 
 model Event {
-  id       Int      @id @default(autoincrement())
-  title    String
-  venue    String
-  time     DateTime
-  color    Int
-  tags     String[]
-  reminder Int[]
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  venue       String
+  time        DateTime
+  maxParticipants     Int
+  color       Int
+  tags        String[]
+  reminder    Int[]
+
+  creator           User                @relation("creator", fields: [creatorID], references: [id])
+  creatorID         Int
+  participants      User[]
+  EventParticipants EventParticipants[]
+}
+
+model EventParticipants {
+  event   Event @relation(fields: [eventID], references: [id])
+  eventID Int
+
+  participant User @relation(fields: [userID], references: [id])
+  userID      Int
+
+  @@id([eventID, userID])
 }

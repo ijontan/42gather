@@ -12,16 +12,19 @@ export class UserService{
 	 * Used internally only
 	 */
 	async getUserDataFromToken(token: string): Promise<any>{
-		let userData = await fetch("https://api.intra.42.fr/v2/me", {
+		console.log("Getting user data from token");
+		console.log("Token:", token);
+		const userData = await fetch("https://api.intra.42.fr/v2/me", {
 			method: "GET",
 			headers:{
 				"Authorization": "Bearer " + token,
 			},
 		});
-		if (userData.status != 200){
+		if (userData.status !== 200){
 			console.log("Failed to get user data");
 			throw new Error("Bad return");
 		}
+		console.log("User data from token success");
 		return (await userData.json());
 	}
 
@@ -31,22 +34,20 @@ export class UserService{
 	 */
 	async getUserData(token: string): Promise<UserDataDTO>{
 		let tokenCode = token.split(" ")[1];
-		try{
-			let userData = await this.getUserDataFromToken(tokenCode);
-			const user = await this.db.user.findUnique({
-				where: {
-					intraID: userData.login,
-				},
-			});
+		
+		let userData = await this.getUserDataFromToken(tokenCode);
+		
+		const user = await this.db.user.findUnique({
+			where: {
+				intraID: userData.login,
+			},
+		});
 
-			if (!user){
-				throw new Error("User not found");
-			}
-			return new UserDataDTO(user.intraID, user.name, user.imageLink);
+		if (!user){
+			throw new Error("User not found");
 		}
-		catch(e){
-			throw new Error("Bad token");
-		}
+		return new UserDataDTO(user.intraID, user.name, user.imageLink, user.discordID);
+		
 	}
 
 	/**
@@ -56,6 +57,29 @@ export class UserService{
 		try{
 			let userData = await this.getUserDataFromToken(token);
 			return userData.login;
+		}
+		catch(e){
+			throw new Error("Bad token");
+		}
+	}
+
+
+	/**
+	 * Get the user ID from the token
+	 */
+	async getIDFromToken(token: string): Promise<number>{
+		try{
+			let userData = await this.getUserDataFromToken(token);
+			const user = await this.db.user.findUnique({
+				where: {
+					intraID: userData.login,
+				},
+			});
+
+			if (!user){
+				throw new Error("User not found");
+			}
+			return user.id;
 		}
 		catch(e){
 			throw new Error("Bad token");
@@ -122,6 +146,97 @@ export class UserService{
 		if (!user){
 			throw new Error("User not found");
 		}
-		user.token = new_token;
+		return this.db.user.update({
+			where: {
+				intraID: intraID,
+			},
+			data: {
+				token: new_token,
+			},
+		});
+	}
+
+	async checkDiscordIDPresent(token: String): Promise<boolean>{
+		let tokenCode = token.split(" ")[1];
+		try{
+			let userData = await this.getUserDataFromToken(tokenCode);
+			const user = await this.db.user.findUnique({
+				where: {
+					intraID: userData.login,
+				},
+			});
+
+			if (!user){
+				throw new Error("User not found");
+			}
+			if (user.discordID){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		catch(e){
+			throw new Error("Bad token");
+		}
+	}
+
+	async setDiscordID(intraToken: any, body: any): Promise<any>{
+		let apiResponse = await fetch("https://discord.com/api/oauth2/token", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+			body: new URLSearchParams({
+				code: body.code,
+				client_id : process.env.DISCORD_UID,
+				client_secret: process.env.DISCORD_SECRET,
+				grant_type: "authorization_code",
+				redirect_uri: process.env.DISCORD_REDIRECT,
+				scope: "identify",
+			}),
+		});
+		let res = await apiResponse.json();
+		if (!res.access_token){
+			throw new Error("Bad discord code");
+		}
+
+		console.log("Discord token:", res.access_token);
+
+		const discordResponse = await fetch('https://discordapp.com/api/users/@me', {
+			method: 'GET',
+    		headers: {
+      			Authorization: "Bearer " + res.access_token,
+    		},
+ 	 	});
+
+		if (discordResponse.status != 200)
+		  throw new Error("Bad discord token");
+		
+		const discordData = await discordResponse.json();
+		console.log("Discord ID:", discordData.id);
+
+		let tokenCode = intraToken.split(" ")[1];
+		console.log("Intra token:", tokenCode);
+		
+		let userData = await this.getUserDataFromToken(tokenCode);
+		const user = await this.db.user.findUnique({
+			where: {
+				intraID: userData.login,
+			},
+		});
+			
+		if (!user){
+			throw new Error("User not found");
+		}
+
+		return this.db.user.update({
+			where: {
+				intraID: userData.login,
+			},
+			data: {
+				discordID: discordData.id,
+			},
+		});
 	}
 }
