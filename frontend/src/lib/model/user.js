@@ -14,6 +14,8 @@
  */
 
 export default class UserData{
+    /** @type {string | null=} */
+    discordID;
     /** @type {string} */
     intraID;
     /** @type {string} */

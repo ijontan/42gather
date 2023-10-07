@@ -14,7 +14,7 @@
      */
     async function authCheck(code) {
         if (typeof window === 'undefined') return;
-        if (code === null && !localStorage.getItem('accessToken'))
+        if (code === null)
             return setTimeout(()=>goto("login"), 0);
         try {
             /** @type {any} */

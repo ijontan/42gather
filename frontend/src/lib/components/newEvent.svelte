@@ -2,6 +2,7 @@
 	import { RemindersType, TagsType } from "$lib/model/event";
 	import ChipsSelectors from "./chips/chipsSelectors.svelte";
 	import Datetimefield from "./datetimefield.svelte";
+	import DropdownColors from "./dropdownColors/dropdownColors.svelte";
 	import MyButton from "./myButton.svelte";
 	import Numberfield from "./numberfield.svelte";
 	import RoundedButton from "./roundedButton.svelte";
@@ -50,8 +51,8 @@ import Textarea from "./textarea.svelte";
     
     <div class="flex items-center w-[654px] h-[80px] mt-[3px] justify-between">
         <div class="flex flex-row gap-5 items-center">
-            <span class={` text-[50px] ${opened? "text-black" : "text-white"}`}>+</span>
-            <span class={` text-2xl ${opened? "text-black" : "text-white"}`}>New Event</span>
+            <span class={` select-none text-[50px] ${opened? "text-black" : "text-white"}`}>+</span>
+            <span class={` select-none text-2xl ${opened? "text-black" : "text-white"}`}>New Event</span>
         </div>
         <button class=" rounded-full bg-red-300 hover:bg-red-400 transition-colors aspect-square w-10 h-10 text-xl text-white font-bold"
             on:click={closeDialog}
@@ -62,9 +63,12 @@ import Textarea from "./textarea.svelte";
         <div class="flex gap-5 w-full">
             <Textfield title="Event Name" />
             <Datetimefield title="Date & Time" />
+            <DropdownColors title="Color" />
         </div>
-        <Textfield title="Vanue" />
-        <Numberfield title="Limit (Optional)" />
+        <div class="flex gap-5 w-full">
+            <Textfield title="Vanue" />
+            <Numberfield title="Limit (Optional)" />
+        </div>
         <Textarea title="Description" />
         <ChipsSelectors title="Tags" options={tagsOptions} />
         <ChipsSelectors title="Reminders" options={remindersOptions} />
