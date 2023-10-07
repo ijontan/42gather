@@ -1,0 +1,38 @@
+
+<script>
+    let date = new Date();
+
+    /** @type {string} */
+    let tod; 
+    let style= ''
+
+    $:date, getTOD()
+
+    function getTOD(){
+        let hour = date.getHours()
+        if (hour < 4) {
+            tod = 'Night'
+            style = ' text-blueAcc '
+        } else if (hour < 12) {
+            tod = 'Morning'
+            style = ' text-orangeAcc '
+        } else if (hour < 18) {
+            tod = 'Afternoon'
+            style = ' text-yellowAcc '
+        } else if (hour < 21) {
+            tod = 'Evening'
+            style = ' text-pinkAcc '
+        } else {
+            tod = 'Night'
+            style = ' text-blueAcc '
+        }
+
+    }
+    /** @type {string} */
+    export let name;
+</script>
+
+
+<h1>
+    Good <span class={`${style} text-blueAcc`}>{tod}</span>, <span class="text-[70px]">{name}</span>
+</h1>

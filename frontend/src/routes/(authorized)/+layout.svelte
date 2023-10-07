@@ -10,6 +10,7 @@
     <div class="flex flex-col">
         <Logo/>
         <SidebarButton name="Home" selected={currentDir === "home"}/>
+        <SidebarButton name="Discover" selected={currentDir === "discover"}/>
     </div>
     <div class="flex flex-col">
         <SidebarButton name="Settings" selected={currentDir === "settings"}/>
