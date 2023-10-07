@@ -1,22 +1,23 @@
 <script>
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { api } from "$lib/api";
+	import { onMount } from "svelte";
     import "./app.css"
+    
+    onMount(()=>{
+        checkAccessToken()
+    })
 
-
-    let code = $page.url.searchParams.get('code')
-
-    $:authCheck(code)
-
-    /**
-     * 
-     * @param {string | null} code 
-     */
-    function authCheck(code){
+    async function checkAccessToken() {
         if (typeof window === 'undefined') return;
-        if (code === null)
-            setTimeout(()=>goto("login"), 0);
-
+        try {
+            /** @type string */
+            const data = await api.get('/auth')
+            goto('home')
+        } catch (error) {
+            console.log(error)
+            goto('login')
+        }
     }
 </script>
 

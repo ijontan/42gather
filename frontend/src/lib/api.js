@@ -20,7 +20,7 @@ class ApiInstance {
   /**
    * @template T
    * @param {string} url 
-   * @param {any} config 
+   * @param {any} [config] 
    * @returns {Promise<T>}
    */
   get(url, config) {
@@ -32,7 +32,7 @@ class ApiInstance {
    * @template T
    * @param {string} url 
    * @param {any} data 
-   * @param {any} config 
+   * @param {any} [config] 
    * @returns {Promise<T>}
    */
   post(url, data, config) {
@@ -44,7 +44,7 @@ class ApiInstance {
    * @template T
    * @param {string} url 
    * @param {any} data 
-   * @param {any} config 
+   * @param {any} [config] 
    * @returns {Promise<T>} 
    */
   patch(url, data, config) {
