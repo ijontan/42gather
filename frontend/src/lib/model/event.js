@@ -1,3 +1,5 @@
+// @ts-ignore
+import UserData from "./user";
 
 /**
  * @enum {number}
@@ -65,6 +67,8 @@ export const ColorType ={
 export default class EventData {
     /** @type {string=} */
     id;
+    /** @type {UserData[]=} */
+    participants;
     /** @type {string} */
     title;
     /** @type {string} */
@@ -147,5 +151,22 @@ export default class EventData {
 
     toJson(){
         return JSON.stringify(this);
+    }
+
+    /**
+     * @param {*} map
+     * @returns {EventData}
+     */
+    static fromMap(map){
+        return new EventData({
+            title: map.title,
+            venue: map.venue,
+            limit: map.limit,
+            description: map.description,
+            datetime: map.datetime,
+            tags: map.tags,
+            reminders: map.reminders,
+            color: map.color,
+        })
     }
 }

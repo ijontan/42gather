@@ -1,3 +1,26 @@
+import { User } from "@prisma/client";
+import { UserDataDTO } from "./user.dto";
+
+export enum TagType {
+	evaluation=0,
+    activity=1,
+    rush=2,
+    dinner=3,
+    badminton=4,
+    jogging=5,
+    gaming=6,
+    movie=7,
+}
+
+export enum ReminderType {
+	"5min"=0,
+	"15min"=1,
+	"1hour"=2,
+	"1day"=3,
+	"1week"=4,
+}
+
+
 export class eventHoverDTO{
 	constructor(id: number, title: string, description: string, venue: string, time: Date){
 		this.id = id;
@@ -21,48 +44,50 @@ export class eventDataDTO{
 		title: string, 
 		description: string, 
 		venue: string, 
-		time: 
-		Date, currentParticipants: string[]){
+		datetime: string,
+		currentParticipants: UserDataDTO[]){
+		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.venue = venue;
-		this.time = time;
+		this.datetime = datetime;
 		this.currentParticipants = currentParticipants;
 		}
 
+	id: number;
 	title: string;
 	description: string;
 	venue: string;
-	time: Date;
-	currentParticipants: string[];
+	datetime: string;
+	currentParticipants: UserDataDTO[];
 }
 
 export class eventCreationDTO{
 	constructor(
 		title: string, 
-		description: string, 
-		venue: string, 
-		time: Date, 
-		maxParticipants: number,
+		description: string | null, 
+		venue: string | null, 
+		datetime: string, 
+		limit: number | null,
 		color: number,
-		tags: string[], 
-		reminder: number[]){
+		tags: number[] | null, 
+		reminders: number[] | null){
 		this.title = title;
 		this.description = description;
 		this.venue = venue;
-		this.time = time;
-		this.maxParticipants = maxParticipants;
+		this.datetime = datetime;
+		this.limit = limit;
 		this.color = color;
 		this.tags = tags;
-		this.reminder = reminder;
+		this.reminders = reminders;
 		}
 	
 	title: string;
-	description: string;
-	venue: string;
-	time: Date;
-	maxParticipants: number;
+	description: string |null;
+	venue: string |null;
+	datetime: string;
+	limit: number | null;
 	color: number;
-	tags: string[];
-	reminder: number[];
+	tags: number[] |null;
+	reminders: number[] |null;
 }
