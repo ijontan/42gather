@@ -52,6 +52,8 @@ export const ColorType ={
  */
 
 export default class EventData {
+    /** @type {string=} */
+    id;
     /** @type {string} */
     title;
     /** @type {string} */

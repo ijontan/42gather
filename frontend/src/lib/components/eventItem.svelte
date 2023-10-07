@@ -76,16 +76,29 @@
     <div class={`  bg-white absolute top-0 box-border flex flex-col gap-2 pt-[25%] left-0 right-0 overflow-clip rounded-[50px] shadow-medium ${hover? ' h-[500px] -z-10' : 'h-0 -z-20'} transition-all`}>
         <div class="flex flex-col p-5 justify-evenly h-full">
 
-            <Textarea title='Descriptions'/>
-            <Textfield title='vanue'/>
-            <Textfield title='date'/>
+            <Textarea title='Descriptions' value={item.description} disabled/>
+            <Textfield title='vanue' value={item.vanue} disabled/>
+            <Textfield title='date' value={item.datetime.toDateString() + item.datetime.toLocaleTimeString()} disabled/>
             <div class="flex flex-row justify-end">
-                <MyButton name='close' color={item.color} noBackground/>
-                <MyButton name='join' color={item.color}/>
+                <MyButton name='close' color={item.color} noBackground
+                    on:click={() => {
+                        hover = !hover;
+                    }}
+                />
+                <MyButton name='join' color={item.color}
+                    on:click={() => {
+                        
+                    }}
+                />
             </div>
         </div>
     </div>
-    <div class={`z-30  flex flex-col gap-2  px-12 py-6 ${bgColor} rounded-[50px]`}>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class={`z-30  flex flex-col gap-2  px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
+        on:click={() => {
+            hover = !hover;
+        }}
+    >
         <h1 class={`z-30  ${textColor} capitalize`}>{item.title}</h1>
         <p class={`z-30  whitespace-nowrap truncate opacity-50 ${textColor}`}>{item.description.split('.')[0]}</p>
     </div>
