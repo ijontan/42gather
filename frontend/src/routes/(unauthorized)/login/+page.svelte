@@ -1,7 +1,6 @@
 <script>
+	import { goto } from "$app/navigation";
 	import RoundedButton from "$lib/components/roundedButton.svelte";
-import Textfield from "$lib/components/textfield.svelte";
-
 </script>
 <section class="grid justify-center items-center h-screen w-screen">
     <div class="group grid justify-center items-center h-[500px] w-[600px] relative">
@@ -10,7 +9,7 @@ import Textfield from "$lib/components/textfield.svelte";
         group-hover:shadow-large group-hover:bg-white`}>
         <div class=" opacity-0 group-hover:opacity-100 gap-3  flex flex-col items-center">
             <h2 class=" text-[80px]/[100px]">Login</h2>
-            <RoundedButton name="with intra"/>
+            <RoundedButton name="with intra" on:click={()=>goto('home')}/>
         </div>
         </div>
         <h1 class={` text-[80px] tracking-tighter absolute top-1/2 left-1/2 -translate-x-1/2 whitespace-nowrap transition-all
