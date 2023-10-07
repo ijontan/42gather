@@ -1,3 +1,6 @@
+/**
+ * DTO used to sent the validation code to 42 Intra API
+ */
 export class IntraValidationCodeDTO{
 	constructor(code: string){
 		this.grant_type = "authorization_code";

@@ -7,6 +7,7 @@ export class UserController{
 
 	@Get()
 	async getUserData(@Headers("Authorization") token: any): Promise<any>{
-		return (await this.UserService.getUserFromToken(token));
+		const userData = await this.UserService.getUserData(token);
+		return (userData);
 	}
 }

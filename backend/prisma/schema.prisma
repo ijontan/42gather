@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  intraID   String  @unique
+  name      String
+  token     String
+  imageLink String
+  discordID String?
+}
+
+model Event {
+  id       Int      @id @default(autoincrement())
+  title    String
+  venue    String
+  time     DateTime
+  color    Int
+  tags     String[]
+  reminder Int[]
+}
