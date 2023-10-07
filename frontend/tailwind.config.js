@@ -31,6 +31,8 @@ export default {
       sans: ['poppins','sans-serif']
     }
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-labeled-groups')(['button',])
+  ],
 }
 
