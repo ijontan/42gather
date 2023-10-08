@@ -9,6 +9,7 @@
 	import { onMount } from "svelte";
 	import userData from "../userData";
 	import { api } from "$lib/api";
+	import Clock from "$lib/components/clock.svelte";
 
     /** @type {UserData} */
     let user;
@@ -48,3 +49,5 @@
     </div>
     <NewEvent />
 </div>
+
+<Clock />

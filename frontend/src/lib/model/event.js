@@ -145,7 +145,7 @@ export default class EventData {
             datetime: '',
             tags: [],
             reminders: [],
-            color: 0,
+            color: -1,
         })
     }
 
