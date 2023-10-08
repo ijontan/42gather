@@ -31,6 +31,7 @@
         <SidebarButton name="Discover" selected={currentDir === "discover"} on:click={()=>goto('/discover')}/>
         <SidebarButton name="Calendar"/>
         <SidebarButton name="History"/>
+        <SidebarButton name="Admin (WIP)" selected={currentDir === "admin"} on:click={()=>goto('/admin')}/>
     </div>
     <div class="flex flex-col">
         <SidebarButton name="Profile" selected={currentDir === "profile"} on:click={()=>goto('/profile')}/>
