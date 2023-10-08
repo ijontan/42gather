@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
+import { ReminderService } from 'src/reminder/reminder.service';
 import { UserService } from 'src/user/user.service';
 import { Event, EventParticipants, User } from '@prisma/client';
-import { eventDataDTO, eventHoverDTO, eventCreationDTO } from 'src/dto/event.dto';
+import { eventDataDTO, eventHoverDTO, eventCreationDTO, EventReminderDTO } from 'src/dto/event.dto';
 
 @Injectable()
 export class EventsService {
-	constructor(private db: DatabaseService, private userService: UserService) {}
+	constructor(private db: DatabaseService, private userService: UserService, private readonly app:ReminderService) {}
 
 	async createEvent(eventCreationDTO: eventCreationDTO, token: string): Promise<number> {
 		let tokenCode = token.split(' ')[1];
@@ -32,9 +33,45 @@ export class EventsService {
 			},
 		});
 		const eventID = event.id;
+		if (reminders){
+			console.log("Start time: ", formattedDate);
+			for (let reminder of reminders){
+				switch (reminder){
+					case 0:
+						console.log("5min");
+						let rt1 = formattedDate.getTime() - 5 * 60 * 1000;
+						let rt1t = new Date(rt1);
+						await this.app.addReminder(new EventReminderDTO(rt1t, eventID))
+						break;
+					case 1:
+						console.log("15min");
+						let rt2 = formattedDate.getTime() - 15 * 60 * 1000;
+						let rt2t = new Date(rt2);
+						await this.app.addReminder(new EventReminderDTO(rt2t, eventID))
+						break;
+					case 2:
+						console.log("1hour");
+						let rt3 = formattedDate.getTime() - 60 * 60 * 1000;
+						let rt3t = new Date(rt3);
+						await this.app.addReminder(new EventReminderDTO(rt3t, eventID))
+						break;
+					case 3:
+						console.log("1day");
+						let rt4 = formattedDate.getTime() - 24 * 60 * 60 * 1000;
+						let rt4t = new Date(rt4);
+						await this.app.addReminder(new EventReminderDTO(rt4t, eventID))
+						break;
+					case 4:
+						console.log("1week");
+						let rt5 = formattedDate.getTime() - 7 * 24 * 60 * 60 * 1000;
+						let rt5t = new Date(rt5);
+						await this.app.addReminder(new EventReminderDTO(rt5t, eventID))
+						break;
+				}
+			}
+		}
 		this.joinEvent(eventID, token);
 		return eventID;
-
 	}
 
 	async joinEvent(eventID: number, token: string): Promise<any> {

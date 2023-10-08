@@ -8,10 +8,12 @@ import { DatabaseModule } from './database/database.module';
 import { EventsModule } from './events/events.module';
 import { ReminderModule } from './reminder/reminder.module';
 import { ReminderService } from './reminder/reminder.service';
+import { EventsService } from './events/events.service';
 
 @Module({
-  imports: [AuthModule, UserModule, DatabaseModule, EventsModule, ScheduleModule.forRoot()],
+  imports: [AuthModule, UserModule, DatabaseModule, EventsModule, ReminderModule, ScheduleModule.forRoot()],
   controllers: [AppController],
-  providers: [AppService, ReminderService],
+  providers: [AppService, ReminderService,EventsService],
+  exports : [AppService, ReminderService],
 })
 export class AppModule {}
