@@ -8,6 +8,7 @@
     onMount(()=>{
         checkAccessToken()
     })
+    $: currentDir = $page.route.id?.split('/')[2]
 
     let code = $page.url.searchParams.get('code')
 
@@ -17,7 +18,8 @@
         try {
             /** @type string */
             const data = await api.get('/auth')
-            goto('/home')
+            if (currentDir === 'login' || currentDir === '' || currentDir === undefined)
+                goto('/home')
         } catch (error) {
             console.log(error)
             localStorage.removeItem('accessToken')

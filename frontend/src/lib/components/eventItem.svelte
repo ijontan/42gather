@@ -1,9 +1,11 @@
 <script>
 	import { goto } from "$app/navigation";
+	import { api } from "$lib/api";
 
 	// @ts-ignore
 	import EventData, { ColorType } from "$lib/model/event";
 	import ChipList from "./chips/chipList.svelte";
+	import DatetimefieldNoBg from "./datetimefieldNoBG.svelte";
 	import MyButton from "./myButton.svelte";
 	import Textarea from "./textarea.svelte";
 	import Textfield from "./textfield.svelte";
@@ -69,6 +71,15 @@
         hover = false;
     }
 
+    async function joinEvent(){
+        try {
+            let res = await api.post('/events/join', {eventID: item.id});
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -81,8 +92,8 @@
         <div class="flex flex-col p-5 justify-evenly h-full">
 
             <TextfieldNoBg title='Descriptions' value={item.description}/>
-            <TextfieldNoBg title='venue' value={item.venue}/>
-            <TextfieldNoBg title='date' value={item.datetime}/>
+            <TextfieldNoBg title='venue' value={item.venue} />
+            <DatetimefieldNoBg title='date' value={item.datetime.split('.')[0]} disabled/>
             <ChipList title='tags' color={item.color} values={item.tags}/>
             <div class="flex flex-row justify-end">
                 <MyButton name='close' color={item.color} noBackground
@@ -91,9 +102,7 @@
                     }}
                 />
                 <MyButton name='join' color={item.color}
-                    on:click={() => {
-                        
-                    }}
+                    on:click={joinEvent}
                 />
             </div>
         </div>
