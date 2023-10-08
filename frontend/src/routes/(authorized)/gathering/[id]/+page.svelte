@@ -1,4 +1,6 @@
 <script>
+	import { page } from "$app/stores";
+	import { api } from "$lib/api";
 	import ChipList from "$lib/components/chips/chipList.svelte";
 	import ChipsSelectors from "$lib/components/chips/chipsSelectors.svelte";
 	import Datetimefield from "$lib/components/datetimefield.svelte";
@@ -8,7 +10,9 @@
 	import RoundedButton from "$lib/components/roundedButton.svelte";
 	import Textarea from "$lib/components/textarea.svelte";
 	import Textfield from "$lib/components/textfield.svelte";
+	import UserList from "$lib/components/userList.svelte";
 	import EventData, { TagsType, RemindersType, ColorType } from "$lib/model/event";
+	import { onMount } from "svelte";
 
 
     /** @type {EventData} */
@@ -19,6 +23,20 @@
     let textColor;
     /** @type {boolean} */
     let disabled = true;
+
+    let id = $page.params.id;
+
+    onMount(async () => {
+        try {
+            /** @type {*} */
+            let res = await api.get('/events/id/' + id);
+            console.log(res.data);
+            item = res.data;
+            item.datetime = item.datetime.split('.')[0];
+        } catch (error) {
+            console.log(error);
+        }
+    })
     
     $: {
         switch (item.color) {
@@ -64,6 +82,15 @@
     function save() {
         disabled = true
     }
+
+    async function joinEvent(){
+        try {
+            let res = await api.post('/events/join', {eventID: item.id});
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 </script>
 
 <div class="flex flex-col overflow-y-scroll mx-5 px-5 gap-2 pb-5 pt-20">
@@ -83,12 +110,16 @@
     <Textarea {disabled} title="Description" bind:value={item.description} />
     <ChipList title='tags' color={item.color} values={item.tags} padding/>
     <ChipList title='Reminders' color={item.color} values={item.reminders} notTag padding/>
+    <h2 class="mt-5">Participants</h2>
+    <hr class=" border-t-2 border-black/10"/>
+    <UserList userList={item.participants}/>
 </div>
 
-<div class="fixed bottom-5 right-5" >
+<div class="fixed bottom-5 right-5 flex gap-2" >
     {#if disabled}
         <MyButton color={item.color} name="Edit" on:click={edit}/>
     {:else}
         <MyButton color={item.color} name="Save" on:click={save}/>
     {/if}
+    <MyButton color={item.color} name="join" on:click={joinEvent}/>
 </div>
