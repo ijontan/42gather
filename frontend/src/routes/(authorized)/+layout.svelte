@@ -29,6 +29,8 @@
         <Logo/>
         <SidebarButton name="Home" selected={currentDir === "home"} on:click={()=>goto('/home')}/>
         <SidebarButton name="Discover" selected={currentDir === "discover"} on:click={()=>goto('/discover')}/>
+        <SidebarButton name="Calendar"/>
+        <SidebarButton name="History"/>
     </div>
     <div class="flex flex-col">
         <SidebarButton name="Profile" selected={currentDir === "profile"} on:click={()=>goto('/profile')}/>

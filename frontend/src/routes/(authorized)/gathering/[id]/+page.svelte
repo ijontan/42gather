@@ -16,7 +16,7 @@
 
 
     /** @type {EventData} */
-    let item = EventData.test();
+    let item = EventData.empty();
     /** @type {string} */
     let bgColor;
     /** @type {string} */
