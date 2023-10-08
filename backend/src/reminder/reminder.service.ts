@@ -55,10 +55,9 @@ export class ReminderService{
 				},
 				select: {
 					title: true,
-					description: true,
 				},
 			});
-			queryString += "&message=Remember to join " + eventTitle.title + "\n" + eventTitle.description + "&linkUrl=http://localhost:5173/gathering/" + reminder.eventID;
+			queryString += "&message=Remember to join " + eventTitle.title + "&linkUrl=http://localhost:5173/gathering/" + reminder.eventID;
 
 			if (ping == 0){
 				console.log("pinging")
