@@ -26,10 +26,13 @@ export class ReminderService{
   async handleReminder(){
 	console.log("handleReminder");
 	for (let reminder of this.reminderArray){
-		let now = new Date();
+		let current = new Date();
+		let now = new Date(current.getTime() + 8 * 60 * 60 * 1000);
+		console.log("now: ", now);
 
 		if (now >= reminder.time){
-			console.log("Reminder time reached");
+			console.log("Reminder time reached." + reminder.time);
+			let ping = 0;
 			const participantsdiscord = await this.db.event.findUnique({
 				where: {
 					id: reminder.eventID,
@@ -44,8 +47,7 @@ export class ReminderService{
 			});
 			console.log("participantsdiscord: ", participantsdiscord);
 		
-			let queryString = `?usersIds=${participantsdiscord.participants.map(participant => participant.discordID).join(',')}`;
-			console.log(queryString);
+			let queryString = `?userIds=${participantsdiscord.participants.map(participant => participant.discordID).join(',')}`;
 			
 			let eventTitle = await this.db.event.findUnique({
 				where: {
@@ -53,9 +55,18 @@ export class ReminderService{
 				},
 				select: {
 					title: true,
+					description: true,
 				},
 			});
-			queryString += "&message=Remember to join " + eventTitle.title + "&linkUrl=";
+			queryString += "&message=Remember to join " + eventTitle.title + "\n" + eventTitle.description + "&linkUrl=http://localhost:5173/gathering/" + reminder.eventID;
+
+			if (ping == 0){
+				console.log("pinging")
+				let response = await fetch("http://localhost:58420/sendpublic" + queryString,{
+					method: "GET",
+				});
+				ping = 1;
+			}
 
 			console.log("removing")
 			let index = this.reminderArray.indexOf(reminder);
