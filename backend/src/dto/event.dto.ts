@@ -91,3 +91,12 @@ export class eventCreationDTO{
 	tags: number[] |null;
 	reminders: number[] |null;
 }
+
+export class EventReminderDTO{
+	constructor(time: Date, eventID: number){
+		this.time = time;
+		this.eventID = eventID;
+	}
+	time: Date;
+	eventID: number;
+}
