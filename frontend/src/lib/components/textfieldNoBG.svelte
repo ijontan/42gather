@@ -11,6 +11,6 @@
         id="title" 
         class="w-full tracking-wide font-semibold"
     >
-        {value ?? '--'}
+        {value? value : '--'}
     </p>
 </div>

@@ -77,7 +77,7 @@
         <DropdownColors {disabled} title="Color" bind:selected={item.color} />
     </div>
     <div class="flex gap-5 w-full">
-        <Textfield {disabled} title="Vanue" bind:value={item.vanue} />
+        <Textfield {disabled} title="venue" bind:value={item.venue} />
         <Numberfield {disabled} title="Limit (Optional)" bind:value={item.limit} />
     </div>
     <Textarea {disabled} title="Description" bind:value={item.description} />

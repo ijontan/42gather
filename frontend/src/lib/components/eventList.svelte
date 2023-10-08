@@ -1,4 +1,5 @@
 <script>
+	// @ts-ignore
 	import EventData from "$lib/model/event";
 	import EventItem from "./eventItem.svelte";
 
@@ -9,7 +10,7 @@
     let offset = 0;
 
     /** @type {EventData[]} */
-    let eventList = [EventData.test(),EventData.test()];
+    export let eventList = [];
 
     /** @param {*} e */
     function handleScroll(e) {

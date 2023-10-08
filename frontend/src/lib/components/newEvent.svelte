@@ -1,12 +1,14 @@
 <script>
-	import { RemindersType, TagsType } from "$lib/model/event";
+	import { goto } from "$app/navigation";
+	import { api } from "$lib/api";
+	import EventData, { RemindersType, TagsType } from "$lib/model/event";
 	import ChipsSelectors from "./chips/chipsSelectors.svelte";
 	import Datetimefield from "./datetimefield.svelte";
 	import DropdownColors from "./dropdownColors/dropdownColors.svelte";
 	import MyButton from "./myButton.svelte";
 	import Numberfield from "./numberfield.svelte";
 	import RoundedButton from "./roundedButton.svelte";
-import Textarea from "./textarea.svelte";
+    import Textarea from "./textarea.svelte";
 	import Textfield from "./textfield.svelte";
 
     let hover = false;
@@ -16,6 +18,8 @@ import Textarea from "./textarea.svelte";
         if (opened) return;
         opened = true;
     }
+
+    let item = EventData.empty();
 
     /**
      * @param {MouseEvent} e
@@ -38,6 +42,19 @@ import Textarea from "./textarea.svelte";
 
     /** @type {string[]} */
     let remindersOptions =Object.entries(RemindersType).map(([key, value]) => key);
+
+    async function newEvent(){
+        console.log(item);
+
+        try {
+            /** @type {*} */
+            let res = await api.post('/events/create', item);
+            console.log("create res: ", res.data);
+            goto('/gathering/' + res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -61,19 +78,19 @@ import Textarea from "./textarea.svelte";
     <hr class={` border-t-2 ${opened? "border-black" : " border-transparent"}`}/>
     <div class="flex flex-col overflow-y-scroll -mx-5 px-5 gap-2 pb-5 pt-2">
         <div class="flex gap-5 w-full">
-            <Textfield title="Event Name" />
-            <Datetimefield title="Date & Time" />
-            <DropdownColors title="Color" />
+            <Textfield title="Title" bind:value={item.title} />
+            <Datetimefield title="Date & Time" bind:value={item.datetime} />
+            <DropdownColors title="Color" bind:selected={item.color} />
         </div>
         <div class="flex gap-5 w-full">
-            <Textfield title="Vanue" />
-            <Numberfield title="Limit (Optional)" />
+            <Textfield title="venue" bind:value={item.venue} />
+            <Numberfield title="Limit (Optional)" bind:value={item.limit} />
         </div>
-        <Textarea title="Description" />
-        <ChipsSelectors title="Tags" options={tagsOptions} />
-        <ChipsSelectors title="Reminders" options={remindersOptions} />
+        <Textarea title="Description" bind:value={item.description} />
+        <ChipsSelectors title="Tags" options={tagsOptions} bind:result={item.tags} />
+        <ChipsSelectors title="Reminders" options={remindersOptions} bind:result={item.reminders} />
     </div>
     <div class={`absolute bottom-5 right-5 ${opened? "": "hidden"}`}>
-        <RoundedButton name="+ Create" />
+        <RoundedButton name="+ Create" on:click={newEvent}/>
     </div>
 </div>

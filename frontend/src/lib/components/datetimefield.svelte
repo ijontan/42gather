@@ -1,10 +1,11 @@
 <script>
     /** @type {string} */
     export let title;
-    /** @type {Date} */
-    export let value = new Date();
+    /** @type {string} */
+    export let value = "";
     /** @type {boolean}*/
     export let disabled = false;
+
 </script>
 <div class="flex flex-col items-start w-full tracking-wide gap-1">
     <label for={title} class="px-5 capitalize text-black/50">{title}:</label>

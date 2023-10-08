@@ -1,7 +1,7 @@
 <script>
     /** @type {string} */
     export let title;
-    /** @type {number | string} */
+    /** @type {number | string | null} */
     export let value = '';
     /** @type {boolean}*/
     export let disabled = false;

@@ -81,8 +81,8 @@
         <div class="flex flex-col p-5 justify-evenly h-full">
 
             <TextfieldNoBg title='Descriptions' value={item.description}/>
-            <TextfieldNoBg title='vanue' value={item.vanue}/>
-            <TextfieldNoBg title='date' value={item.datetime.toDateString() + item.datetime.toLocaleTimeString()}/>
+            <TextfieldNoBg title='venue' value={item.venue}/>
+            <TextfieldNoBg title='date' value={item.datetime}/>
             <ChipList title='tags' color={item.color} values={item.tags}/>
             <div class="flex flex-row justify-end">
                 <MyButton name='close' color={item.color} noBackground
@@ -99,12 +99,12 @@
         </div>
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class={`z-30  flex flex-col gap-2  px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
+    <div class={`z-30  flex flex-col gap-2 w-[500px] px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
         on:click={() => {
             goto(`/gathering/${item.id}`);
         }}
     >
         <h1 class={`z-30  ${textColor} capitalize`}>{item.title}</h1>
-        <p class={`z-30  whitespace-nowrap truncate opacity-50 ${textColor}`}>{item.description.split('.')[0]}</p>
+        <p class={`z-30  whitespace-nowrap truncate opacity-50 ${textColor}`}>{item.description? item.description.split('.')[0] : '--'}</p>
     </div>
 </div>
