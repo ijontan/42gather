@@ -1,9 +1,13 @@
 <script>
+	import { goto } from "$app/navigation";
+
 	// @ts-ignore
 	import EventData, { ColorType } from "$lib/model/event";
+	import ChipList from "./chips/chipList.svelte";
 	import MyButton from "./myButton.svelte";
 	import Textarea from "./textarea.svelte";
 	import Textfield from "./textfield.svelte";
+	import TextfieldNoBg from "./textfieldNoBG.svelte";
 
 
     /** @type boolean */
@@ -76,9 +80,10 @@
     <div class={`  bg-white absolute top-0 box-border flex flex-col gap-2 pt-[25%] left-0 right-0 overflow-clip rounded-[50px] shadow-medium ${hover? ' h-[500px] -z-10' : 'h-0 -z-20'} transition-all`}>
         <div class="flex flex-col p-5 justify-evenly h-full">
 
-            <Textarea title='Descriptions' value={item.description} disabled/>
-            <Textfield title='vanue' value={item.vanue} disabled/>
-            <Textfield title='date' value={item.datetime.toDateString() + item.datetime.toLocaleTimeString()} disabled/>
+            <TextfieldNoBg title='Descriptions' value={item.description}/>
+            <TextfieldNoBg title='venue' value={item.venue}/>
+            <TextfieldNoBg title='date' value={item.datetime}/>
+            <ChipList title='tags' color={item.color} values={item.tags}/>
             <div class="flex flex-row justify-end">
                 <MyButton name='close' color={item.color} noBackground
                     on:click={() => {
@@ -94,12 +99,12 @@
         </div>
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class={`z-30  flex flex-col gap-2  px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
+    <div class={`z-30  flex flex-col gap-2 w-[500px] px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
         on:click={() => {
-            hover = !hover;
+            goto(`/gathering/${item.id}`);
         }}
     >
         <h1 class={`z-30  ${textColor} capitalize`}>{item.title}</h1>
-        <p class={`z-30  whitespace-nowrap truncate opacity-50 ${textColor}`}>{item.description.split('.')[0]}</p>
+        <p class={`z-30  whitespace-nowrap truncate opacity-50 ${textColor}`}>{item.description? item.description.split('.')[0] : '--'}</p>
     </div>
 </div>

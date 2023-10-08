@@ -40,10 +40,10 @@ export const ColorType ={
  * @typedef EventDataProps
  * @type {object}
  * @property {string} title
- * @property {string} vanue
- * @property {number} limit
+ * @property {string} venue
+ * @property {number | null} limit
  * @property {string} description
- * @property {Date} datetime
+ * @property {string} datetime
  * @property {TagsType[]} tags
  * @property {RemindersType[]} reminders
  * @property {ColorType} color
@@ -53,10 +53,10 @@ export const ColorType ={
  * @typedef EventItemCopyProps
  * @type {object}
  * @property {string | null} title
- * @property {string | null} vanue
+ * @property {string | null} venue
  * @property {number | null} limit
  * @property {string | null} description
- * @property {Date | null} datetime
+ * @property {string | null} datetime
  * @property {TagsType[] | null} tags
  * @property {RemindersType[] | null} reminders
  * @property {ColorType | null} color
@@ -68,12 +68,12 @@ export default class EventData {
     /** @type {string} */
     title;
     /** @type {string} */
-    vanue;
-    /** @type {number} */
+    venue;
+    /** @type {number | null} */
     limit;
     /** @type {string} */
     description;
-    /** @type {Date} */
+    /** @type {string} */
     datetime;
     /** @type {TagsType[]} */
     tags;
@@ -87,9 +87,9 @@ export default class EventData {
      * 
      * @param {EventDataProps} param0
      */
-    constructor({title, vanue, limit, description, datetime, tags, reminders, color}){
+    constructor({title, venue, limit, description, datetime, tags, reminders, color}){
         this.title = title;
-        this.vanue = vanue;
+        this.venue = venue;
         this.limit = limit;
         this.description = description;
         this.datetime = datetime;
@@ -103,10 +103,10 @@ export default class EventData {
      * @param {EventItemCopyProps} param0
      * @returns {EventData} 
      */
-    copyWith({title, vanue, limit, description, datetime, tags, reminders, color}){
+    copyWith({title, venue, limit, description, datetime, tags, reminders, color}){
         return new EventData({
             title: title ?? this.title,
-            vanue: vanue ?? this.vanue,
+            venue: venue ?? this.venue,
             limit: limit ?? this.limit,
             description: description ?? this.description,
             datetime: datetime ?? this.datetime,
@@ -122,13 +122,30 @@ export default class EventData {
     static test(){
         return new EventData({
             title: 'the event title',
-            vanue: 'The vanue to the event',
+            venue: 'The venue to the event',
             limit: -1,
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec non posuere justo, at rhoncus ipsum. Donec id efficitur nisi. Aenean.',
-            datetime: new Date(),
+            datetime: '',
             tags: [0, 1, 2],
             reminders: [0, 1, 2],
             color: Math.floor(Math.random() * 5),
         })
+    }
+
+    static empty(){
+        return new EventData({
+            title: '',
+            venue: '',
+            limit: null,
+            description: '',
+            datetime: '',
+            tags: [],
+            reminders: [],
+            color: 0,
+        })
+    }
+
+    toJson(){
+        return JSON.stringify(this);
     }
 }

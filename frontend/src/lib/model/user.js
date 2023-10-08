@@ -14,6 +14,8 @@
  */
 
 export default class UserData{
+    /** @type {string | null=} */
+    discordID;
     /** @type {string} */
     intraID;
     /** @type {string} */
@@ -40,6 +42,15 @@ export default class UserData{
             intraID: intraID ?? this.intraID,
             name: name ?? this.name,
             imageLink: imageLink ?? this.imageLink
+        });
+    }
+
+
+    static empty(){
+        return new UserData({
+            intraID: "--",
+            name: "--",
+            imageLink: "--"
         });
     }
 }
