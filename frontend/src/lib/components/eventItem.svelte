@@ -5,11 +5,9 @@
 	// @ts-ignore
 	import EventData, { ColorType } from "$lib/model/event";
 	import ChipList from "./chips/chipList.svelte";
-	import DatetimefieldNoBg from "./datetimefieldNoBG.svelte";
+	import DatetimefieldNoBg from "./fields/datetimefieldNoBG.svelte";
 	import MyButton from "./buttons/myButton.svelte";
-	import Textarea from "./textarea.svelte";
-	import Textfield from "./textfield.svelte";
-	import TextfieldNoBg from "./textfieldNoBG.svelte";
+	import TextfieldNoBg from "./fields/textfieldNoBG.svelte";
 
 
     /** @type boolean */
