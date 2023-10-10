@@ -25,16 +25,12 @@
         }
     }
 
-    /** @type {ResizeObserverSize[]} */
-    let boxSize;
-
 </script>
 
 <div class="overflow-x-clip -mx-12 px-12">
     <h2 class=" capitalize">{title}</h2>
     <div class=' flex  gap-5 overflow-visible px-12 py-5 -mx-12 transition-transform'
         style={`transform: translateX(${-offset}px)`}
-        bind:borderBoxSize={boxSize}
         on:wheel={handleScroll}
     >
         {#each eventList as item}
