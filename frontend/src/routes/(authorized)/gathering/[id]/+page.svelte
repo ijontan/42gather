@@ -3,9 +3,9 @@
 	import { api } from "$lib/api";
 	import ChipList from "$lib/components/chips/chipList.svelte";
 	import ChipsSelectors from "$lib/components/chips/chipsSelectors.svelte";
-	import Datetimefield from "$lib/components/datetimefield.svelte";
+	import Datetimefield from "$lib/components/fields/datetimefield.svelte";
 	import DropdownColors from "$lib/components/dropdownColors/dropdownColors.svelte";
-	import MyButton from "$lib/components/myButton.svelte";
+	import MyButton from "$lib/components/buttons/myButton.svelte";
 	import Numberfield from "$lib/components/numberfield.svelte";
 	import RoundedButton from "$lib/components/roundedButton.svelte";
 	import Textarea from "$lib/components/textarea.svelte";

@@ -3,9 +3,9 @@
 	import { api } from "$lib/api";
 	import EventData, { RemindersType, TagsType } from "$lib/model/event";
 	import ChipsSelectors from "./chips/chipsSelectors.svelte";
-	import Datetimefield from "./datetimefield.svelte";
+	import Datetimefield from "./fields/datetimefield.svelte";
 	import DropdownColors from "./dropdownColors/dropdownColors.svelte";
-	import MyButton from "./myButton.svelte";
+	import MyButton from "./buttons/myButton.svelte";
 	import Numberfield from "./numberfield.svelte";
 	import RoundedButton from "./roundedButton.svelte";
     import Textarea from "./textarea.svelte";

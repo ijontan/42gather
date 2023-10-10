@@ -45,7 +45,7 @@
     <HomeGreeting name={user.name}/>
     <div class="flex flex-col-reverse gap-7 pb-[300px]">
         <EventList title='Suggested' eventList={suggestedEventList}/>
-        <EventList title='joining && upcoming' eventList={joiningEventList}/>
+        <EventList title='joining && upcoming' eventList={joiningEventList} joined/>
     </div>
     <NewEvent />
 </div>
