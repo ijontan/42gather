@@ -9,6 +9,9 @@
     /** @type {number}*/
     let offset = 0;
 
+    /** @type {boolean}*/
+    export let joined = false;
+
     /** @type {EventData[]} */
     export let eventList = [];
 
@@ -34,7 +37,7 @@
         on:wheel={handleScroll}
     >
         {#each eventList as item}
-            <EventItem {item} />
+            <EventItem {item} {joined} />
         {/each}
     </div>
     <hr class=" border-t-2 border-black/20 -mr-12">

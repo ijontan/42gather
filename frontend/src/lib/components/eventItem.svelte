@@ -5,11 +5,9 @@
 	// @ts-ignore
 	import EventData, { ColorType } from "$lib/model/event";
 	import ChipList from "./chips/chipList.svelte";
-	import DatetimefieldNoBg from "./datetimefieldNoBG.svelte";
-	import MyButton from "./myButton.svelte";
-	import Textarea from "./textarea.svelte";
-	import Textfield from "./textfield.svelte";
-	import TextfieldNoBg from "./textfieldNoBG.svelte";
+	import DatetimefieldNoBg from "./fields/datetimefieldNoBG.svelte";
+	import MyButton from "./buttons/myButton.svelte";
+	import TextfieldNoBg from "./fields/textfieldNoBG.svelte";
 
 
     /** @type boolean */
@@ -17,6 +15,8 @@
 
     /** @type {EventData} */
     export let item;
+    /** @type {boolean} */
+    export let joined;
     /** @type {string} */
     let bgColor;
     /** @type {string} */
@@ -109,7 +109,7 @@
                         hover = !hover;
                     }}
                 />
-                <MyButton name='join' color={item.color}
+                <MyButton name={joined? 'joined' : 'join'} color={item.color} disabled={joined}
                     on:click={joinEvent}
                 />
             </div>
@@ -121,7 +121,7 @@
             goto(`/gathering/${item.id}`);
         }}
     >
-        <h1 class={`z-30  ${textColor} capitalize`}>{item.title}</h1>
+        <h1 class={`z-30  ${textColor} capitalize whitespace-pre`}>{item.title ?? '--'}</h1>
         <p class={`z-30  whitespace-nowrap truncate opacity-50 ${textColor}`}>{item.description? item.description.split('.')[0] : '--'}</p>
     </div>
 </div>

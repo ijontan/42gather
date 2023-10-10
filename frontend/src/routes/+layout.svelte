@@ -4,6 +4,9 @@
 	import { onMount } from "svelte";
     import "./app.css"
 	import { page } from "$app/stores";
+	import Dialogs from "$lib/components/dialog/dialogs.svelte";
+	import DialogDelegate, { DialogType } from "$lib/components/dialog/dialogs";
+    import RoundedButton from "$lib/components/buttons/roundedButton.svelte";
     
     onMount(()=>{
         checkAccessToken()
@@ -26,6 +29,21 @@
             goto('/login')
         }
     }
+    function clickDialog(){
+        console.log('click')
+        DialogDelegate.show(
+            DialogType.normal,
+            'test',
+            'test',
+            1000
+        );
+    }
 </script>
 
 <slot/>
+
+<div class="fixed bottom-0 left-0">
+    <RoundedButton name="test" on:click={clickDialog}/>
+</div>
+
+<Dialogs />

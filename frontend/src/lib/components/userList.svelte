@@ -1,7 +1,7 @@
 <script>
 	// @ts-ignore
 	import UserData from "$lib/model/user";
-	import MyButton from "./myButton.svelte";
+	import MyButton from "./buttons/myButton.svelte";
 
     /** @type {UserData[]} */
     export let userList = [];
