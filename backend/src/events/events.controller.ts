@@ -1,6 +1,6 @@
 import { Controller, Body, Get, Headers, Post, Param, UseGuards } from "@nestjs/common";
 import { EventsService } from "./events.service";
-import { eventDataDTO, eventHoverDTO, eventCreationDTO } from "src/dto/event.dto";
+import { eventCreationDTO } from "src/dto/event.dto";
 import { AuthGuard } from "src/guard/auth.guard";
 
 @Controller("events")

@@ -21,45 +21,40 @@ export enum ReminderType {
 }
 
 
-export class eventHoverDTO{
-	constructor(id: number, title: string, description: string, venue: string, time: Date){
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.venue = venue;
-		this.time = time;
-	}
-	
-	id : number;
-	title: string;
-	description: string;
-	venue: string;
-	time: Date;
-}
-
-
 export class eventDataDTO{
 	constructor(
 		id: number,
 		title: string, 
-		description: string, 
-		venue: string, 
-		datetime: string,
-		currentParticipants: UserDataDTO[]){
+		description: string | null, 
+		venue: string | null, 
+		datetime: string |null,
+		color: number,
+		tags: number[] | null,
+		creator: UserDataDTO,
+		currentParticipants: UserDataDTO[],
+		joined: boolean,){
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.venue = venue;
 		this.datetime = datetime;
+		this.color = color;
+		this.tags = tags;
+		this.creator = creator;
 		this.currentParticipants = currentParticipants;
+		this.joined = joined;
 		}
 
 	id: number;
 	title: string;
-	description: string;
-	venue: string;
+	description: string | null;
+	venue: string | null;
 	datetime: string;
+	color: number;
+	tags: number[] | null;
+	creator: UserDataDTO;
 	currentParticipants: UserDataDTO[];
+	joined: boolean;
 }
 
 export class eventCreationDTO{

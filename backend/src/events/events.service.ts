@@ -3,7 +3,8 @@ import { DatabaseService } from 'src/database/database.service';
 import { ReminderService } from 'src/reminder/reminder.service';
 import { UserService } from 'src/user/user.service';
 import { Event, EventParticipants, User } from '@prisma/client';
-import { eventDataDTO, eventHoverDTO, eventCreationDTO, EventReminderDTO } from 'src/dto/event.dto';
+import { eventDataDTO, eventCreationDTO, EventReminderDTO } from 'src/dto/event.dto';
+import { UserDataDTO } from 'src/dto/user.dto';
 
 @Injectable()
 export class EventsService {
@@ -147,6 +148,7 @@ export class EventsService {
 		}
 		return events.joinedEvents;
 	}
+	
 
 	async getSuggestedEvents(token: string): Promise<any> {
 		let tokenCode = token.split(' ')[1];
@@ -226,7 +228,10 @@ export class EventsService {
 		return events;
 	}
 
+
 	async getEventByID(token: string, id: string): Promise<any> {
+		
+		//Get event data
 		let eventID = parseInt(id);
 		let event = await this.db.event.findUnique({
 			where: {
@@ -239,6 +244,54 @@ export class EventsService {
 		if (!event) {
 			throw new Error('Event not found');
 		}
+
+		//Check user joined or not
+		let tokenCode = token.split(' ')[1];
+		let userID = await this.userService.getIDFromToken(tokenCode);
+		let joined = false;
+		for (const participant of event.participants){
+			if (participant.id == userID){
+				joined = true;
+			}
+		}
+
+		//Clean up participants, remove creator id
+		let participants = []
+		let creatorDTO;
+		for (const participant of event.participants){
+			if (participant.id != event.creatorID){
+				participants.push(
+					new UserDataDTO(
+						participant.intraID,
+						participant.name,
+						participant.imageLink,
+						participant.discordID,
+					)
+					);
+			}
+			if (participant.id == event.creatorID){
+				creatorDTO = new UserDataDTO(
+					participant.intraID,
+					participant.name,
+					participant.imageLink,
+					participant.discordID,
+				)
+			}
+		}
+
+		return new eventDataDTO(
+			event.id,
+			event.title,
+			event.description,
+			event.venue,
+			event.datetime.toISOString(),
+			event.color,
+			event.tags,
+			creatorDTO,
+			participants,
+			joined,
+		);
+
 		return event;
 	}
 
