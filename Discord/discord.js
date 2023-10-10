@@ -4,12 +4,12 @@ const { Client } = require('discord.js');
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Replace these with your Discord OAuth2 credentials
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
-const redirectUri = 'http://localhost:3000/callback'; // Update with your redirect URI
+const redirectUri = 'http://localhost:3001/callback'; // Update with your redirect URI
 
 const discordClient = new Client({ intents: 123 });
 
