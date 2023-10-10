@@ -1,5 +1,5 @@
 <script>
-	import Textfield from "$lib/components/textfield.svelte";
+	import Textfield from "$lib/components/fields/textfield.svelte";
 	import UserData from "$lib/model/user";
 	import userData from "../userData";
 

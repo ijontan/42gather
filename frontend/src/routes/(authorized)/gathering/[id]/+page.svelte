@@ -107,11 +107,11 @@
         <Numberfield {disabled} title="Limit (Optional)" bind:value={item.limit} />
     </div>
     <Textarea {disabled} title="Description" bind:value={item.description} />
-    <ChipList title='tags' color={item.color} values={item.tags} padding/>
-    <ChipList title='Reminders' color={item.color} values={item.reminders} notTag padding/>
+    <ChipList title='tags' color={item.color} values={item.tags??[]} padding/>
+    <ChipList title='Reminders' color={item.color} values={item.reminders??[]} notTag padding/>
     <h2 class="mt-5">Participants</h2>
     <hr class=" border-t-2 border-black/10"/>
-    <UserList userList={item.participants}/>
+    <UserList userList={item.currentParticipants}/>
 </div>
 
 <div class="fixed bottom-5 right-5 flex gap-2" >

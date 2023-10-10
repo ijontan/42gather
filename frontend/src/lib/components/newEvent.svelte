@@ -9,6 +9,8 @@
 	import RoundedButton from "./buttons/roundedButton.svelte";
     import Textarea from "./fields/textarea.svelte";
 	import Textfield from "./fields/textfield.svelte";
+	import Dialog from "./dialog/dialog.svelte";
+	import DialogDelegate, { DialogType } from "./dialog/dialogs";
 
     let hover = false;
     let opened = false;
@@ -48,6 +50,11 @@
         try {
             /** @type {*} */
             let res = await api.post('/events/create', item);
+            DialogDelegate.show(
+                DialogType.success,
+                'Success',
+                'Event created successfully'
+            );
             console.log("create res: ", res.data);
             goto('/gathering/' + res.data);
         } catch (error) {

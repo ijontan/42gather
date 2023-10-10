@@ -8,6 +8,8 @@
 	import DatetimefieldNoBg from "./fields/datetimefieldNoBG.svelte";
 	import MyButton from "./buttons/myButton.svelte";
 	import TextfieldNoBg from "./fields/textfieldNoBG.svelte";
+	import Dialog from "./dialog/dialog.svelte";
+	import DialogDelegate, { DialogType } from "./dialog/dialogs";
 
 
     /** @type boolean */
@@ -81,6 +83,20 @@
     async function joinEvent(){
         try {
             let res = await api.post('/events/join', {eventID: item.id});
+            if (res.data) {
+                joined = true;
+                DialogDelegate.show(
+                    DialogType.success,
+                    'Success',
+                    'You have joined the event'
+                );
+            } else {
+                DialogDelegate.show(
+                    DialogType.error,
+                    'Error',
+                    'You have already joined the event'
+                );
+            }
             console.log(res.data);
         } catch (error) {
             console.log(error);

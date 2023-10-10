@@ -30,12 +30,10 @@
         }
     }
     function clickDialog(){
-        console.log('click')
         DialogDelegate.show(
             DialogType.normal,
             'test',
-            'test',
-            1000
+            'test'
         );
     }
 </script>

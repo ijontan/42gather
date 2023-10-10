@@ -7,6 +7,7 @@ export const DialogType ={
     normal: 0,
     error: 1,
     warning: 2,
+    success: 3,
 }
 
 export class DialogData{
@@ -61,13 +62,6 @@ class DialogDelegate {
     static show(type, title, message, duration = 3000){
         const dialog = new DialogData(type, title, message, duration);
         this.dialogs.update(dialogs => [...dialogs, dialog]);
-        if(!dialog.timeout){
-            // @ts-ignore
-            dialog.timeout = setTimeout(() => {
-                console.log("timeout");
-                this.dialogs.update(dialogs => dialogs.filter(d => !d.checkId(dialog.id)));
-            }, duration + 1000);
-        }
     }
 
     /**
@@ -79,6 +73,13 @@ class DialogDelegate {
 
     static clear(){
         this.dialogs.update(dialogs => dialogs.filter(d => !d.timeout));
+    }
+
+    /**
+     * @param {string} id
+     */
+    static remove(id){
+        this.dialogs.update(dialogs => dialogs.filter(d => !d.checkId(id)));
     }
 }
 

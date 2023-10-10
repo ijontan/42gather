@@ -68,7 +68,7 @@ export default class EventData {
     /** @type {string=} */
     id;
     /** @type {UserData[]=} */
-    participants;
+    currentParticipants;
     /** @type {boolean=} */
     joined;
     /** @type {string} */

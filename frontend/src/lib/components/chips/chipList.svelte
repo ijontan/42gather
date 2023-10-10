@@ -13,7 +13,7 @@
     /** @type {boolean}*/
     export let padding = false;
 
-    $: options = values.map((v) => Object.keys(!notTag? TagsType : RemindersType)[v]);
+    $: options = values.map((v) => Object.keys(!notTag? TagsType : RemindersType)[v ?? 0]);
 </script>
 <div class="flex flex-col items-start w-full tracking-wide gap-1">
     <label for={title} class={`capitalize text-black/50 ${padding? "px-5" : ""}`}>{title}:</label>

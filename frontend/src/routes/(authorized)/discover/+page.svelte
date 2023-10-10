@@ -2,7 +2,7 @@
 	import { api } from "$lib/api";
 	import ChipsSelectors from "$lib/components/chips/chipsSelectors.svelte";
     import EventList from "$lib/components/eventList.svelte";
-	import Textfield from "$lib/components/textfield.svelte";
+	import Textfield from "$lib/components/fields/textfield.svelte";
 	import EventData, { TagsType } from "$lib/model/event";
 	import { onMount } from "svelte";
 
