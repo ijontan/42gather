@@ -12,8 +12,6 @@ export class UserService{
 	 * Used internally only
 	 */
 	async getUserDataFromToken(token: string): Promise<any>{
-		console.log("Getting user data from token");
-		console.log("Token:", token);
 		const userData = await fetch("https://api.intra.42.fr/v2/me", {
 			method: "GET",
 			headers:{

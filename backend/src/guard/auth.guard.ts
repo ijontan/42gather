@@ -5,11 +5,18 @@ import { UserService } from "src/user/user.service";
 @Injectable()
 export class AuthGuard implements CanActivate {
 	constructor (private readonly UserService: UserService){}
-	canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+	async canActivate(context: ExecutionContext): Promise<boolean> {
 
 		const request = context.switchToHttp().getRequest();
 		const token = request.headers.authorization;
 		let tokenCode = token.split(" ")[1];
-		return (this.UserService.CheckTokenPresent(tokenCode));
+		const userData = await fetch("https://api.intra.42.fr/v2/me", {
+			method: "GET",
+			headers:{
+				"Authorization": "Bearer " + tokenCode,
+			},
+		});
+		let res = await userData.status == 200;
+		return res
 	}
 }

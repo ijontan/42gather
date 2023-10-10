@@ -1,4 +1,4 @@
-import { Controller, Body, Get, Headers, Post, Param, UseGuards } from "@nestjs/common";
+import { Controller, Body, Get, Headers, Post, Param, Put, UseGuards } from "@nestjs/common";
 import { EventsService } from "./events.service";
 import { eventCreationDTO } from "src/dto/event.dto";
 import { AuthGuard } from "src/guard/auth.guard";
@@ -58,6 +58,12 @@ export class EventsController{
   @UseGuards(AuthGuard)
   async joinEvent(@Body() body: any, @Headers("Authorization") token: string): Promise<any>{
     return (await this.EventsService.joinEvent(body.eventID, token));
+  }
+
+  @Put("id/:id")
+  @UseGuards(AuthGuard)
+  async editEvent(@Body() eventCreationDTO: eventCreationDTO, @Headers("Authorization") token: string, @Param("id") id: string): Promise<any>{
+    await this.EventsService.editEvent(eventCreationDTO, token, id);
   }
 
   @Get("reset")

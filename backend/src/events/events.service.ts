@@ -291,8 +291,49 @@ export class EventsService {
 			participants,
 			joined,
 		);
+	}
 
-		return event;
+	async editEvent(eventCreationDTO: eventCreationDTO, token: string, id: string): Promise<any> {
+		const { title, description, venue, datetime, color, limit, tags,reminders } = eventCreationDTO;
+		let localDate = new Date(datetime);
+		let localTime = localDate.getTime() + 8 * 60 * 60 * 1000;
+		let formattedDate = new Date(localTime);
+		const update = await this.db.event.update({
+			where: {
+				id: parseInt(id),
+			},
+			data: {
+				title: title,
+				description: description,
+				venue: venue,
+				datetime: formattedDate,
+				color: color,
+				limit: limit,
+				tags: tags,
+				reminders: reminders,
+			},
+		});
+
+		const participants = await this.db.event.findUnique({
+			where: {
+				id: parseInt(id),
+			},
+			select: {
+				participants: {
+					select: {
+						discordID: true,
+					},
+				},
+			},
+		});
+
+		let discordIDs = [];
+		for (let participant of participants.participants){
+			discordIDs.push(participant.discordID);
+		}
+		
+		this.app.sentReminder(discordIDs, "Event has new update: " + title + "&linkUrl=http://localhost:5173/gathering/" + id);
+
 	}
 
 	async resetEvents(): Promise<void> {

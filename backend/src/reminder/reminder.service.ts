@@ -45,37 +45,45 @@ export class ReminderService{
 					},
 				},
 			});
-			console.log("participantsdiscord: ", participantsdiscord);
-		
-			let queryString = `?userIds=${participantsdiscord.participants.map(participant => participant.discordID).join(',')}`;
+			console.log("participantsdiscord: ", participantsdiscord.participants);
+
+			let discordIDs = [];
+			for (let participant of participantsdiscord.participants){
+				discordIDs.push(participant.discordID);
+			}
 			
 			let eventTitle = await this.db.event.findUnique({
 				where: {
-					id: reminder.eventID,
-				},
-				select: {
-					title: true,
-				},
-			});
-			queryString += "&message=Remember to join " + eventTitle.title + "&linkUrl=http://localhost:5173/gathering/" + reminder.eventID;
-
-			if (ping == 0){
-				console.log("pinging")
-				let response = await fetch("http://localhost:58420/sendpublic" + queryString,{
-					method: "GET",
+						id: reminder.eventID,
+					},
+					select: {
+							title: true,
+						},
 				});
-				ping = 1;
+
+				let messge = "Remember to join " + eventTitle.title + "&linkUrl=http://localhost:5173/gathering/" + reminder.eventID;
+				
+				if (ping == 0){
+					this.sentReminder(discordIDs, messge);
+					ping = 1;
+				}	
+								
+				let index = this.reminderArray.indexOf(reminder);
+				await this.reminderArray.splice(index, 1);
+			
 			}
-
-			console.log("removing")
-			let index = this.reminderArray.indexOf(reminder);
-			console.log("before remove")
-			console.log(this.reminderArray.length)
-			await this.reminderArray.splice(index, 1);
-			console.log("after remove")
-			console.log(this.reminderArray.length)
 		}
-  	}
-}
+	}
+					
+	async sentReminder(discordID: string[], message: string){
+		let queryString = `userIds=${discordID.map(id => id).join(',')}`;
+		queryString += `&message=${message}`;
+		console.log("queryString: ", queryString);
+		let response = await fetch("http://localhost:58420/sendpublic?" + queryString,{
+			method: "GET",
+		});
 
+		console.log("response: ", response);
+
+	}
 }
