@@ -71,6 +71,18 @@ export class EventsService {
 			}
 		}
 		this.joinEvent(eventID, token);
+		if(eventCreationDTO.preJoinMemberID != null){
+			for (let memberID of eventCreationDTO.preJoinMemberID){
+				await this.db.event.update({
+					where: {
+						id: eventID,
+					},
+					data: {
+						participants: {connect: {id: memberID}},
+					},
+				})
+			}
+		}
 		return eventID;
 	}
 

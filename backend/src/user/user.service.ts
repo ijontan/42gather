@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
 import { DatabaseService } from "src/database/database.service";
-import { UserDataDTO } from "src/dto/user.dto";
+import { UserDataDTO, UserBriefDTO, UserDetailDTO } from "src/dto/user.dto";
 
 @Injectable()
 export class UserService{
@@ -30,7 +30,7 @@ export class UserService{
 
 	/**
 	 * Get the user data from the token
-	 * Return a UserDataDTO
+	 * Return a UserDataDTO, used for profile
 	 */
 	async getUserData(token: string): Promise<UserDataDTO>{
 		let tokenCode = token.split(" ")[1];
@@ -238,5 +238,54 @@ export class UserService{
 				discordID: discordData.id,
 			},
 		});
+	}
+
+	/**
+	 * Get all users from database, return a list of UserBriefDTO
+	 */
+	async getAllUsers(): Promise<any>{
+		const users = await this.db.user.findMany({
+			include:{
+				createdEvents: true,
+				joinedEvents: true,
+			},
+		});
+
+		const usersBrief = users.map((user) => {
+			return new UserBriefDTO(
+				user.id,
+				user.intraID,
+				user.createdEvents.length,
+				user.joinedEvents.length,
+			);
+		});
+		console.log("Users:", usersBrief);
+		return usersBrief;
+	}
+
+	/**
+	 * Get user by ID, return a UserDetailDTO.
+	 * Used for admin dashboard to get user detail
+	 */
+	async getUserByID(id: string): Promise<any>{
+		const user = await this.db.user.findUnique({
+			where: {
+				id: parseInt(id),
+			},
+			include: {
+				createdEvents: true,
+				joinedEvents: true,
+			},
+		});
+		if (!user){
+			throw new Error("User not found");
+		}
+		const userDetail = new UserDetailDTO(
+			user.intraID,
+			user.createdEvents.length,
+			user.joinedEvents.length,
+			user.joinedEvents,
+		);
+		return userDetail;
 	}
 }
