@@ -146,6 +146,7 @@ export class EventsService {
 		if (!events){
 			return [];
 		}
+
 		return events.joinedEvents;
 	}
 	
@@ -174,7 +175,6 @@ export class EventsService {
 
 	async getTodayEvents(token: string): Promise<any> {
 		const today = new Date().toISOString().split('T')[0];
-		console.log(today);
 		const events = await this.db.event.findMany({
 			where: {
 				datetime: {
@@ -219,6 +219,21 @@ export class EventsService {
 				datetime: {
 					gte: startofMonth,
 					lt: endofMonth,
+				},
+			},
+			include:{
+				participants: true,
+			}
+		});
+		return events;
+	}
+
+	async getPastEvents(token: string): Promise<any> {
+		const current =new Date();
+		const events = await this.db.event.findMany({
+			where: {
+				datetime: {
+					lt: current,
 				},
 			},
 			include:{
@@ -290,7 +305,23 @@ export class EventsService {
 			creatorDTO,
 			participants,
 			joined,
+			event.comments,
 		);
+	}
+
+	async getEventsByTag(tag : string){
+		let events = await this.db.event.findMany({
+			where: {
+				tags: {
+					hasSome: [parseInt(tag)],
+				},
+			},
+			include:{
+				participants: true,
+			}
+		});
+		
+		return events;
 	}
 
 	async editEvent(eventCreationDTO: eventCreationDTO, token: string, id: string): Promise<any> {
@@ -336,13 +367,61 @@ export class EventsService {
 
 	}
 
+
+	async announce(body:any, token: string, id: string): Promise<any> {
+		const userID = await this.userService.getIDFromToken(token.split(' ')[1]);
+		const eventData = await this.db.event.findUnique({
+			where: {
+				id: parseInt(id),
+			},
+			select: {
+				creatorID: true,
+				participants: {
+					select: {
+						discordID: true,
+					},
+				},
+			},
+		});
+		if (userID != eventData.creatorID){
+			return (false)
+		}
+		let discordIDs = [];
+		for (let participant of eventData.participants){
+			discordIDs.push(participant.discordID);
+		}
+		let msg = body.message + "&linkUrl=http://localhost:5173/gathering/" + id;
+		this.app.sentReminder(discordIDs, msg);
+		return (true);
+	}
+
+	async comment(body:any, token: string, id: string): Promise<any> {
+		const event = await this.db.event.findUnique({
+			where: {
+				id: parseInt(id),
+			},
+		});
+
+		if (!event){
+			throw new Error("Event not found");
+		}
+
+		const new_comment = await this.db.event.update({
+			where: {
+				id: parseInt(id),
+			},
+			data: {
+				comments: [...event.comments, body.message]
+				},
+		});
+	}
+
 	async resetEvents(): Promise<void> {
 		await this.db.$transaction([
 			this.db.eventParticipants.deleteMany({}),
       		this.db.$executeRaw`ALTER SEQUENCE "Event_id_seq" RESTART WITH 1;`,
       		this.db.event.deleteMany({}),
 		]);
-
 	}
 }
 

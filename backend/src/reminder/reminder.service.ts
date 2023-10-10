@@ -83,7 +83,5 @@ export class ReminderService{
 			method: "GET",
 		});
 
-		console.log("response: ", response);
-
 	}
 }

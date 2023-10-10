@@ -29,11 +29,12 @@ model Event {
   title       String
   description String?
   venue       String?
-  datetime        DateTime
-  limit     Int?
+  datetime    DateTime
+  limit       Int?
   color       Int
   tags        Int[]
-  reminders    Int[]
+  reminders   Int[]
+  comments    String[]
 
   creator           User                @relation("creator", fields: [creatorID], references: [id])
   creatorID         Int

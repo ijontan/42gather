@@ -40,10 +40,22 @@ export class EventsController{
     return (await this.EventsService.getMonthEvents(token));
   }
 
+  @Get("past")
+  @UseGuards(AuthGuard)
+  async getPastEvents(@Headers("Authorization") token: string): Promise<any>{
+    return (await this.EventsService.getPastEvents(token));
+  }
+
   @Get("id/:id")
   @UseGuards(AuthGuard)
   async getEventByID(@Headers("Authorization") token: string, @Param("id") id: string): Promise<any>{
     return (await this.EventsService.getEventByID(token, id));
+  }
+
+  @Get("tag/:tag")
+  @UseGuards(AuthGuard)
+  async getEventsByTag(@Param("tag") tag: string): Promise<any>{
+    return (await this.EventsService.getEventsByTag(tag));
   }
 
   @Post("create")
@@ -64,6 +76,18 @@ export class EventsController{
   @UseGuards(AuthGuard)
   async editEvent(@Body() eventCreationDTO: eventCreationDTO, @Headers("Authorization") token: string, @Param("id") id: string): Promise<any>{
     await this.EventsService.editEvent(eventCreationDTO, token, id);
+  }
+
+  @Post("announce/:id")
+  @UseGuards(AuthGuard)
+  async announce(@Body() body:any, @Headers("Authorization") token: string, @Param("id") id: string): Promise<any>{
+    return (await this.EventsService.announce(body, token, id));
+  }
+
+  @Post("comment/:id")
+  @UseGuards(AuthGuard)
+  async comment(@Body() body:any, @Headers("Authorization") token: string, @Param("id") id: string): Promise<any>{
+    return (await this.EventsService.comment(body, token, id));
   }
 
   @Get("reset")

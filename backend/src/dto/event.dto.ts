@@ -32,7 +32,8 @@ export class eventDataDTO{
 		tags: number[] | null,
 		creator: UserDataDTO,
 		currentParticipants: UserDataDTO[],
-		joined: boolean,){
+		joined: boolean,
+		comment: string[] | null){
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -43,6 +44,7 @@ export class eventDataDTO{
 		this.creator = creator;
 		this.currentParticipants = currentParticipants;
 		this.joined = joined;
+		this.comment = comment;
 		}
 
 	id: number;
@@ -55,6 +57,7 @@ export class eventDataDTO{
 	creator: UserDataDTO;
 	currentParticipants: UserDataDTO[];
 	joined: boolean;
+	comment: string[] | null;
 }
 
 export class eventCreationDTO{
@@ -67,7 +70,8 @@ export class eventCreationDTO{
 		color: number,
 		tags: number[] | null, 
 		reminders: number[] | null,
-		preJoinMemberID : number[] | null){
+		preJoinMemberID : number[] | null,
+		comments: string[] | null){
 		this.title = title;
 		this.description = description;
 		this.venue = venue;
