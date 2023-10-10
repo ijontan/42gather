@@ -71,7 +71,8 @@ export class eventCreationDTO{
 		limit: number | null,
 		color: number,
 		tags: number[] | null, 
-		reminders: number[] | null){
+		reminders: number[] | null,
+		preJoinMemberID : number[] | null){
 		this.title = title;
 		this.description = description;
 		this.venue = venue;
@@ -80,6 +81,7 @@ export class eventCreationDTO{
 		this.color = color;
 		this.tags = tags;
 		this.reminders = reminders;
+		this.preJoinMemberID = preJoinMemberID;
 		}
 	
 	title: string;
@@ -90,6 +92,7 @@ export class eventCreationDTO{
 	color: number;
 	tags: number[] |null;
 	reminders: number[] |null;
+	preJoinMemberID : number[] |null;
 }
 
 export class EventReminderDTO{
