@@ -1,5 +1,5 @@
 <script>
-	import RoundedButton from "$lib/components/roundedButton.svelte";
+	import RoundedButton from "$lib/components/buttons/roundedButton.svelte";
     import { PUBLIC_REDIRECT_URI } from "$env/static/public";
 
     function login() {
