@@ -58,17 +58,24 @@
     /** @type {HTMLDivElement} */
     let div;
 
+    /** @type {number} */
+    let timeout;
+
     function mouseEnter(){
         hover = true;
         if (div) {
             const {top, bottom} = div.getBoundingClientRect();
             if (bottom + 500 > window.innerHeight || top < 0)
-                div.scrollIntoView({behavior: 'smooth', block: 'start'});
+                timeout = setTimeout(() => {
+                    div.scrollIntoView({behavior: 'smooth', block: 'end'});
+                }, 300);
+                // div.scrollIntoView({behavior: 'smooth', block: 'end'});
         }
     }
 
     function mouseLeave(){
         hover = false;
+        if (timeout) clearTimeout(timeout);
     }
 
     async function joinEvent(){
@@ -86,9 +93,10 @@
 <div class="relative z-0 w-[500px] rounded-[50px]" 
     on:mouseenter={mouseEnter}
     on:mouseleave={mouseLeave}
-    bind:this={div}
 >
-    <div class={`  bg-white absolute top-0 box-border flex flex-col gap-2 pt-[25%] left-0 right-0 overflow-clip rounded-[50px] shadow-medium ${hover? ' h-[500px] -z-10' : 'h-0 -z-20'} transition-all`}>
+    <div class={`  bg-white absolute top-0 box-border flex flex-col gap-2 pt-[25%] left-0 right-0 overflow-clip rounded-[50px] shadow-medium ${hover? ' h-[500px] -z-10' : 'h-0 -z-20'} transition-all`}
+        bind:this={div}
+    >
         <div class="flex flex-col p-5 justify-evenly h-full">
 
             <TextfieldNoBg title='Descriptions' value={item.description}/>
