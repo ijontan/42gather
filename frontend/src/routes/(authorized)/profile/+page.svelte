@@ -13,6 +13,7 @@
 
     userData.subscribe(value => {
         user = value ?? UserData.empty();
+        console.log(user)
     })
     let code = $page.url.searchParams.get('code')
 

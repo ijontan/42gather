@@ -12,6 +12,8 @@
 	import UserList from "$lib/components/userList.svelte";
 	import EventData, { TagsType, RemindersType, ColorType } from "$lib/model/event";
 	import { onMount } from "svelte";
+	import UserData from "$lib/model/user";
+	import UserListItem from "$lib/components/userListItem.svelte";
 
 
     /** @type {EventData} */
@@ -109,6 +111,10 @@
     <Textarea {disabled} title="Description" bind:value={item.description} />
     <ChipList title='tags' color={item.color} values={item.tags??[]} padding/>
     <ChipList title='Reminders' color={item.color} values={item.reminders??[]} notTag padding/>
+    <h2 class="mt-5">Creator</h2>
+    <hr class=" border-t-2 border-black/10"/>
+    <UserListItem user={item.creator ?? UserData.empty()
+    }/>
     <h2 class="mt-5">Participants</h2>
     <hr class=" border-t-2 border-black/10"/>
     <UserList userList={item.currentParticipants}/>

@@ -67,6 +67,8 @@ export const ColorType ={
 export default class EventData {
     /** @type {string=} */
     id;
+    /** @type {UserData=} */
+    creator;
     /** @type {UserData[]=} */
     currentParticipants;
     /** @type {boolean=} */
