@@ -14,6 +14,7 @@
 	import { onMount } from "svelte";
 	import UserData from "$lib/model/user";
 	import UserListItem from "$lib/components/userListItem.svelte";
+	import DialogDelegate, { DialogType } from "$lib/components/dialog/dialogs";
 
 
     /** @type {EventData} */
@@ -87,6 +88,20 @@
     async function joinEvent(){
         try {
             let res = await api.post('/events/join', {eventID: item.id});
+            if (res.data) {
+                item.joined = true;
+                DialogDelegate.show(
+                    DialogType.success,
+                    'Success',
+                    'You have joined the event'
+                );
+            } else {
+                DialogDelegate.show(
+                    DialogType.error,
+                    'Error',
+                    'You have already joined the event'
+                );
+            }
             console.log(res.data);
         } catch (error) {
             console.log(error);
@@ -95,9 +110,9 @@
 </script>
 
 <div class="flex flex-col overflow-y-scroll mx-5 px-5 gap-2 pb-5 pt-20">
-    <div class={`z-30  flex flex-col gap-2  px-12 py-6 ${bgColor} rounded-[40px]`}>
-        <h1 class={`z-30  ${textColor} capitalize`}>{item.title}</h1>
-        <p class={`z-30 opacity-50 ${textColor}`}>{item.description}</p>
+    <div class={`  flex flex-col gap-2  px-12 py-6 ${bgColor} rounded-[40px]`}>
+        <h1 class={`  ${textColor} capitalize`}>{item.title}</h1>
+        <p class={` opacity-50 ${textColor}`}>{item.description}</p>
     </div>
     <div class="flex gap-5 w-full">
         <Textfield {disabled} title="Event Name" bind:value={item.title}/>
@@ -121,10 +136,6 @@
 </div>
 
 <div class="fixed bottom-5 right-5 flex gap-2" >
-    {#if disabled}
-        <MyButton color={item.color} name="Edit" on:click={edit}/>
-    {:else}
-        <MyButton color={item.color} name="Save" on:click={save}/>
-    {/if}
-    <MyButton color={item.color} name="join" on:click={joinEvent}/>
+    <MyButton color={item.color} name={disabled?"Edit":"Save"} on:click={disabled?edit:save}/>
+    <MyButton color={item.color} name={item.joined? "joined": "join"} disabled={item.joined} on:click={joinEvent}/>
 </div>

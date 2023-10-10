@@ -22,8 +22,8 @@ class ApiInstance {
     }, (error) => {
       if ((error.response.status === 403 || error.response.status === 401) && !error.config.url.endsWith('/auth')) {
         DialogDelegate.show(DialogType.warning, 'Error', 'You are not authorized to perform this action. Please login again.');
-        localStorage.removeItem('accessToken');
-        goto('/login');
+        // localStorage.removeItem('accessToken');
+        // goto('/login');
         return Promise.reject(error);
       } else if (error.response.status >= 500) {
         DialogDelegate.show(DialogType.error, 'Error', 'An error occurred while processing your request. Please try again later.')

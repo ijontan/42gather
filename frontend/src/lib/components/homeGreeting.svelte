@@ -33,7 +33,7 @@
 </script>
 
 
-<div class="h-full grid items-center">
+<div class="h-full grid items-center justify-center">
 
     <div class=" sticky pb-10 top-10">
 

@@ -16,7 +16,7 @@
 
 </script>
 
-<div class=" fixed top-10 right-72 translate-x-[100%] flex flex-col">
+<div class=" fixed top-10 left-[350px] flex flex-col">
     <span class=" text-[25px]">{date}</span>
     <span class=" text-[50px] leading-[40px] ">{time}</span>
 </div>

@@ -29,19 +29,8 @@
             goto('/login')
         }
     }
-    function clickDialog(){
-        DialogDelegate.show(
-            DialogType.normal,
-            'test',
-            'test'
-        );
-    }
 </script>
 
 <slot/>
-
-<div class="fixed bottom-0 left-0">
-    <RoundedButton name="test" on:click={clickDialog}/>
-</div>
 
 <Dialogs />

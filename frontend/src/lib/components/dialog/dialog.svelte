@@ -59,7 +59,7 @@
     }
 </script>
 
-<div id={dialog.id} class={` w-full ${expended?"":"h-0 p-0"} py-5 shadow-2xl shadow-black/20 pl-7 justify-center flex flex-col ${bgColor} rounded-l-[30px] ${show?"" : " translate-x-full"} transition-all duration-300`}>
+<div id={dialog.id} class={` z-[100] w-full ${expended?"":"h-0 p-0"} py-5 shadow-2xl shadow-black/20 pl-7 justify-center flex flex-col ${bgColor} rounded-l-[30px] ${show?"" : " translate-x-full"} transition-all duration-300`}>
     <span class={`text-[30px] leading-7 tracking-tight capitalize ${textColor}`}>{dialog.title}</span>
     <span class={` capitalize ${textColor50}`}>{dialog.message}</span>
 </div>
