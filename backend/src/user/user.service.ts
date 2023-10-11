@@ -70,19 +70,19 @@ export class UserService{
 	 * Get the user ID from the token
 	 */
 	async getIDFromToken(token: string): Promise<number>{
-		let tokenCode = token.split(" ")[1];
-		const db_info = await this.db.user.findFirst({
-			where: {
-				token: tokenCode,
-			},
-		})
-		if (db_info == null){
+		// let tokenCode = token.split(" ")[1];
+		// const db_info = await this.db.user.findFirst({
+		// 	where: {
+		// 		token: tokenCode,
+		// 	},
+		// })
+		// if (db_info == null){
 			const userData = await this.getUserData(token);
 			return userData.id;
-		}
-		else{
-			return db_info.id;
-		}
+		// }
+		// else{
+		// 	return db_info.id;
+		// }
 	}
 
 	/**
