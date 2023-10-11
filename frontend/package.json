@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    
+    "install": "vite install",
     "dev": "vite dev --host",
     "build": "vite build",
     "preview": "vite preview",
