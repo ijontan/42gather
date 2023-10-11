@@ -41,9 +41,9 @@
     })
 </script>
 
-<div class=" w-full h-[calc(100vh+300px)] flex flex-col p-12 overflow-visible justify-between">
+<div class=" w-full h-[calc(100vh+320px)] flex flex-col p-12 overflow-visible justify-between">
     <HomeGreeting name={user.name}/>
-    <div class="flex flex-col-reverse gap-7 pb-[300px]">
+    <div class="flex flex-col-reverse gap-7 pb-[320px]">
         <EventList title='Suggested' eventList={suggestedEventList}/>
         <EventList title='joining && upcoming' eventList={joiningEventList} joined/>
     </div>

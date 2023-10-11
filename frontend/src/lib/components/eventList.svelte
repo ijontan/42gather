@@ -15,9 +15,15 @@
     /** @type {EventData[]} */
     export let eventList = [];
 
+    /** @type {number | null} */
+    let throttleTimeout = null;
     /** @param {*} e */
     function handleScroll(e) {
         e.preventDefault();
+        if (throttleTimeout !== null) return;
+        throttleTimeout = setTimeout(() => {
+            throttleTimeout = null;
+        }, 10);
         let maxOffset = (eventList.length - 1) * 510;
         if (e.deltaY < 0 && offset > 0) {
             offset += e.deltaY;
@@ -30,15 +36,20 @@
 
 </script>
 
-<div class="overflow-x-clip -mx-12 px-12">
+<div class="overflow-x-clip -mx-12 px-12"
+>
     <h2 class=" capitalize">{title}</h2>
-    <div class=' flex  gap-5 overflow-visible px-12 py-5 -mx-12 transition-transform'
-        style={`transform: translateX(${-offset}px)`}
+    <div
+        class=" w-full "
         on:wheel={handleScroll}
     >
+        <div class=' flex  gap-5 overflow-visible px-12 py-5 -mx-12 transition-transform'
+        style={`transform: translateX(${-offset}px)`}
+        >
         {#each eventList as item}
-            <EventItem {item} {joined} />
+        <EventItem {item} {joined} />
         {/each}
+        </div>
     </div>
     <hr class=" border-t-2 border-black/20 -mr-12">
 </div>

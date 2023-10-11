@@ -66,12 +66,11 @@
     function mouseEnter(){
         hover = true;
         if (div) {
-            const {top, bottom} = div.getBoundingClientRect();
-            if (bottom + 500 > window.innerHeight || top < 0)
-                timeout = setTimeout(() => {
+            timeout = setTimeout(() => {
+                const {top, bottom} = div.getBoundingClientRect();
+                if (bottom > window.innerHeight || top < 0)
                     div.scrollIntoView({behavior: 'smooth', block: 'end'});
-                }, 300);
-                // div.scrollIntoView({behavior: 'smooth', block: 'end'});
+            }, 300);
         }
     }
 
