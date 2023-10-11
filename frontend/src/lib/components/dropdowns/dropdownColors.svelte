@@ -48,7 +48,7 @@
             id="title" 
             class="w-20 outline-none bg-gray h-12 z-20 rounded-[25px] py-3 px-5"
         >
-            <div class={`w-full h-6 rounded-md ${getColor(selected)}`} />
+            <div class={`w-full h-6 rounded-md ${getColor(selected)} transition-colors duration-300`} />
 
         </div>
     </div>
