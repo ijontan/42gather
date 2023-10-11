@@ -78,7 +78,6 @@ export class ReminderService{
 	async sentReminder(discordID: string[], message: string){
 		let queryString = `userIds=${discordID.map(id => id).join(',')}`;
 		queryString += `&message=${message}`;
-		console.log("queryString: ", queryString);
 		let response = await fetch("http://localhost:58420/sendpublic?" + queryString,{
 			method: "GET",
 		});

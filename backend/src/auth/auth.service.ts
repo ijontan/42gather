@@ -7,21 +7,6 @@ export class AuthService{
 	constructor (private readonly UserService: UserService){}
 
 	/**
-	 * Validate the token in header
-	 */
-	async validate(token: any): Promise<any>{
-		let tokenCode = token.split(" ")[1];
-		if (await this.UserService.CheckTokenPresent(tokenCode)){
-			console.log("Token present");
-			return 200;
-		}
-		else{
-			console.log("Token not present");
-			return 403;
-		}
-	}
-
-	/**
 	 * Use the code to get the token.
 	 * Also compare the token with user in database and update the database if needed
 	 * Return the token
@@ -39,21 +24,21 @@ export class AuthService{
 		let token = res.access_token;
 		
 		if (token){
-			console.log("In getToken, token presnet")
+			console.log("Token:", token);
 			try{
-				let intraID = await this.UserService.getIntraIDFromToken(token);
+				let userData = await this.UserService.getUserDataFromToken(token);
+				console.log("User data:", userData.login);
 				//Check whether the user is in database
-				const user_present = await this.UserService.FindUserByIntraID(intraID);
+				const user_present = await this.UserService.FindUserByIntraID(userData.login);
 				//If yes, check the access token and update if needed
 				if (user_present){
-					if (await this.UserService.CheckTokenPresent(token)){
+					if (await this.UserService.CheckTokenPresent(token, userData.login)){
 						console.log("Token still valid");
 					}
 					else{
 						console.log("Token not identical. Updating ...");
-						let ret = await this.UserService.UpdateUserToken(intraID, token);
+						let ret = await this.UserService.UpdateUserToken(userData.login, token);
 						console.log("ret:", ret);
-						// await this.UserService.UpdateUserToken(intraID, token);
 					}
 				}
 				//If not, add the user to database

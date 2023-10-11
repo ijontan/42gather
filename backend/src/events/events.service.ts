@@ -11,8 +11,9 @@ export class EventsService {
 	constructor(private db: DatabaseService, private userService: UserService, private readonly app:ReminderService) {}
 
 	async createEvent(eventCreationDTO: eventCreationDTO, token: string): Promise<number> {
+
 		let userID = await this.userService.getIDFromToken(token);
-		console.log(userID);
+		console.log("UserID:", userID);
 		const { title, description, venue, datetime, color, limit, tags,reminders } = eventCreationDTO;
 		let localDate = new Date(datetime);
 		let localTime = localDate.getTime() + 8 * 60 * 60 * 1000;
@@ -71,8 +72,8 @@ export class EventsService {
 			}
 		}
 		this.joinEvent(eventID, token);
-		if(eventCreationDTO.preJoinMemberID != null){
-			for (let memberID of eventCreationDTO.preJoinMemberID){
+		if(eventCreationDTO.preJoinedMemberID != null){
+			for (let memberID of eventCreationDTO.preJoinedMemberID){
 				await this.db.event.update({
 					where: {
 						id: eventID,

@@ -56,8 +56,6 @@ export class EventsController{
   @Post("create")
   @UseGuards(AuthGuard)
   async createEvent(@Body() eventCreationDTO: eventCreationDTO, @Headers("Authorization") token: string): Promise<number>{
-    console.log("Create event");
-    console.log(eventCreationDTO);
     return (await this.EventsService.createEvent(eventCreationDTO, token));
   }
 

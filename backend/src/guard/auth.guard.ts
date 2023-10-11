@@ -10,11 +10,11 @@ export class AuthGuard implements CanActivate {
 		const request = context.switchToHttp().getRequest();
 		const token = request.headers.authorization;
 		let tokenCode = token.split(" ")[1];
-		const find = await this.db.user.findMany({
+		const find = await this.db.user.findFirst({
 			where: {
 				token: tokenCode,
 			},
 		});
-		return (find.length > 0)
+		return (find != null)
 	}
 }

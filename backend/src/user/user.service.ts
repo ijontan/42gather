@@ -61,19 +61,8 @@ export class UserService{
 	 * Get the intraID from the token
 	 */
 	async getIntraIDFromToken(token: string): Promise<string>{
-		let tokenCode = token.split(" ")[1];
-		const db_info = await this.db.user.findMany({
-			where: {
-				token: tokenCode,
-			},
-		})
-		if (db_info.length == 0){
-			const userData = await this.getUserData(token);
-			return userData.intraName;
-		}
-		else{
-			return db_info[0].intraID;
-		}
+		const userData = await this.getUserData(token);
+		return userData.intraName;
 	}
 
 
@@ -82,17 +71,17 @@ export class UserService{
 	 */
 	async getIDFromToken(token: string): Promise<number>{
 		let tokenCode = token.split(" ")[1];
-		const db_info = await this.db.user.findMany({
+		const db_info = await this.db.user.findFirst({
 			where: {
 				token: tokenCode,
 			},
 		})
-		if (db_info.length == 0){
+		if (db_info == null){
 			const userData = await this.getUserData(token);
 			return userData.id;
 		}
 		else{
-			return db_info[0].id;
+			return db_info.id;
 		}
 	}
 
@@ -110,13 +99,14 @@ export class UserService{
 	/**
 	 * Check whether the token is present in database
 	 */
-	async CheckTokenPresent(token: string): Promise<boolean>{
-		let user = await this.db.user.findMany({
+	async CheckTokenPresent(token: string, intraID: string): Promise<boolean>{
+		let user = await this.db.user.findFirst({
 			where: {
 				token: token,
+				intraID: intraID,
 			},
 		});
-		if (user.length > 0){
+		if (user != null){
 			return true;
 		}
 		else{
@@ -153,6 +143,7 @@ export class UserService{
 				intraID: intraID,
 			},
 		});
+		console.log("User:", user);
 		if (!user){
 			throw new Error("User not found");
 		}

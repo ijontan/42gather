@@ -70,8 +70,8 @@ export class eventCreationDTO{
 		color: number,
 		tags: number[] | null, 
 		reminders: number[] | null,
-		preJoinMemberID : number[] | null,
-		comments: string[] | null){
+		preJoinedMemberID : number[] | null,
+		){
 		this.title = title;
 		this.description = description;
 		this.venue = venue;
@@ -80,7 +80,7 @@ export class eventCreationDTO{
 		this.color = color;
 		this.tags = tags;
 		this.reminders = reminders;
-		this.preJoinMemberID = preJoinMemberID;
+		this.preJoinedMemberID = preJoinedMemberID;
 		}
 	
 	title: string;
@@ -91,7 +91,7 @@ export class eventCreationDTO{
 	color: number;
 	tags: number[] |null;
 	reminders: number[] |null;
-	preJoinMemberID : number[] |null;
+	preJoinedMemberID : number[] |null;
 }
 
 export class EventReminderDTO{
