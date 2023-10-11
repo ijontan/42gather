@@ -4,13 +4,14 @@
 	import EventData, { RemindersType, TagsType } from "$lib/model/event";
 	import ChipsSelectors from "./chips/chipsSelectors.svelte";
 	import Datetimefield from "./fields/datetimefield.svelte";
-	import DropdownColors from "./dropdownColors/dropdownColors.svelte";
+	import DropdownColors from "./dropdowns/dropdownColors.svelte";
 	import Numberfield from "./fields/numberfield.svelte";
 	import RoundedButton from "./buttons/roundedButton.svelte";
     import Textarea from "./fields/textarea.svelte";
 	import Textfield from "./fields/textfield.svelte";
 	import Dialog from "./dialog/dialog.svelte";
 	import DialogDelegate, { DialogType } from "./dialog/dialogs";
+	import DropdownUsers from "./dropdowns/dropdownUsers.svelte";
 
     let hover = false;
     let opened = false;
@@ -92,6 +93,7 @@
             <Textfield title="venue" bind:value={item.venue} />
             <Numberfield title="Limit (Optional)" bind:value={item.limit} />
         </div>
+        <DropdownUsers title="Select User"/>
         <Textarea title="Description" bind:value={item.description} />
         <ChipsSelectors title="Tags" options={tagsOptions} bind:result={item.tags} />
         <ChipsSelectors title="Reminders" options={remindersOptions} bind:result={item.reminders} />
