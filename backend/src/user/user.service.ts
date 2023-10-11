@@ -32,10 +32,18 @@ export class UserService{
 	 * Return a UserDataDTO, used for profile
 	 */
 	async getUserData(token: string): Promise<UserDataDTO>{
-		let tokenCode = token.split(" ")[1];
-	
-		let userData = await this.getUserDataFromToken(tokenCode);
-		
+		const api_response = await fetch("https://api.intra.42.fr/v2/me", {
+			method: "GET",
+			headers:{
+				"Authorization": token,
+			},
+		});
+		if (api_response.status != 200){
+			console.log("Failed to get user data");
+			console.log("Status:", api_response.status);
+			throw new Error("Failed to get user data");
+		}
+		const userData = await api_response.json();
 		const user = await this.db.user.findUnique({
 			where: {
 				intraID: userData.login,
@@ -45,7 +53,7 @@ export class UserService{
 		if (!user){
 			throw new Error("User not found");
 		}
-		return new UserDataDTO(user.intraID, user.name, user.imageLink, user.discordID);
+		return new UserDataDTO(user.id, user.intraID, user.name, user.imageLink, user.discordID);
 		
 	}
 
@@ -53,13 +61,8 @@ export class UserService{
 	 * Get the intraID from the token
 	 */
 	async getIntraIDFromToken(token: string): Promise<string>{
-		try{
-			let userData = await this.getUserDataFromToken(token);
-			return userData.login;
-		}
-		catch(e){
-			throw new Error("Bad token");
-		}
+		const userData = await this.getUserData(token);
+		return userData.intraName;
 	}
 
 
@@ -67,22 +70,8 @@ export class UserService{
 	 * Get the user ID from the token
 	 */
 	async getIDFromToken(token: string): Promise<number>{
-		try{
-			let userData = await this.getUserDataFromToken(token);
-			const user = await this.db.user.findUnique({
-				where: {
-					intraID: userData.login,
-				},
-			});
-
-			if (!user){
-				throw new Error("User not found");
-			}
-			return user.id;
-		}
-		catch(e){
-			throw new Error("Bad token");
-		}
+		const userData = await this.getUserData(token);
+		return userData.id;
 	}
 
 	/**
@@ -261,7 +250,6 @@ export class UserService{
 				user.joinedEvents.length,
 			);
 		});
-		console.log("Users:", usersBrief);
 		return usersBrief;
 	}
 

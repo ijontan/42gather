@@ -1,13 +1,14 @@
 import { eventDataDTO } from "./event.dto";
 
 export class UserDataDTO{
-	constructor (intraName: string, fullName: string, imageLink: string, discordID: string | null = null){
+	constructor (id:number, intraName: string, fullName: string, imageLink: string, discordID: string | null = null){
+		this.id = id;
 		this.intraName = intraName;
 		this.name = fullName;
 		this.imageLink = imageLink;
 		this.discordID = discordID;
 	}
-
+	id: number;
 	intraName: string;
 	name: string;
 	imageLink: string;

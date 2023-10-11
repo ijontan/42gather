@@ -277,6 +277,7 @@ export class EventsService {
 			if (participant.id != event.creatorID){
 				participants.push(
 					new UserDataDTO(
+						participant.id,
 						participant.intraID,
 						participant.name,
 						participant.imageLink,
@@ -286,6 +287,7 @@ export class EventsService {
 			}
 			if (participant.id == event.creatorID){
 				creatorDTO = new UserDataDTO(
+					participant.id,
 					participant.intraID,
 					participant.name,
 					participant.imageLink,
