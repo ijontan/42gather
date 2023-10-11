@@ -1,6 +1,6 @@
 <script>
-	import DialogDelegate, { DialogData } from "./dialogs";
-    import Dialog from "./dialog.svelte";
+	import DialogDelegate, { DialogData } from "./snackBar";
+    import Dialog from "./SnackBar.svelte";
 
     /** @type {DialogData[]} */
     let dialogs;

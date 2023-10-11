@@ -14,6 +14,12 @@
  */
 
 export default class UserData{
+    /** @type {number=} */
+    id;
+    /** @type {number=} */
+    joinedEvent;
+    /** @type {number=} */
+    createdEvent;
     /** @type {string | null=} */
     discordID;
     /** @type {string} */

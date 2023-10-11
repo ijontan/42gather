@@ -3,7 +3,7 @@ import { PUBLIC_BACKEND_URL } from '$env/static/public';
 import { browser } from '$app/environment';
 import { getContext } from 'svelte';
 import { goto } from '$app/navigation';
-import DialogDelegate, { DialogType } from './components/dialog/dialogs';
+import DialogDelegate, { DialogType } from './components/dialog/snackBar';
 
 class ApiInstance {
   static instance = axios.create({
@@ -27,8 +27,8 @@ class ApiInstance {
         if (ApiInstance.unAuthorized) return Promise.reject(error);
         DialogDelegate.show(DialogType.warning, 'Error', 'You are not authorized to perform this action. Please login again.');
         ApiInstance.unAuthorized = true;
-        // localStorage.removeItem('accessToken');
-        // goto('/login');
+        localStorage.removeItem('accessToken');
+        goto('/login');
         return Promise.reject(error);
       } else if (error.response.status >= 500) {
         DialogDelegate.show(DialogType.error, 'Error', 'An error occurred while processing your request. Please try again later.')

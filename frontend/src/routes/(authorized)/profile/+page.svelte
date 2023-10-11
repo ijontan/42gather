@@ -10,6 +10,8 @@
 
     /** @type {UserData} */
     let user;
+    /** @type {UserData} */
+    let userHistory;
 
     userData.subscribe(value => {
         user = value ?? UserData.empty();
@@ -19,11 +21,9 @@
 
     onMount(()=>{
         if (typeof window === 'undefined') return;
-        
         postDiscordCode();
+        getUserHistory();
     })
-
-    
 
     async function postDiscordCode() {
         if (code !== null){
@@ -38,6 +38,12 @@
         }
     }
     
+    async function getUserHistory() {
+        /** @type {*} */
+        let res = await api.get('user/id/' + user.id);
+        userHistory = res.data;
+        console.log(userHistory)
+    }
 </script>
 
 <div class=" w-full h-screen grid justify-center items-center">

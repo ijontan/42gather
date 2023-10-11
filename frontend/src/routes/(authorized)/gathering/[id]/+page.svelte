@@ -14,7 +14,9 @@
 	import { onMount } from "svelte";
 	import UserData from "$lib/model/user";
 	import UserListItem from "$lib/components/userListItem.svelte";
-	import DialogDelegate, { DialogType } from "$lib/components/dialog/dialogs";
+	import DialogDelegate, { DialogType } from "$lib/components/dialog/snackBar";
+	import userData from "../../userData";
+	import Dialog from "$lib/components/dialog/dialog.svelte";
 
 
     /** @type {EventData} */
@@ -28,11 +30,23 @@
 
     let id = $page.params.id;
 
+    /** @type {UserData} */
+    let user = UserData.empty();
+
+    /** @type {boolean} */
+    let displayDialog = false;
+    /** @type {string} */
+    let announcement = '';
+
+    userData.subscribe(value => {
+        if (!value) return;
+        user = value;
+    })
+
     onMount(async () => {
         try {
             /** @type {*} */
             let res = await api.get('/events/id/' + id);
-            console.log(res.data);
             item = res.data;
             item.datetime = item.datetime.split('.')[0];
         } catch (error) {
@@ -82,6 +96,7 @@
     }
 
     function save() {
+        update();
         disabled = true
     }
 
@@ -102,6 +117,27 @@
                     'You have already joined the event'
                 );
             }
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function makeAnnouncement(){
+        try {
+            /** @type {*} */
+            let res = await api.post('/events/announce/' + item.id, {message: announcement});
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+        displayDialog = false;
+    }
+
+    async function update() {
+        try {
+            /** @type {*}*/
+            let res = await api.put('/events/id/' + item.id, item);
             console.log(res.data);
         } catch (error) {
             console.log(error);
@@ -136,6 +172,23 @@
 </div>
 
 <div class="fixed bottom-5 right-5 flex gap-2" >
+    {#if user && user.intraName === item.creator?.intraName}
+        <MyButton color={item.color} name={"Make Announcement"} on:click={()=>{displayDialog = true}} />
+    {/if}
     <MyButton color={item.color} name={disabled?"Edit":"Save"} on:click={disabled?edit:save}/>
     <MyButton color={item.color} name={item.joined? "joined": "join"} disabled={item.joined} on:click={joinEvent}/>
 </div>
+
+<Dialog bind:show={displayDialog}>
+    <div class="flex flex-col">
+        <h2 class=" text-[30px] tracking-tighter">Announcement</h2>
+        <hr class=" border-black/30 w-[30vw] mb-3"/>
+        <div class=" flex flex-col gap-4">
+
+            <Textarea title="message" bind:value={announcement} />
+            <div class="flex gap-2 self-end">
+                <MyButton color={item.color} name="send"  on:click={makeAnnouncement}/>
+            </div>
+        </div>
+    </div>
+</Dialog>
