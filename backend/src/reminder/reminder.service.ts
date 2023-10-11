@@ -82,6 +82,11 @@ export class ReminderService{
 		let response = await fetch("http://localhost:58420/sendpublic?" + queryString,{
 			method: "GET",
 		});
+		if(response.status != 200){
+			console.log("Failed to send message");
+			console.log("Status:", response.status);
+			throw new Error("Failed to send message");
+		}
 
 	}
 }

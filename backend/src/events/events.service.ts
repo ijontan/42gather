@@ -114,6 +114,19 @@ export class EventsService {
 			},
 		});
 
+		let discordID = await this.db.user.findUnique({
+			where:{
+				id: userID,
+			},
+			select:{
+				discordID: true,
+			},
+		});
+		
+		if (discordID.discordID){
+			this.app.sentReminder([discordID.discordID], "You have joined " + event.title + "&linkUrl=http://localhost:5173/gathering/" + eventID);
+		}
+
 		await this.db.event.update({
 			where: {
 				id: eventID,
