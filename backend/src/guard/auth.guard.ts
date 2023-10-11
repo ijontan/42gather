@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivate {
 			},
 		});
 		let res = await userData.status == 200;
+		console.log ("Guard: " + res)
 		return res
 	}
 }

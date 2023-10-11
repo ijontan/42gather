@@ -19,8 +19,9 @@ export class UserService{
 			},
 		});
 		if (userData.status !== 200){
+			console.log("Status:", userData.status);
 			console.log("Failed to get user data");
-			throw new Error("Bad return");
+			throw new Error("Failed to get user data");
 		}
 		console.log("User data from token success");
 		return (await userData.json());
@@ -32,7 +33,7 @@ export class UserService{
 	 */
 	async getUserData(token: string): Promise<UserDataDTO>{
 		let tokenCode = token.split(" ")[1];
-		
+	
 		let userData = await this.getUserDataFromToken(tokenCode);
 		
 		const user = await this.db.user.findUnique({
@@ -253,6 +254,9 @@ export class UserService{
 			return new UserBriefDTO(
 				user.id,
 				user.intraID,
+				user.name,
+				user.imageLink,
+				user.discordID,
 				user.createdEvents.length,
 				user.joinedEvents.length,
 			);
@@ -280,6 +284,9 @@ export class UserService{
 		}
 		const userDetail = new UserDetailDTO(
 			user.intraID,
+			user.name,
+			user.imageLink,
+			user.discordID,
 			user.createdEvents.length,
 			user.joinedEvents.length,
 			user.joinedEvents,

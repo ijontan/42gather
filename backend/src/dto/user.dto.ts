@@ -1,14 +1,14 @@
 import { eventDataDTO } from "./event.dto";
 
 export class UserDataDTO{
-	constructor (intraID: string, fullName: string, imageLink: string, discordID: string | null = null){
-		this.intraID = intraID;
+	constructor (intraName: string, fullName: string, imageLink: string, discordID: string | null = null){
+		this.intraName = intraName;
 		this.name = fullName;
 		this.imageLink = imageLink;
 		this.discordID = discordID;
 	}
 
-	intraID: string;
+	intraName: string;
 	name: string;
 	imageLink: string;
 	discordID: string | null;
@@ -16,14 +16,20 @@ export class UserDataDTO{
 
 
 export class UserDetailDTO{
-	constructor (intraName: string, joinedEvent: number, createdEvent: number, allEvents: any[]){
+	constructor (intraName: string, name:string, imageLink:string, discordID: string, joinedEvent: number, createdEvent: number, allEvents: any[]){
 		this.intraName = intraName;
+		this.name = name;
+		this.imageLink = imageLink;
+		this.discordID = discordID;
 		this.joinedEvent = joinedEvent;
 		this.createdEvent = createdEvent;
 		this.allEvents = allEvents;
 	}
 
 	intraName : string;
+	name: string;
+	imageLink: string;
+	discordID: string | null;
 	joinedEvent: number;
 	createdEvent: number;
 	allEvents: any[];
@@ -31,15 +37,21 @@ export class UserDetailDTO{
 }
 
 export class UserBriefDTO{
-	constructor (id: number, intraName: string, joinedEvent: number, createdEvent: number){
+	constructor (id: number, intraName: string, name: string, imageLink: string, discordID: string, joinedEvent: number, createdEvent: number){
 		this.id = id;
 		this.intraName = intraName;
+		this.name = name;
+		this.imageLink = imageLink;
+		this.discordID = discordID;
 		this.joinedEvent = joinedEvent;
 		this.createdEvent = createdEvent;
 	}
 
 	id : number;
 	intraName: string;
+	name: string;
+	imageLink: string;
+	discordID: string | null;
 	joinedEvent: number;
 	createdEvent: number;
 }
