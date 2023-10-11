@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
 import { DatabaseService } from "src/database/database.service";
 import { UserDataDTO, UserBriefDTO, UserDetailDTO } from "src/dto/user.dto";
@@ -41,7 +41,7 @@ export class UserService{
 		if (api_response.status != 200){
 			console.log("Failed to get user data");
 			console.log("Status:", api_response.status);
-			throw new Error("Failed to get user data");
+			throw new HttpException("Forbidden", 403);
 		}
 		const userData = await api_response.json();
 		const user = await this.db.user.findUnique({
@@ -61,8 +61,19 @@ export class UserService{
 	 * Get the intraID from the token
 	 */
 	async getIntraIDFromToken(token: string): Promise<string>{
-		const userData = await this.getUserData(token);
-		return userData.intraName;
+		let tokenCode = token.split(" ")[1];
+		const db_info = await this.db.user.findMany({
+			where: {
+				token: tokenCode,
+			},
+		})
+		if (db_info.length == 0){
+			const userData = await this.getUserData(token);
+			return userData.intraName;
+		}
+		else{
+			return db_info[0].intraID;
+		}
 	}
 
 
@@ -70,8 +81,19 @@ export class UserService{
 	 * Get the user ID from the token
 	 */
 	async getIDFromToken(token: string): Promise<number>{
-		const userData = await this.getUserData(token);
-		return userData.id;
+		let tokenCode = token.split(" ")[1];
+		const db_info = await this.db.user.findMany({
+			where: {
+				token: tokenCode,
+			},
+		})
+		if (db_info.length == 0){
+			const userData = await this.getUserData(token);
+			return userData.id;
+		}
+		else{
+			return db_info[0].id;
+		}
 	}
 
 	/**

@@ -1,23 +1,20 @@
 import { Injectable, CanActivate, ExecutionContext } from "@nestjs/common";
 import { Observable} from "rxjs";
-import { UserService } from "src/user/user.service";
+import { DatabaseService } from "src/database/database.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-	constructor (private readonly UserService: UserService){}
+	constructor (private readonly db: DatabaseService){}
 	async canActivate(context: ExecutionContext): Promise<boolean> {
 
 		const request = context.switchToHttp().getRequest();
 		const token = request.headers.authorization;
 		let tokenCode = token.split(" ")[1];
-		const userData = await fetch("https://api.intra.42.fr/v2/me", {
-			method: "GET",
-			headers:{
-				"Authorization": "Bearer " + tokenCode,
+		const find = await this.db.user.findMany({
+			where: {
+				token: tokenCode,
 			},
 		});
-		let res = await userData.status == 200;
-		console.log ("Guard: " + res)
-		return res
+		return (find.length > 0)
 	}
 }

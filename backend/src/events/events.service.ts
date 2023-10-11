@@ -11,8 +11,7 @@ export class EventsService {
 	constructor(private db: DatabaseService, private userService: UserService, private readonly app:ReminderService) {}
 
 	async createEvent(eventCreationDTO: eventCreationDTO, token: string): Promise<number> {
-		let tokenCode = token.split(' ')[1];
-		let userID = await this.userService.getIDFromToken(tokenCode);
+		let userID = await this.userService.getIDFromToken(token);
 		console.log(userID);
 		const { title, description, venue, datetime, color, limit, tags,reminders } = eventCreationDTO;
 		let localDate = new Date(datetime);
@@ -88,8 +87,7 @@ export class EventsService {
 	}
 
 	async joinEvent(eventID: number, token: string): Promise<any> {
-		let tokenCode = token.split(' ')[1];
-		let userID = await this.userService.getIDFromToken(tokenCode);
+		let userID = await this.userService.getIDFromToken(token);
 		let event = await this.db.event.findUnique({
 			where: {
 				id: eventID,
@@ -128,8 +126,7 @@ export class EventsService {
 	}
 
 	async getMyEvents(token: string): Promise<any> {
-		let tokenCode = token.split(' ')[1];
-		let userID = await this.userService.getIDFromToken(tokenCode);
+		let userID = await this.userService.getIDFromToken(token);
 		console.log(userID);
 		let events = await this.db.user.findUnique({
 			where: {
@@ -152,8 +149,7 @@ export class EventsService {
 	
 
 	async getSuggestedEvents(token: string): Promise<any> {
-		let tokenCode = token.split(' ')[1];
-		let userID = await this.userService.getIDFromToken(tokenCode);
+		let userID = await this.userService.getIDFromToken(token);
 		let participated = await this.db.eventParticipants.findMany({
 			where: {
 				userID: userID,
@@ -371,7 +367,7 @@ export class EventsService {
 
 
 	async announce(body:any, token: string, id: string): Promise<any> {
-		const userID = await this.userService.getIDFromToken(token.split(' ')[1]);
+		const userID = await this.userService.getIDFromToken(token);
 		const eventData = await this.db.event.findUnique({
 			where: {
 				id: parseInt(id),

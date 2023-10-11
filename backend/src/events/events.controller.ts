@@ -8,33 +8,28 @@ export class EventsController{
   constructor(private readonly EventsService: EventsService){}
 
   @Get("my")
-  @UseGuards(AuthGuard)
   async getMyEvents(@Headers("Authorization") token: string): Promise<any>{
     return (await this.EventsService.getMyEvents(token));
   }
 
   @Get("suggested")
-  @UseGuards(AuthGuard)
   async getSuggestedEvents(@Headers("Authorization") token: string): Promise<any>{
     return (await this.EventsService.getSuggestedEvents(token));
   }
 
   @Get("today")
-  @UseGuards(AuthGuard)
   async getTodayEvents(@Headers("Authorization") token: string): Promise<any>{
     console.log("today event")
     return (await this.EventsService.getTodayEvents(token));
   }
 
   @Get("week")
-  @UseGuards(AuthGuard)
   async getWeekEvents(@Headers("Authorization") token: string): Promise<any>{
     console.log("week event")
     return (await this.EventsService.getWeekEvents(token));
   }
 
   @Get("month")
-  @UseGuards(AuthGuard)
   async getMonthEvents(@Headers("Authorization") token: string): Promise<any>{
     console.log("month event")
     return (await this.EventsService.getMonthEvents(token));
