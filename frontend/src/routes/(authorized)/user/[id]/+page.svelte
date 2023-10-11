@@ -1,28 +1,25 @@
 <script>
 	import { api } from "$lib/api";
 	import { onMount } from "svelte";
-	import DiscordButton from "./discordButton.svelte";
+	import DiscordButton from "../../profile/discordButton.svelte";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
     // @ts-ignore
     import UserData from "$lib/model/user";
-	import userData from "../userData";
 	import EventList from "$lib/components/eventList.svelte";
+	import MyButton from "$lib/components/buttons/myButton.svelte";
+
+    let id = $page.params.id;
 
     /** @type {UserData} */
-    let user;
-    /** @type {UserData} */
-    let userHistory;
+    let user = UserData.empty();
 
-    userData.subscribe(value => {
-        user = value ?? UserData.empty();
-        getUserHistory();
-    })
     let code = $page.url.searchParams.get('code')
 
     onMount(()=>{
         if (typeof window === 'undefined') return;
         postDiscordCode();
+        getUserHistory();
     })
 
     async function postDiscordCode() {
@@ -39,11 +36,10 @@
     }
     
     async function getUserHistory() {
-        if (user.id === null || user.id === undefined) return;
         /** @type {*} */
-        let res = await api.get('user/id/' + user.id);
-        userHistory = res.data;
-        console.log(userHistory)
+        let res = await api.get('user/id/' + id);
+        user = res.data;
+        console.log(user)
     }
 </script>
 
@@ -55,7 +51,11 @@
                 <h2>{user.name} (<span>{user.intraName}</span>)</h2>
             </div>
         </div>
-        <DiscordButton connected={user.discordID !== null}/>
     </div>
-    <EventList title="Joined Events" joined={true} eventList={userHistory? userHistory.allEvents: []} />
+    {#if user.discordID}
+        <MyButton name="Discord" color={3} on:click={()=>{
+            window.open('https://discordapp.com/users/' + user.discordID, '_blank')
+        }}/>
+    {/if}
+    <EventList title="Joined Events" joined={true} eventList={user? user.allEvents: []} />
 </div>

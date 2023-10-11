@@ -5,6 +5,7 @@
 	import { onMount } from "svelte";
 	import userData from "../userData";
 	import { api } from "$lib/api";
+	import { goto } from "$app/navigation";
 
     /** @type {UserData[]} */
     let userList = [];
@@ -66,7 +67,13 @@
     on:wheel={handleScroll}
     >
         {#each filteredUsers as user}
-        <div class=" w-[250px] min-w-[250px] shadow-large rounded-[30px] overflow-clip flex flex-col">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div class=" w-[250px] hover:scale-110 transition-all min-w-[250px] shadow-large rounded-[30px] overflow-clip flex flex-col"
+            on:click={() => {
+                goto('/user/' + user.id );
+            }}
+        >
             <img src={user.imageLink} alt="Profile Icon" class=" aspect-square object-cover">
             <div class=" p-5 flex flex-col items-center gap-2">
                 <div class="flex flex-row w-full justify-center">

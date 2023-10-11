@@ -1,3 +1,5 @@
+// @ts-ignore
+import EventData from "./event";
 
 /**
  * @typedef {Object} UserDataProps
@@ -20,6 +22,8 @@ export default class UserData{
     joinedEvent;
     /** @type {number=} */
     createdEvent;
+    /** @type {EventData[]=} */
+    allEvents;
     /** @type {string | null=} */
     discordID;
     /** @type {string} */
