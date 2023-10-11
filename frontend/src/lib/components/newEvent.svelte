@@ -13,6 +13,7 @@
 	import DialogDelegate, { DialogType } from "./dialog/snackBar";
 	import DropdownUsers from "./dropdowns/dropdownUsers.svelte";
     import UserData from "../model/user";
+	import Toggle from "./buttons/toggle.svelte";
 
     let hover = false;
     let opened = false;
@@ -98,7 +99,10 @@
             <Textfield title="venue" bind:value={item.venue} />
             <Numberfield title="Limit (Optional)" bind:value={item.limit} />
         </div>
-        <DropdownUsers title="Select User" bind:selected/>
+        <div class="flex gap-5 w-full">
+            <DropdownUsers title="Select User" bind:selected/>
+            <Toggle title="Public"/>
+        </div>
         <Textarea title="Description" bind:value={item.description} />
         <ChipsSelectors title="Tags" options={tagsOptions} bind:result={item.tags} />
         <ChipsSelectors title="Reminders" options={remindersOptions} bind:result={item.reminders} />
