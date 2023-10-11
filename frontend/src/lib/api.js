@@ -70,6 +70,18 @@ class ApiInstance {
     if (!browser) return Promise.reject('Not in browser');
     return ApiInstance.instance.patch(url, data, config);
   }
+
+  /**
+   * @template T
+   * @param {string} url
+   * @param {any} data
+   * @param {any} [config]
+   * @returns {Promise<T>}
+   */
+  put(url, data, config) {
+    if (!browser) return Promise.reject('Not in browser');
+    return ApiInstance.instance.put(url, data, config);
+  }
 }
 
 export const api = new ApiInstance();
