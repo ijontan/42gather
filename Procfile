@@ -1,1 +1,1 @@
-web: cd frontend && npm run dev 
+web: cd frontend && npm i && npm run dev 
