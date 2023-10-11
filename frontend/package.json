@@ -28,5 +28,9 @@
   "type": "module",
   "dependencies": {
     "axios": "^1.5.1"
-  }
+  },
+  "description": "Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).",
+  "main": "postcss.config.js",
+  "author": "",
+  "license": "ISC"
 }
