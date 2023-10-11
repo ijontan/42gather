@@ -44,7 +44,7 @@
         <div class=" w-[250px] min-w-[250px] shadow-large rounded-[30px] overflow-clip flex flex-col">
             <img src={user.imageLink} alt="Profile Icon" class=" aspect-square object-cover">
             <div class=" p-5 flex flex-col items-center gap-2">
-                <span>{user.name} (<span>{user.intraID}</span>)</span>
+                <span>{user.name} (<span>{user.intraName}</span>)</span>
                 <hr class="w-full border-black/10"/>
                 <div class="flex justify-evenly w-full">
                     <div class="flex flex-col items-center">

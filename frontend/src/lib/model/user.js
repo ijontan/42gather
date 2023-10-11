@@ -1,14 +1,14 @@
 
 /**
  * @typedef {Object} UserDataProps
- * @property {string} intraID
+ * @property {string} intraName
  * @property {string} name
  * @property {string} imageLink
  */
 
 /**
  * @typedef {Object} UserDataCopyProps
- * @property {string | null} intraID
+ * @property {string | null} intraName
  * @property {string | null} name
  * @property {string | null} imageLink
  */
@@ -17,7 +17,7 @@ export default class UserData{
     /** @type {string | null=} */
     discordID;
     /** @type {string} */
-    intraID;
+    intraName;
     /** @type {string} */
     name;
     /** @type {string} */
@@ -27,8 +27,8 @@ export default class UserData{
      * 
      * @param {UserDataProps} param0 
      */
-    constructor({intraID, name, imageLink}){
-        this.intraID = intraID;
+    constructor({intraName, name, imageLink}){
+        this.intraName = intraName;
         this.name = name;
         this.imageLink = imageLink;
     }
@@ -37,9 +37,9 @@ export default class UserData{
      * 
      * @param {UserDataCopyProps} param0 
      */
-    copyWith({intraID, name, imageLink}){
+    copyWith({intraName, name, imageLink}){
         return new UserData({
-            intraID: intraID ?? this.intraID,
+            intraName: intraName ?? this.intraName,
             name: name ?? this.name,
             imageLink: imageLink ?? this.imageLink
         });
@@ -48,7 +48,7 @@ export default class UserData{
 
     static empty(){
         return new UserData({
-            intraID: "--",
+            intraName: "--",
             name: "--",
             imageLink: "--"
         });

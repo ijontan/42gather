@@ -45,7 +45,7 @@
         <div class=" w-[500px] shadow-large rounded-[30px] overflow-clip flex flex-col">
             <img src={user.imageLink} alt="Profile Icon" class=" aspect-square object-cover">
             <div class="p-10">
-                <h2>{user.name} (<span>{user.intraID}</span>)</h2>
+                <h2>{user.name} (<span>{user.intraName}</span>)</h2>
             </div>
         </div>
         <DiscordButton connected={user.discordID !== null}/>

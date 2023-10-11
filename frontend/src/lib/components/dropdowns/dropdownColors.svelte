@@ -36,7 +36,7 @@
 
 <div class="flex flex-col items-start tracking-wide gap-1">
     <label for={title} class="px-5 capitalize text-black/50">{title}:</label>
-    <div class={` relative ${disabled?"":"group-button"} z-0`}>
+    <div class={` relative ${disabled?"":"group-button"} z-10`}>
         <div class={` absolute top-0 left-0 -z-10 right-0 bg-white rounded-[24px] group-button-hover:h-60 h-12 ${disabled?"":"shadow-light"} transition-all p-5 overflow-y-scroll`}>
             <div class="gap-1 flex flex-col mt-10">
                 {#each options as option}

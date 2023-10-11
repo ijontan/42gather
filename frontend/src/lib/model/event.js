@@ -69,6 +69,8 @@ export default class EventData {
     id;
     /** @type {UserData=} */
     creator;
+    /** @type {number[]=} */
+    preJoinedMemberID;
     /** @type {UserData[]=} */
     currentParticipants;
     /** @type {boolean=} */

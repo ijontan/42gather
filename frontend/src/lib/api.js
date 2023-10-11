@@ -10,6 +10,9 @@ class ApiInstance {
     baseURL: PUBLIC_BACKEND_URL ?? 'http://localhost:3000'
   });
 
+  /** @type {boolean} */
+  static unAuthorized = false;
+
   constructor() {
     if (!browser) return;
     const accessToken = localStorage.getItem('accessToken');
@@ -21,7 +24,9 @@ class ApiInstance {
       return response;
     }, (error) => {
       if ((error.response.status === 403 || error.response.status === 401) && !error.config.url.endsWith('/auth')) {
+        if (ApiInstance.unAuthorized) return Promise.reject(error);
         DialogDelegate.show(DialogType.warning, 'Error', 'You are not authorized to perform this action. Please login again.');
+        ApiInstance.unAuthorized = true;
         // localStorage.removeItem('accessToken');
         // goto('/login');
         return Promise.reject(error);
