@@ -271,8 +271,7 @@ export class EventsService {
 		}
 
 		//Check user joined or not
-		let tokenCode = token.split(' ')[1];
-		let userID = await this.userService.getIDFromToken(tokenCode);
+		let userID = await this.userService.getIDFromToken(token);
 		let joined = false;
 		for (const participant of event.participants){
 			if (participant.id == userID){
