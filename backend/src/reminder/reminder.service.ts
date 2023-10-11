@@ -84,8 +84,6 @@ export class ReminderService{
 		if(response.status != 200){
 			console.log("Failed to send message");
 			console.log("Status:", response.status);
-			throw new Error("Failed to send message");
 		}
-
 	}
 }
