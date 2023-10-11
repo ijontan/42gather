@@ -10,8 +10,7 @@
 	import RoundedButton from "./buttons/roundedButton.svelte";
     import Textarea from "./fields/textarea.svelte";
 	import Textfield from "./fields/textfield.svelte";
-	import Dialog from "./dialog/dialog.svelte";
-	import DialogDelegate, { DialogType } from "./dialog/dialogs";
+	import DialogDelegate, { DialogType } from "./dialog/snackBar";
 	import DropdownUsers from "./dropdowns/dropdownUsers.svelte";
     import UserData from "../model/user";
 

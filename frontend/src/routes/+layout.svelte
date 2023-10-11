@@ -4,9 +4,7 @@
 	import { onMount } from "svelte";
     import "./app.css"
 	import { page } from "$app/stores";
-	import Dialogs from "$lib/components/dialog/dialogs.svelte";
-	import DialogDelegate, { DialogType } from "$lib/components/dialog/dialogs";
-    import RoundedButton from "$lib/components/buttons/roundedButton.svelte";
+	import Dialogs from "$lib/components/dialog/SnackBars.svelte";
     
     onMount(()=>{
         checkAccessToken()

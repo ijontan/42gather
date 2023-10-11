@@ -1,15 +1,40 @@
 <script>
 	import Textfield from "$lib/components/fields/textfield.svelte";
+	// @ts-ignore
 	import UserData from "$lib/model/user";
+	import { onMount } from "svelte";
 	import userData from "../userData";
+	import { api } from "$lib/api";
 
+    /** @type {UserData[]} */
+    let userList = [];
+    /** @type {UserData[]} */
+    let filteredUsers = [];
+    /** @type {UserData[]} */
 
-    /** @type {UserData} */
-    let user;
+    /** @type {string} */
+    let filterString = "";
+    onMount(() => {
+        getUsers();
+    });
 
-    userData.subscribe(value => {
-        user = value ?? UserData.empty();
-    })
+    $: userList, filterString, (filteredUsers = filter());
+
+    function filter(){
+        if (filterString === "") return userList;
+        return userList.filter(user => user.name.toLowerCase().includes(filterString.toLowerCase()) || user.intraName.toLowerCase().includes(filterString.toLowerCase()));
+    }
+
+    async function getUsers() {
+        try {
+            /** @type {*} */
+            let res = await api.get('/user/all');
+            userList = res.data;
+            console.log(userList);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     /** @type {number}*/
     let offset = 0;
@@ -32,7 +57,7 @@
     <h1 class="mb-5">Admin Dashboard (for bocals, work in progress)</h1>
     <div class="flex flex-col gap-2">
         <div class=" w-[400px]">
-            <Textfield title='Search' />
+            <Textfield title='Search' bind:value={filterString} />
         </div>
     </div>
     
@@ -40,21 +65,24 @@
     style={`transform: translateX(${-offset}px)`}
     on:wheel={handleScroll}
     >
-        {#each Array(5) as item}
+        {#each filteredUsers as user}
         <div class=" w-[250px] min-w-[250px] shadow-large rounded-[30px] overflow-clip flex flex-col">
             <img src={user.imageLink} alt="Profile Icon" class=" aspect-square object-cover">
             <div class=" p-5 flex flex-col items-center gap-2">
-                <span>{user.name} (<span>{user.intraName}</span>)</span>
+                <div class="flex flex-row w-full justify-center">
+                    <span class=" truncate">{user.name} </span>
+                    <span class=" whitespace-nowrap">({user.intraName})</span>
+                </div>
                 <hr class="w-full border-black/10"/>
                 <div class="flex justify-evenly w-full">
                     <div class="flex flex-col items-center">
                         <span>Joined</span>
-                        <span>5</span>
+                        <span>{user.joinedEvent}</span>
                     </div>
                     <div class="border-[1px] border-black/10 h-full"/>
                     <div class="flex flex-col items-center">
                         <span>Created</span>
-                        <span>2</span>
+                        <span>{user.createdEvent}</span>
                     </div>
                 </div>
             </div>

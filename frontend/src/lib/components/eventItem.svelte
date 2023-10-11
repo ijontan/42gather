@@ -8,8 +8,7 @@
 	import DatetimefieldNoBg from "./fields/datetimefieldNoBG.svelte";
 	import MyButton from "./buttons/myButton.svelte";
 	import TextfieldNoBg from "./fields/textfieldNoBG.svelte";
-	import Dialog from "./dialog/dialog.svelte";
-	import DialogDelegate, { DialogType } from "./dialog/dialogs";
+	import DialogDelegate, { DialogType } from "./dialog/snackBar";
 
 
     /** @type boolean */
