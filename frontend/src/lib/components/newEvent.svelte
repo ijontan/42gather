@@ -1,4 +1,5 @@
 <script>
+    // @ts-nocheck
 	import { goto } from "$app/navigation";
 	import { api } from "$lib/api";
 	import EventData, { RemindersType, TagsType } from "$lib/model/event";
@@ -12,6 +13,7 @@
 	import Dialog from "./dialog/dialog.svelte";
 	import DialogDelegate, { DialogType } from "./dialog/dialogs";
 	import DropdownUsers from "./dropdowns/dropdownUsers.svelte";
+    import UserData from "../model/user";
 
     let hover = false;
     let opened = false;
@@ -45,10 +47,14 @@
     /** @type {string[]} */
     let remindersOptions =Object.entries(RemindersType).map(([key, value]) => key);
 
+    /** @type {UserData[]} */
+    let selected = [];
+
     async function newEvent(){
         console.log(item);
 
         try {
+            item.preJoinedMemberID = selected.map(user => user.id);
             /** @type {*} */
             let res = await api.post('/events/create', item);
             DialogDelegate.show(
@@ -93,7 +99,7 @@
             <Textfield title="venue" bind:value={item.venue} />
             <Numberfield title="Limit (Optional)" bind:value={item.limit} />
         </div>
-        <DropdownUsers title="Select User"/>
+        <DropdownUsers title="Select User" bind:selected/>
         <Textarea title="Description" bind:value={item.description} />
         <ChipsSelectors title="Tags" options={tagsOptions} bind:result={item.tags} />
         <ChipsSelectors title="Reminders" options={remindersOptions} bind:result={item.reminders} />

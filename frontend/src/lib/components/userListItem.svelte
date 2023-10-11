@@ -11,7 +11,7 @@
     <div class="flex flex-row items-center gap-5 ">
         <img src={user.imageLink} alt="avatar" class="w-16 h-16 bg-auto bg-center rounded-full"/>
         <p class="text-black/80 text-[25px]">{user.name} 
-            (<a href={'https://profile.intra.42.fr/users/' + user.intraID} class=" text-blueAcc" target="_blank">{user.intraID}</a>)
+            (<a href={'https://profile.intra.42.fr/users/' + user.intraName} class=" text-blueAcc" target="_blank">{user.intraName}</a>)
         </p>
     </div>
     {#if user.discordID}
