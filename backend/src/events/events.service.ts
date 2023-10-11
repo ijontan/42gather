@@ -140,7 +140,7 @@ export class EventsService {
 	}
 
 	async getMyEvents(token: string): Promise<any> {
-		let userID = await this.userService.getIDFromToken(token);
+		let userID = await this.userService.getIDFromTokenFast(token);
 		console.log(userID);
 		let events = await this.db.user.findUnique({
 			where: {
@@ -163,7 +163,7 @@ export class EventsService {
 	
 
 	async getSuggestedEvents(token: string): Promise<any> {
-		let userID = await this.userService.getIDFromToken(token);
+		let userID = await this.userService.getIDFromTokenFast(token);
 		let participated = await this.db.eventParticipants.findMany({
 			where: {
 				userID: userID,
@@ -401,6 +401,7 @@ export class EventsService {
 		for (let participant of eventData.participants){
 			discordIDs.push(participant.discordID);
 		}
+
 		let msg = body.message + "&linkUrl=http://localhost:5173/gathering/" + id;
 		this.app.sentReminder(discordIDs, msg);
 		return (true);
