@@ -55,7 +55,7 @@
 </script>
 
 <div class=" p-12 w-full flex flex-col overflow-clip h-screen">
-    <h1 class="mb-5">Admin Dashboard (for bocals, work in progress)</h1>
+    <h1 class="mb-5">Admin Dashboard</h1>
     <div class="flex flex-col gap-2">
         <div class=" w-[400px]">
             <Textfield title='Search' bind:value={filterString} />
