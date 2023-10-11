@@ -71,7 +71,7 @@ export class EventsService {
 				}
 			}
 		}
-		this.joinEvent(eventID, token);
+		this.joinEvent(eventID, token, 1);
 		if(eventCreationDTO.preJoinedMemberID != null){
 			for (let memberID of eventCreationDTO.preJoinedMemberID){
 				await this.db.event.update({
@@ -83,11 +83,29 @@ export class EventsService {
 					},
 				})
 			}
+
+			let discordIDs = [];
+			for (let member of eventCreationDTO.preJoinedMemberID){
+				let discordID = await this.db.user.findUnique({
+					where:{
+						id: member,
+					},
+					select:{
+						discordID: true,
+					},
+				});
+				if (discordID.discordID){
+					discordIDs.push(discordID.discordID);
+				}
+			}
+			let message = "You have been invited to " + title + "&linkUrl=http://localhost:5173/gathering/" + eventID;
+			this.app.sentReminder(discordIDs, message);
+
 		}
 		return eventID;
 	}
 
-	async joinEvent(eventID: number, token: string): Promise<any> {
+	async joinEvent(eventID: number, token: string, ping : number): Promise<any> {
 		let userID = await this.userService.getIDFromToken(token);
 		let event = await this.db.event.findUnique({
 			where: {
@@ -124,8 +142,10 @@ export class EventsService {
 			},
 		});
 		
-		if (discordID.discordID){
-			this.app.sentReminder([discordID.discordID], "You have joined " + event.title + "&linkUrl=http://localhost:5173/gathering/" + eventID);
+		if (ping == 1){
+			if (discordID.discordID){
+				this.app.sentReminder([discordID.discordID], "You have joined " + event.title + "&linkUrl=http://localhost:5173/gathering/" + eventID);
+			}
 		}
 
 		await this.db.event.update({

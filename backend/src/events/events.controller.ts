@@ -62,7 +62,7 @@ export class EventsController{
   @Post("join")
   @UseGuards(AuthGuard)
   async joinEvent(@Body() body: any, @Headers("Authorization") token: string): Promise<any>{
-    return (await this.EventsService.joinEvent(body.eventID, token));
+    return (await this.EventsService.joinEvent(body.eventID, token,1));
   }
 
   @Put("id/:id")

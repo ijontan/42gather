@@ -78,12 +78,19 @@ export class ReminderService{
 	async sentReminder(discordID: string[], message: string){
 		let queryString = `userIds=${discordID.map(id => id).join(',')}`;
 		queryString += `&message=${message}`;
-		let response = await fetch("http://localhost:58420/sendpublic?" + queryString,{
+		try{
+			let response = await fetch("http://localhost:58420/sendpublic?" + queryString,{
 			method: "GET",
-		});
+			});
 		if(response.status != 200){
 			console.log("Failed to send message");
 			console.log("Status:", response.status);
 		}
+		}
+		catch (err){
+			console.log("Failed to send message");
+			console.log(err);
+		}
+		
 	}
 }
