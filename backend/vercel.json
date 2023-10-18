@@ -1,22 +1,8 @@
 {
-    "headers": [
-      {
-        "source": "/(.*)",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-          }
-        ]
-      },
-      {
-        "source": "/:path*",
-        "headers": [
-            {
-                "key": "Access-Control-Allow-Origin",
-                "value": "*"
-            }
-        ]
-      }
-    ]
+  "routes": [
+   {
+       "src": "/(.*)",
+       "dest": "/"
+   }
+  ]
 }
