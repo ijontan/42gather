@@ -1,22 +1,10 @@
 {
     "headers": [
       {
-        "source": "/(.*)",
-        "headers": [
-            {
-                "key": "x-authorized",
-                "value": "*"
-              }
-        ]
+        "source": "/(.*)"
       },
       {
-        "source": "/:path*",
-        "headers": [
-          {
-            "key": "x-authorized",
-            "value": "*"
-          }
-        ]
+        "source": "/:path*"
       }
     ]
 }
