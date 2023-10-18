@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
-import { DatabaseService } from "src/database/database.service";
-import { UserDataDTO, UserBriefDTO, UserDetailDTO } from "src/dto/user.dto";
+import { DatabaseService } from "../database/database.service";
+import { UserDataDTO, UserBriefDTO, UserDetailDTO } from "../dto/user.dto";
 
 @Injectable()
 export class UserService{

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
-import { ReminderService } from 'src/reminder/reminder.service';
-import { UserService } from 'src/user/user.service';
+import { DatabaseService } from '../database/database.service';
+import { ReminderService } from '../reminder/reminder.service';
+import { UserService } from '../user/user.service';
 import { Event, EventParticipants, User } from '@prisma/client';
-import { eventDataDTO, eventCreationDTO, EventReminderDTO } from 'src/dto/event.dto';
-import { UserDataDTO } from 'src/dto/user.dto';
+import { eventDataDTO, eventCreationDTO, EventReminderDTO } from '../dto/event.dto';
+import { UserDataDTO } from '../dto/user.dto';
 
 @Injectable()
 export class EventsService {

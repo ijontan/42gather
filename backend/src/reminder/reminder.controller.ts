@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { ReminderService } from "./reminder.service";
-import { EventReminderDTO } from "src/dto/event.dto";
+import { EventReminderDTO } from "../dto/event.dto";
 
 @Controller("remind")
 export class ReminderController {
