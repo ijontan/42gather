@@ -6,7 +6,7 @@ async function bootstrap() {
   dotenv.config();
   const app = await NestFactory.create(AppModule, {
       cors:{
-        origin: "https://42gather.vercel.app/",
+        origin: "*",
         methods: ["GET","POST", "PUT", "DELETE", "PATCH"],
         credentials: true,
         allowedHeaders: "*",
