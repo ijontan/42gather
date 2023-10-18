@@ -9,7 +9,7 @@ async function bootstrap() {
         origin: "*",
         methods: ["GET","POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         credentials: true,
-        allowedHeaders:'*',
+        allowedHeaders:'Access-Control-Allow-Origin',
       }
 
   

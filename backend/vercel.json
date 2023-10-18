@@ -1,10 +1,22 @@
 {
     "headers": [
       {
-        "source": "/(.*)"
+        "source": "/(.*)",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
       },
       {
-        "source": "/:path*"
+        "source": "/:path*",
+        "headers": [
+            {
+                "key": "Access-Control-Allow-Origin",
+                "value": "*"
+            }
+        ]
       }
     ]
 }
