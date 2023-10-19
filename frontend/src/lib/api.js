@@ -17,7 +17,9 @@ class ApiInstance {
     if (!browser) return;
     const accessToken = localStorage.getItem('accessToken');
     ApiInstance.instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-    ApiInstance.instance.defaults.headers.common['ngrok-skip-browser-warning'] = "";
+    ApiInstance.instance.defaults.headers.common['Access-Control-Allow-Credentials'] = `true`;
+    ApiInstance.instance.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
+    ApiInstance.instance.defaults.headers.common['ngrok-skip-browser-warning'] = "true";
     ApiInstance.instance.interceptors.request.use((config) => {
       return config;
     });
