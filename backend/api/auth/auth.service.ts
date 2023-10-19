@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { IntraValidationCodeDTO } from "src/dto/auth.dto";
+import { IntraValidationCodeDTO } from "api/dto/auth.dto";
 import { UserService } from "../user/user.service";
 
 @Injectable()
