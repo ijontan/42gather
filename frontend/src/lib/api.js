@@ -24,6 +24,7 @@ class ApiInstance {
     ApiInstance.instance.interceptors.response.use((response) => {
       return response;
     }, (error) => {
+      if (!error.response) return Promise.reject(error);
       if ((error.response.status === 403 || error.response.status === 401) && !error.config.url.endsWith('/auth')) {
         if (ApiInstance.unAuthorized) return Promise.reject(error);
         DialogDelegate.show(DialogType.warning, 'Error', 'You are not authorized to perform this action. Please login again.');
