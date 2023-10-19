@@ -38,3 +38,4 @@ lerna-debug.log*
 
 # prisma
 prisma/migrations/
+dist/
