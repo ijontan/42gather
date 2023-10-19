@@ -16,6 +16,7 @@ class ApiInstance {
   constructor() {
     if (!browser) return;
     const accessToken = localStorage.getItem('accessToken');
+    console.log('accessToken', accessToken);
     ApiInstance.instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     ApiInstance.instance.defaults.headers.common['Access-Control-Allow-Credentials'] = `true`;
     ApiInstance.instance.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
