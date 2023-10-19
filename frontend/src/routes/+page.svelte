@@ -26,5 +26,6 @@
             console.log(error)
             goto('/login')
         }
+        
     }
 </script>
