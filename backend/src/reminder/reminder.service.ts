@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { EventReminderDTO } from "../dto/event.dto";
 import { Cron,CronExpression } from "@nestjs/schedule";
-import { DatabaseService } from "src/database/database.service";
+import { DatabaseService } from "../database/database.service";
 
 
 @Injectable()
