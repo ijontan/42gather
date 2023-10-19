@@ -143,6 +143,21 @@
                     'Failed to make an announcement'
                 );
             }
+            announcement = '';
+            if (res.data) {
+                item.joined = true;
+                DialogDelegate.show(
+                    DialogType.success,
+                    'Success',
+                    'You successfully made an announcement'
+                );
+            } else {
+                DialogDelegate.show(
+                    DialogType.error,
+                    'Error',
+                    'Failed to make an announcement'
+                );
+            }
         } catch (error) {
             console.log(error);
         }
@@ -177,7 +192,7 @@
     <Textarea {disabled} title="Description" bind:value={item.description} />
     <ChipList title='tags' color={item.color} values={item.tags??[]} padding/>
     <ChipList title='Reminders' color={item.color} values={item.reminders??[]} notTag padding/>
-    <h2 class="mt-5">Oganizer</h2>
+    <h2 class="mt-5">Organizer</h2>
     <hr class=" border-t-2 border-black/10"/>
     <UserListItem user={item.creator ?? UserData.empty()
     }/>
