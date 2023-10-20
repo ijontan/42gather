@@ -1,2 +1,1 @@
-release: npm install --global serve
 web: npm i && npm run build && npm install --global serve && serve ./dist
