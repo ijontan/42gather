@@ -43,6 +43,9 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# oushing to production
+$ git subtree push --prefix backend heroku master
 ```
 
 ## Test
