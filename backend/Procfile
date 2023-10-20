@@ -1,2 +1,2 @@
 release: npm i -g @nestjs/cli
-web: npm start
+web: npm i -g @nestjs/cli && npm i --save-dev @types/node && npm start
