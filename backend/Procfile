@@ -1,2 +1,2 @@
-release: npm i -g @nestjs/cli
+release: npm i -g @nestjs/cli && npx prisma migrate deploy 
 web: npm i -g @nestjs/cli && npm i @types/node && npm run build && npm run start:prod
