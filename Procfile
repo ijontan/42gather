@@ -1,1 +1,1 @@
-web: ls -la && cd backend && ls -la && npm i && npm run start:dev
+web: cd backend && npm i && npm run start:prod
