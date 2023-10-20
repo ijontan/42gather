@@ -1,2 +1,2 @@
 release: npm install --global serve
-web: npm install --global serve && serve ./dist
+web: npm run build && npm install --global serve && serve ./dist
