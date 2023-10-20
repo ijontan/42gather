@@ -1,1 +1,1 @@
-web: cd backend && npm i && cp ../.env . && npm run start:prod
+web: ls && cd backend && npm i && npm run start:prod
