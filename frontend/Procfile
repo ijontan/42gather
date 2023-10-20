@@ -1,1 +1,2 @@
-web: bin/start-nginx-solo
+release: npm install --global serve
+web: npm run start
