@@ -1,1 +1,2 @@
 release: npm i -g @nestjs/cli
+web: npm i -g @nestjs/cli && npm i @types/node && npm run build && npm run start:prod
