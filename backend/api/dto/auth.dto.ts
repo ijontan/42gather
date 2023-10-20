@@ -4,7 +4,7 @@
 export class IntraValidationCodeDTO{
 	constructor(code: string){
 		this.grant_type = "authorization_code";
-		this.client_id = process.env.UID;
+		this.client_id = process.env.INTRA_UID;
 		this.client_secret = process.env.SECRET;
 		this.code = code;
 		this.redirect_uri = process.env.FE_IP + ":" + process.env.FE_PORT;
