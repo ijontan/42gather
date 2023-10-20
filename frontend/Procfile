@@ -1,2 +1,2 @@
-release: cp nginx.conf.erb ./config/nginx.conf.erb
-web: bin/start-nginx-solo
+release: npm install --global serve
+web: serve ./dist
