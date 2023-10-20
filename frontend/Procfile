@@ -1,1 +1,1 @@
-web: npm i && npm install --global serve && serve ./dist
+web: npm install --global serve && serve ./dist
