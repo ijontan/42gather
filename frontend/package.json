@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite dev --host",
+    "start": "node build/index.js",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
@@ -27,6 +28,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@sveltejs/adapter-node": "^1.0.0-next.106",
     "@sveltejs/adapter-vercel": "^3.0.3",
     "axios": "^1.5.1"
   }
