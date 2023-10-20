@@ -1,1 +1,1 @@
-web: npm install --global serve && serve dist
+web: bin/start-nginx-solo
