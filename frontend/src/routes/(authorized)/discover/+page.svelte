@@ -16,6 +16,11 @@
     /** @type {EventData[]} */
     let monthEventList = [];
 
+    /** @type {number[]} */
+    let selectedTags = [];
+
+    /** @type {string} */
+    let filterString = '';
     onMount(async () => {
         try {
             const res = await api.get('/events/today');
@@ -47,14 +52,14 @@
         <h3>Filter</h3>
         <div class="flex gap-20">
             <div class=" w-[400px]">
-                <Textfield title='Search' />
+                <Textfield title='Search' bind:value={filterString} />
             </div>
-            <ChipsSelectors title='Tags' options={tagsOptions}/>
+            <ChipsSelectors title='Tags' options={tagsOptions} bind:result={selectedTags} />
         </div>
     </div>
     <div class=" w-full flex flex-col-reverse gap-7 pb-[400px]">
-        <EventList title='happening this Month' eventList={monthEventList}/>
-        <EventList title='happening this Week' eventList={weekEventList}/>
-        <EventList title='Happening today' eventList={todayEventList}/>
+        <EventList title='happening this Month' eventList={monthEventList} filterTags={selectedTags} {filterString} />
+        <EventList title='happening this Week' eventList={weekEventList} filterTags={selectedTags} {filterString} />
+        <EventList title='Happening today' eventList={todayEventList} filterTags={selectedTags} {filterString} />
     </div>
 </div>

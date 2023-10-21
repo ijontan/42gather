@@ -6,6 +6,12 @@
     /** @type {string} */
     export let title;
 
+    /** @type {number[]} */
+    export let filterTags = [];
+    
+    /** @type {string} */
+    export let filterString = '';
+
     /** @type {number}*/
     let offset = 0;
 
@@ -14,6 +20,23 @@
 
     /** @type {EventData[]} */
     export let eventList = [];
+    
+    /** @type {EventData[]} */
+    let filteredList = [];
+
+    $:filteredList = eventList.filter(item => {
+        if (filterTags.length === 0) return true;
+        return filterTags.some(tag => item.tags.includes(tag));
+    });
+
+    $: if (filterString.length > 0)filteredList = filteredList.filter(item => {
+        if (filterString === '') return true;
+        return item.title.toLowerCase().includes(filterString.toLowerCase());
+    }); else filteredList = eventList.filter(item => {
+        if (filterTags.length === 0) return true;
+        return filterTags.some(tag => item.tags.includes(tag));
+    });
+
 
     /** @type {number | null} */
     let throttleTimeout = null;
@@ -46,7 +69,7 @@
         <div class=' flex  gap-5 overflow-visible px-12 py-5 -mx-12 transition-transform'
         style={`transform: translateX(${-offset}px)`}
         >
-        {#each eventList as item}
+        {#each filteredList as item}
         <EventItem {item} {joined} />
         {/each}
         </div>
