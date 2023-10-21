@@ -21,8 +21,8 @@
             console.log(code)
             const authToken = await api.post('auth', {code});
             console.log(authToken.data);
-            localStorage.setItem('accessToken', authToken.data);
-            // window.location.replace('/')
+            localStorage.setItem('accessToken', authToken.data.Token);
+            window.location.replace('/')
         } catch (error) {
             console.log(error)
             goto('/login')
