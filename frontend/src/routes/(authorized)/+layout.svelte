@@ -6,6 +6,7 @@
 	import { onMount } from "svelte";
 	import userData from "./userData";
 	import { api } from "$lib/api";
+	import DialogDelegate, { DialogType } from "$lib/components/dialog/snackBar";
 
     $: currentDir = $page.route.id?.split('/')[2]
 
@@ -15,6 +16,7 @@
 
     async function getProfile() {
         const res = await api.get('/user')
+        if (res.data.discordID === null) DialogDelegate.show(DialogType.warning, "Account", "Link your discord account in profile to get notified for events", 20000)
         userData.set(res.data)
     }
 
