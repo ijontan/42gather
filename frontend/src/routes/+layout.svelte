@@ -2,14 +2,18 @@
 	import { goto } from "$app/navigation";
 	import { api } from "$lib/api";
 	import { onMount } from "svelte";
+    import { dev } from '$app/environment';
     import "./app.css"
 	import { page } from "$app/stores";
 	import Dialogs from "$lib/components/dialog/SnackBars.svelte";
     import Device from 'svelte-device-info'
+    import { inject } from '@vercel/analytics';
+
     
     $: currentDir = $page.route.id?.split('/').pop()
     
     onMount(()=>{
+        inject({ mode: dev ? 'development' : 'production' });
         if (Device.isMobile && currentDir !== "mobile") {
             setTimeout(() => goto('/mobile'), 0)
             return ;
