@@ -5,12 +5,18 @@
     import "./app.css"
 	import { page } from "$app/stores";
 	import Dialogs from "$lib/components/dialog/SnackBars.svelte";
+    import Device from 'svelte-device-info'
+    
+    $: currentDir = $page.route.id?.split('/').pop()
     
     onMount(()=>{
+        if (Device.isMobile && currentDir !== "mobile") {
+            setTimeout(() => goto('/mobile'), 0)
+            return ;
+        }
         checkAccessToken()
     })
-    $: currentDir = $page.route.id?.split('/')[2]
-
+    
     let code = $page.url.searchParams.get('code')
 
     async function checkAccessToken() {
