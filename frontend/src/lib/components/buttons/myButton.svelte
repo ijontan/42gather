@@ -17,6 +17,9 @@
     let hoverTextColor;
     /** @type {boolean}*/
     export let disabled = false;
+
+    /** @type {string | null} */
+    export let tooltip = null;
     $: {
         switch (color) {
             case ColorType.orange:
@@ -72,6 +75,11 @@
 
 </script>
 
-<button id={name} on:click {disabled} class={` group-button rounded-full ${bgColor} px-7 py-2 ${hoverBgColor} transition-all`}>
+<button id={name} on:click {disabled} class={` relative group-button rounded-full ${bgColor} px-7 py-2 ${hoverBgColor} transition-all`}>
     <span class={` uppercase ${textColor} ${hoverTextColor} transition-all`}>{name}</span>
+    {#if tooltip}
+        <div class="absolute -top-10 left-1/2 -translate-x-1/2 pointer-events-none px-2 group-button-hover:opacity-100 opacity-0 rounded-md bg-black/30 first-line:bgColor">
+            <span class=" text-white whitespace-pre">{tooltip}</span>
+        </div>
+    {/if}
 </button>

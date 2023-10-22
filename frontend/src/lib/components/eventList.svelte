@@ -24,6 +24,8 @@
     /** @type {EventData[]} */
     let filteredList = [];
 
+    let widths = eventList.map(item => 0);
+
     $:filteredList = eventList.filter(item => {
         if (filterTags.length === 0) return true;
         return filterTags.some(tag => item.tags.includes(tag));
@@ -47,7 +49,8 @@
         throttleTimeout = setTimeout(() => {
             throttleTimeout = null;
         }, 10);
-        let maxOffset = (eventList.length - 1) * 510;
+        let maxOffset = widths.reduce((a, b) => a + b + 20, 0) - (widths.findLast(n=> true) ?? 0) - 20;
+        console.log(maxOffset)
         if (e.deltaY < 0 && offset > 0) {
             offset += e.deltaY;
             if (offset < 0) offset = 0;
@@ -57,20 +60,28 @@
         }
     }
 
+    /** @param {*} e */
+    function handleDrag(e){
+        e.preventDefault();
+        console.log(e)
+    }
 </script>
 
 <div class="overflow-x-clip -mx-12 px-12"
 >
     <h2 class=" capitalize">{title}</h2>
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
         class=" w-full "
         on:wheel={handleScroll}
+        on:drag={handleDrag}
+
     >
         <div class=' flex  gap-5 overflow-visible px-12 py-5 -mx-12 transition-transform'
         style={`transform: translateX(${-offset}px)`}
         >
-        {#each filteredList as item}
-        <EventItem {item} {joined} />
+        {#each filteredList as item, i}
+        <EventItem {item} {joined} bind:width={widths[i]} />
         {/each}
         </div>
     </div>

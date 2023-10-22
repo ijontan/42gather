@@ -16,7 +16,8 @@
 
     async function getProfile() {
         const res = await api.get('/user')
-        if (res.data.discordID === null) DialogDelegate.show(DialogType.warning, "Account", "Link your discord account in profile to get notified for events", 20000)
+        if (res.data.discordID === null) DialogDelegate.show(DialogType.warning, "Account", "Link your discord account in profile to get notified for events", 50000)
+        DialogDelegate.show(DialogType.warning, "Announcement", "Anything related to Discord is not working yet, need to invite the bot into 42 discord server.", 500000)
         userData.set(res.data)
     }
 

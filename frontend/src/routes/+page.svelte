@@ -20,8 +20,8 @@
             /** @type {any} */
             console.log(code)
             const authToken = await api.post('auth', {code});
-            console.log(authToken.data);
-            localStorage.setItem('accessToken', authToken.data.token);
+            console.log("post auth: ", authToken.data);
+            localStorage.setItem('accessToken', authToken.data);
             window.location.replace('/')
         } catch (error) {
             console.log(error)

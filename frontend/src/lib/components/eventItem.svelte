@@ -9,6 +9,7 @@
 	import MyButton from "./buttons/myButton.svelte";
 	import TextfieldNoBg from "./fields/textfieldNoBG.svelte";
 	import DialogDelegate, { DialogType } from "./dialog/snackBar";
+	import { onMount } from "svelte";
 
 
     /** @type boolean */
@@ -60,6 +61,23 @@
     let div;
 
     /** @type {number} */
+    export let width = 0;
+
+    $: {
+        if (!div) {
+            width = 420;
+        }
+        else {
+            const rect = div.getBoundingClientRect();
+            if (rect.width < 420) {
+                width = 420;
+            } else {
+                width = rect.width;
+            }
+        }
+    }
+
+    /** @type {number} */
     let timeout;
 
     function mouseEnter(){
@@ -104,11 +122,11 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="relative z-0 w-[500px] rounded-[50px]" 
+<div class="relative z-0 rounded-[50px]" 
     on:mouseenter={mouseEnter}
     on:mouseleave={mouseLeave}
 >
-    <div class={`  bg-white absolute top-0 box-border flex flex-col gap-2 pt-[25%] left-0 right-0 overflow-clip rounded-[50px] shadow-medium ${hover? ' h-[500px] -z-10' : 'h-0 -z-20'} transition-all`}
+    <div class={`  bg-white absolute top-0 box-border flex flex-col gap-2 pt-[126px] left-0 right-0 overflow-clip rounded-[50px] shadow-medium ${hover? ' h-[500px] -z-10' : 'h-0 -z-20'} transition-all`}
         bind:this={div}
     >
         <div class="flex flex-col p-5 justify-evenly h-full">
@@ -130,7 +148,7 @@
         </div>
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class={`z-30  flex flex-col gap-2 w-[500px] px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
+    <div class={`z-30  flex flex-col gap-2 min-w-[420px] px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
         on:click={() => {
             goto(`/gathering/${item.id}`);
         }}

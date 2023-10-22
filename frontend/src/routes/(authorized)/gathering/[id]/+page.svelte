@@ -203,7 +203,7 @@
 
 <div class="fixed bottom-5 right-5 flex gap-2" >
     {#if user && user.intraName === item.creator?.intraName}
-        <MyButton color={item.color} name={"Make Announcement"} on:click={()=>{displayDialog = true}} />
+        <MyButton color={item.color} name={"Make Announcement"} tooltip="make announcement to joined members" on:click={()=>{displayDialog = true}} />
         <MyButton color={item.color} name={disabled?"Edit":"Save"} on:click={disabled?edit:save}/>
     {/if}
     <MyButton color={item.color} name={item.joined? "joined": "join"} disabled={item.joined} on:click={joinEvent}/>
@@ -217,7 +217,7 @@
 
             <Textarea title="message" bind:value={announcement} />
             <div class="flex gap-2 self-end">
-                <MyButton color={item.color} name="send"  on:click={makeAnnouncement}/>
+                <MyButton color={item.color} name="send" on:click={makeAnnouncement}/>
             </div>
         </div>
     </div>
