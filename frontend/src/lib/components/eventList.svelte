@@ -50,7 +50,6 @@
             throttleTimeout = null;
         }, 10);
         let maxOffset = widths.reduce((a, b) => a + b + 20, 0) - (widths.findLast(n=> true) ?? 0) - 20;
-        console.log(maxOffset)
         if (e.deltaY < 0 && offset > 0) {
             offset += e.deltaY;
             if (offset < 0) offset = 0;
@@ -60,24 +59,72 @@
         }
     }
 
+    let vx = 0;
+
+    let lastX = 0;
+    let lastTime = 0;
+
     /** @param {*} e */
     function handleDrag(e){
         e.preventDefault();
         console.log(e)
+    }
+
+    let dragging = false;
+
+    /** @param {TouchEvent} e */
+    function handleDragStart(e){
+        e.preventDefault();
+        dragging = true;
+        const touch = e.touches[0];
+        lastX = touch.clientX;
+        lastTime = e.timeStamp;
+    }
+    
+    /** @param {TouchEvent} e */
+    async function handleDragEnd(e) {
+        e.preventDefault();
+        dragging = false;
+        // while (vx !== 0) {
+        //     offset -= vx;
+        //     vx *= 0.9;
+        //     if (Math.abs(vx) < 0.01) vx = 0;
+        //     await new Promise(r => setTimeout(r, 6));
+        // }
+    }
+
+    /** @param {TouchEvent} e */
+    function handleDragMove(e){
+        e.preventDefault();
+        if (!dragging || e.timeStamp - lastTime < 60) return;
+        const touch = e.touches[0];
+        vx = (touch.clientX - lastX) / (e.timeStamp - lastTime);
+        const deltaY = lastX - touch.clientX;
+        lastX = touch.clientX;
+        lastTime = e.timeStamp;
+        let maxOffset = widths.reduce((a, b) => a + b + 20, 0) - (widths.findLast(n=> true) ?? 0) - 20;
+        if (deltaY < 0 && offset > 0) {
+            offset += deltaY;
+            if (offset < 0) offset = 0;
+        } else if (deltaY > 0 && offset < maxOffset) {
+            offset += deltaY;
+            if (offset > maxOffset) offset = maxOffset;
+        }
     }
 </script>
 
 <div class="overflow-x-clip -mx-12 px-12"
 >
     <h2 class=" capitalize">{title}</h2>
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
         class=" w-full "
         on:wheel={handleScroll}
-        on:drag={handleDrag}
-
+        on:touchstart={handleDragStart}
+        on:touchmove={handleDragMove}
+        on:touchcancel={handleDragEnd}
+        on:touchend={handleDragEnd}
     >
-        <div class=' flex  gap-5 overflow-visible px-12 py-5 -mx-12 transition-transform'
+        <div class={` flex  gap-5 overflow-visible px-12 py-5 -mx-12 transition-transform  ${dragging ? 'pointer-events-none' : ''}`}
         style={`transform: translateX(${-offset}px)`}
         >
         {#each filteredList as item, i}
