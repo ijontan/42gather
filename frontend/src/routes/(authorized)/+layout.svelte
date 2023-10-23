@@ -34,7 +34,7 @@
 </script>
 
 {#if !isMobile}
-<div class={`w-[300px] rounded-r-[100px] py-16 flex flex-col justify-between hidden lg:block fixed top-0 left-0 h-screen shadow-large overflow-clip z-50 `}>
+<div class={`w-[300px] rounded-r-[100px] py-16 flex-col justify-between hidden lg:flex fixed top-0 left-0 h-screen shadow-large overflow-clip z-50 `}>
     <div class="flex flex-col">
         <Logo/>
         <SidebarButton name="Home" selected={currentDir === "home"} on:click={()=>goto('/home')}/>
