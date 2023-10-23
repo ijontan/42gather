@@ -7,10 +7,15 @@
 	import userData from "./userData";
 	import { api } from "$lib/api";
 	import DialogDelegate, { DialogType } from "$lib/components/dialog/snackBar";
+    import Device from 'svelte-device-info'
 
     $: currentDir = $page.route.id?.split('/')[2]
 
+    /** @type {boolean} */
+    let isMobile = false;
+
     onMount(() => {
+        isMobile = Device.isMobile;
         getProfile(); 
     })
 
@@ -28,7 +33,7 @@
     }
 </script>
 
-<div class="w-[300px] rounded-r-[100px] py-16 flex flex-col justify-between fixed top-0 left-0 h-screen shadow-large overflow-clip z-50">
+<div class={`w-[300px] rounded-r-[100px] py-16 flex flex-col justify-between fixed top-0 left-0 h-screen shadow-large overflow-clip z-50 ${isMobile?" hidden":""}`}>
     <div class="flex flex-col">
         <Logo/>
         <SidebarButton name="Home" selected={currentDir === "home"} on:click={()=>goto('/home')}/>
@@ -41,6 +46,6 @@
         <SidebarButton name="Logout" on:click={logout} />
     </div>
 </div>
-<div class=" pl-[300px]">
+<div class={isMobile?"":" pl-[300px]"}>
     <slot />
 </div>

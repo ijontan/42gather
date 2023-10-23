@@ -10,6 +10,8 @@
 	import userData from "../userData";
 	import { api } from "$lib/api";
 	import Clock from "$lib/components/clock.svelte";
+    import Device from 'svelte-device-info'
+
 
     /** @type {UserData} */
     let user;
@@ -18,12 +20,16 @@
         user = value ?? UserData.empty();
     })
 
+    /** @type {boolean} */
+    let isMobile = false;
+
     /** @type {EventData[]} */
     let joiningEventList = [];
     /** @type {EventData[]} */
     let suggestedEventList = [];
 
     onMount(async () => {
+        isMobile = Device.isMobile;
         try {
             const res = await api.get('/events/my');
             console.log(res.data)
@@ -41,12 +47,12 @@
     })
 </script>
 
-<div class=" w-full h-[calc(100vh+320px)] flex flex-col p-12 overflow-visible justify-between">
-    <div class="h-full flex">
+<div class={` w-full  flex flex-col ${isMobile?"p-4 h-screen":"p-12 h-[calc(100vh+320px)]"} overflow-visible justify-between`}>
+    <div class={`h-full flex ${isMobile? "flex-col gap-2" : ""}`}>
         <Clock />
         <HomeGreeting name={user.name}/>
     </div>
-    <div class="flex flex-col-reverse gap-7 pb-[320px]">
+    <div class={"flex flex-col-reverse gap-7 lg:pb-[320px]"}>
         <EventList title='Suggested' eventList={suggestedEventList}/>
         <EventList title='joining && upcoming' eventList={joiningEventList} joined/>
     </div>

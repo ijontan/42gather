@@ -12,7 +12,9 @@
 
 <div class="flex flex-col w-[300px] fixed top-20 right-0 gap-2 ">
     {#each dialogs as dialog}
+    {#key dialog.id}
     <Dialog {dialog} />
+    {/key}
     {/each}
 </div>
 

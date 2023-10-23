@@ -31,6 +31,7 @@
         await new Promise((resolve) => setTimeout(resolve, 300));
         expended = false;
         await new Promise((resolve) => setTimeout(resolve, 200));
+        console.log("end", id)
         DialogDelegate.remove(id);
     }
     $:switch (dialog.type) {
@@ -58,8 +59,12 @@
             break;
     }
 </script>
-
-<div id={dialog.id} class={` z-[100] w-full ${expended?"":"h-0 p-0"} py-5 shadow-2xl shadow-black/20 pl-7 justify-center flex flex-col ${bgColor} rounded-l-[30px] ${show?"" : " translate-x-full"} transition-all duration-300`}>
-    <span class={`text-[30px] leading-7 tracking-tight capitalize ${textColor}`}>{dialog.title}</span>
-    <span class={` capitalize ${textColor50} pr-1`}>{dialog.message}</span>
-</div>
+<button id={dialog.id} class={` z-[100] w-full ${expended?"":"h-0 p-0"} py-5 shadow-2xl shadow-black/20 pl-7 justify-center flex flex-col ${bgColor} rounded-l-[30px] ${show?"" : " translate-x-full"} transition-all duration-300`}
+on:click={() => {
+    show = false;
+    closeDialog(dialog.id, 0);
+}}
+>
+<span class={`text-[30px] leading-7 tracking-tight capitalize ${textColor}`}>{dialog.title}</span>
+<span class={` capitalize ${textColor50} pr-1`}>{dialog.message}</span>
+</button>

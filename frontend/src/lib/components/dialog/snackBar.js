@@ -79,7 +79,11 @@ class DialogDelegate {
      * @param {string} id
      */
     static remove(id){
-        this.dialogs.update(dialogs => dialogs.filter(d => !d.checkId(id)));
+        this.dialogs.update(dialogs => {
+            const newDialogs = dialogs.filter(d => !d.checkId(id))
+            console.log(newDialogs);
+            return newDialogs;
+        });
     }
 }
 

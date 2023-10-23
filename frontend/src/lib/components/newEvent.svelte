@@ -14,6 +14,8 @@
 	import DropdownUsers from "./dropdowns/dropdownUsers.svelte";
     import UserData from "../model/user";
 	import Toggle from "./buttons/toggle.svelte";
+    import Device from 'svelte-device-info'
+	import { onMount } from "svelte";
 
     let hover = false;
     let opened = false;
@@ -24,6 +26,11 @@
     }
 
     let item = EventData.empty();
+
+    let isMobile = false
+    onMount(() => {
+        isMobile = Device.isMobile;
+    });
 
     /**
      * @param {MouseEvent} e
@@ -72,14 +79,14 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class={` ${opened? "w-[700px] h-[650px]" : (hover ? 'w-[248px] h-[80px]' : 'w-[80px] h-[80px]')} shadow-heavy flex flex-col overflow-clip px-[22px] ${opened? "bg-white" :"bg-cyanAcc cursor-pointer"} fixed right-20 bottom-20 transition-all`}
+<div class={` ${opened? "w-[calc(100vw-20px)] lg:w-[700px] h-[650px]" : (hover ? 'w-[248px] h-[80px]' : 'w-[80px] h-[80px]')} shadow-heavy flex flex-col overflow-clip px-[22px] ${opened? "bg-white" :"bg-cyanAcc cursor-pointer"} fixed right-6 bottom-6 lg:right-20 lg:bottom-20 transition-all`}
     style={`border-radius: ${hover || opened ? '25px' : '100%'};`}
     on:click={openDialog}
     on:mouseenter={handleMouseEnter}
     on:mouseleave={handleMouseLeave}
 >
     
-    <div class="flex items-center w-[654px] h-[80px] mt-[3px] justify-between">
+    <div class="flex items-center w-[calc(100vw-60px)] lg:w-[654px] h-[80px] mt-[3px] justify-between">
         <div class="flex flex-row gap-5 items-center">
             <span class={` select-none text-[50px] ${opened? "text-black" : "text-white"}`}>+</span>
             <span class={` select-none text-2xl ${opened? "text-black" : "text-white"}`}>New Event</span>
@@ -89,13 +96,22 @@
         >x</button>
     </div>
     <hr class={` border-t-2 ${opened? "border-black" : " border-transparent"}`}/>
-    <div class="flex flex-col overflow-y-scroll -mx-5 px-5 gap-2 pb-5 pt-2">
-        <div class="flex gap-5 w-full">
-            <Textfield title="Title" bind:value={item.title} />
-            <Datetimefield title="Date & Time" bind:value={item.datetime} />
-            <DropdownColors title="Color" bind:selected={item.color} />
+    <div class="flex flex-col overflow-y-scroll -mx-5 px-5 gap-2 pb-10 lg:pb-5 pt-2 mt-[1px]">
+        <div class="flex gap-2 lg:gap-5 w-full flex-col lg:flex-row">
+            <div class="flex gap-5 ">
+                <Textfield title="Title" bind:value={item.title} />
+                {#if isMobile}
+                <DropdownColors title="Color" bind:selected={item.color} />
+                {/if}
+            </div>
+            <div class="flex gap-5 ">
+                <Datetimefield title="Date & Time" bind:value={item.datetime} />
+                {#if !isMobile}
+                <DropdownColors title="Color" bind:selected={item.color} />
+                {/if}
+            </div>
         </div>
-        <div class="flex gap-5 w-full">
+        <div class="flex gap-2 lg:gap-5 w-full flex-col lg:flex-row">
             <Textfield title="venue" bind:value={item.venue} />
             <Numberfield title="Limit (Optional)" bind:value={item.limit} />
         </div>
