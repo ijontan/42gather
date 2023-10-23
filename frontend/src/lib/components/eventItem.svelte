@@ -129,7 +129,7 @@
     <div class={`  bg-white absolute top-0 box-border flex flex-col gap-2 pt-[126px] left-0 right-0 overflow-clip rounded-[50px] shadow-medium ${hover? ' h-[500px] -z-10' : 'h-0 -z-20'} transition-all`}
         bind:this={div}
     >
-        <div class="flex flex-col p-5 justify-evenly h-full">
+        <div class={`flex flex-col p-5 justify-evenly h-full ${hover?"":" hidden"}`}>
 
             <TextfieldNoBg title='Descriptions' value={item.description}/>
             <TextfieldNoBg title='venue' value={item.venue} />

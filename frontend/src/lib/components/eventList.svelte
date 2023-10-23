@@ -85,17 +85,26 @@
     async function handleDragEnd(e) {
         e.preventDefault();
         dragging = false;
-        // while (vx !== 0) {
-        //     offset -= vx;
-        //     vx *= 0.9;
-        //     if (Math.abs(vx) < 0.01) vx = 0;
-        //     await new Promise(r => setTimeout(r, 6));
-        // }
+        while (vx !== 0) {
+            const deltaY = -vx;
+            let maxOffset = widths.reduce((a, b) => a + b + 20, 0) - (widths.findLast(n=> true) ?? 0) - 20;
+            if (deltaY < 0 && offset > 0) {
+                offset += deltaY;
+                if (offset < 0) offset = 0;
+            } else if (deltaY > 0 && offset < maxOffset) {
+                offset += deltaY;
+                if (offset > maxOffset) offset = maxOffset;
+            }
+            vx *= 0.98;
+            if (Math.abs(vx) < 0.01) vx = 0;
+            await new Promise(r => setTimeout(r, 6));
+        }
     }
 
     /** @param {TouchEvent} e */
     function handleDragMove(e){
         e.preventDefault();
+        e.stopPropagation();
         if (!dragging || e.timeStamp - lastTime < 60) return;
         const touch = e.touches[0];
         vx = (touch.clientX - lastX) / (e.timeStamp - lastTime);
