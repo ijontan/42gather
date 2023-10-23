@@ -35,7 +35,7 @@
 
 <div class="h-full grid items-center justify-center">
     <div class=" sticky pb-5 top-14">
-        <h1>
+        <h1 class="text-center">
             Good <span class={`${style} text-blueAcc`}>{tod}</span>, <span class="text-[70px]">{name}</span>
         </h1>
     </div>

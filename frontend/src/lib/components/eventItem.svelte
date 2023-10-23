@@ -119,6 +119,34 @@
         }
     }
 
+    /** @type {number | null} */
+    let pressTimeout = null;
+
+    function onDown(){
+        if (pressTimeout !== null) return;
+        pressTimeout = setTimeout(() => {
+            pressTimeout = null;
+            onLongPress();
+        }, 300);
+    }
+
+    function onUp(){
+        if (pressTimeout !== null) {
+            clearTimeout(pressTimeout);
+            pressTimeout = null;
+            onClick();
+        }
+    }
+
+
+    function onClick(){
+        goto(`/gathering/${item.id}`);
+    }
+
+    function onLongPress(){
+        hover = true;
+    }
+
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -147,13 +175,11 @@
             </div>
         </div>
     </div>
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class={`z-30  flex flex-col gap-2 min-w-[420px] px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
-        on:click={() => {
-            goto(`/gathering/${item.id}`);
-        }}
+    <button class={`z-30  flex flex-col gap-2 min-w-[420px] outline-none px-12 py-6 ${bgColor} rounded-[50px] cursor-pointer`}
+        on:pointerdown={onDown}
+        on:pointerup={onUp}
     >
         <h1 class={`z-30  ${textColor} capitalize whitespace-pre`}>{item.title ?? '--'}</h1>
         <p class={`z-30  whitespace-nowrap truncate opacity-50 ${textColor}`}>{item.description? item.description.split('.')[0] : '--'}</p>
-    </div>
+    </button>
 </div>

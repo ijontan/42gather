@@ -21,13 +21,13 @@
   }
 
 </script>
-<div class="flex flex-col items-center gap-5 mb-16">
+<div class="flex flex-col items-center gap-1 lg:gap-5 lg:mb-16">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class=" rotate-45 bg-cyanAcc w-[70px] h-[70px] hover:rotate-[225deg] transition-transform duration-300"
+    <div class=" rotate-45 bg-cyanAcc w-[20px] h-[20px] lg:w-[70px] lg:h-[70px] hover:rotate-[225deg] transition-transform duration-300"
         on:click={clickLogo}
     />
-    <h1>42 Gather</h1>
+    <h1 class="text-xl lg:text-5xl">42 Gather</h1>
 </div>
 
 <Credit bind:animate/>

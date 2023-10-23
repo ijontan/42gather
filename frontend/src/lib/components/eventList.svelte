@@ -122,7 +122,7 @@
     }
 </script>
 
-<div class="overflow-x-clip -mx-12 px-12"
+<div class="overflow-x-clip -mx-4 px-4 lg:-mx-12 lg:px-12"
 >
     <h2 class=" capitalize">{title}</h2>
     <div

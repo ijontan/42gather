@@ -16,7 +16,7 @@
 
 </script>
 
-<div class=" flex flex-col w-[300px] h-full">
+<div class=" flex-col w-[300px] h-full hidden lg:flex">
     <div class=" sticky top-10">
         <span class=" text-[25px]">{date}</span>
         <span class=" text-[50px] leading-[40px] ">{time}</span>

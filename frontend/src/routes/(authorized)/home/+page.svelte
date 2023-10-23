@@ -47,9 +47,11 @@
     })
 </script>
 
-<div class={` w-full  flex flex-col ${isMobile?"p-4 h-screen":"p-12 h-[calc(100vh+320px)]"} overflow-visible justify-between`}>
-    <div class={`h-full flex ${isMobile? "flex-col gap-2" : ""}`}>
+<div class={` w-full  flex flex-col ${isMobile?"p-4 h-[calc(100vh-160px)]":"p-12 h-[calc(100vh+320px)]"} overflow-visible justify-between`}>
+    <div class={`h-full flex ${isMobile? "flex-col gap-2 items-center" : ""}`}>
+        {#if !isMobile}
         <Clock />
+        {/if}
         <HomeGreeting name={user.name}/>
     </div>
     <div class={"flex flex-col-reverse gap-7 lg:pb-[320px]"}>

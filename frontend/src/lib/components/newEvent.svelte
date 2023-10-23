@@ -79,14 +79,14 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class={` ${opened? "w-[calc(100vw-20px)] lg:w-[700px] h-[650px]" : (hover ? 'w-[248px] h-[80px]' : 'w-[80px] h-[80px]')} shadow-heavy flex flex-col overflow-clip px-[22px] ${opened? "bg-white" :"bg-cyanAcc cursor-pointer"} fixed right-6 bottom-6 lg:right-20 lg:bottom-20 transition-all`}
+<div class={` ${opened? "w-[calc(100vw-36px)] lg:w-[700px] h-[500px] lg:h-[650px]" : (hover ? 'w-[248px] h-[80px]' : 'w-[80px] h-[80px]')} shadow-heavy flex flex-col overflow-clip px-[22px] ${opened? "bg-white" :"bg-cyanAcc cursor-pointer"} fixed right-4 bottom-24 lg:right-20 lg:bottom-20 transition-all`}
     style={`border-radius: ${hover || opened ? '25px' : '100%'};`}
     on:click={openDialog}
     on:mouseenter={handleMouseEnter}
     on:mouseleave={handleMouseLeave}
 >
     
-    <div class="flex items-center w-[calc(100vw-60px)] lg:w-[654px] h-[80px] mt-[3px] justify-between">
+    <div class="flex items-center w-[calc(100vw-80px)] lg:w-[654px] h-[80px] mt-[3px] justify-between">
         <div class="flex flex-row gap-5 items-center">
             <span class={` select-none text-[50px] ${opened? "text-black" : "text-white"}`}>+</span>
             <span class={` select-none text-2xl ${opened? "text-black" : "text-white"}`}>New Event</span>
@@ -124,6 +124,6 @@
         <ChipsSelectors title="Reminders" options={remindersOptions} bind:result={item.reminders} />
     </div>
     <div class={`absolute bottom-5 right-5 ${opened? "": "hidden"}`}>
-        <RoundedButton name="+ Create" on:click={newEvent}/>
+        <RoundedButton name="+ Create" shadow on:click={newEvent}/>
     </div>
 </div>

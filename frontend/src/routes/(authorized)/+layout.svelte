@@ -33,7 +33,8 @@
     }
 </script>
 
-<div class={`w-[300px] rounded-r-[100px] py-16 flex flex-col justify-between fixed top-0 left-0 h-screen shadow-large overflow-clip z-50 ${isMobile?" hidden":""}`}>
+{#if !isMobile}
+<div class={`w-[300px] rounded-r-[100px] py-16 flex flex-col justify-between hidden lg:block fixed top-0 left-0 h-screen shadow-large overflow-clip z-50 `}>
     <div class="flex flex-col">
         <Logo/>
         <SidebarButton name="Home" selected={currentDir === "home"} on:click={()=>goto('/home')}/>
@@ -46,6 +47,22 @@
         <SidebarButton name="Logout" on:click={logout} />
     </div>
 </div>
-<div class={isMobile?"":" pl-[300px]"}>
+{:else}
+    <div class=" fixed top-0 left-0 right-0 bg-white shadow-medium h-20 z-50">
+        {#if currentDir !== "home"}
+        <div class=" fixed top-3 left-3">
+            <button class="material-icons text-2xl rounded-full h-14 w-14 " on:click={()=>window.history.go(-1)}>arrow_back</button>
+        </div>
+        {/if}
+        <div class="flex justify-center items-center h-full pt-4">
+            <Logo/>
+        </div>
+    </div>
+    <div class=" fixed bottom-0 left-0 right-0 bg-white shadow-heavy h-20 z-50">
+        
+    </div>
+{/if}
+<div class={"relative pt-20 pb-20 lg:pt-0 lg:pb-0 lg:block lg:pl-[300px]"}>
     <slot />
 </div>
+<!-- <i class="material-icons">home</i> -->
