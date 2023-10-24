@@ -14,7 +14,11 @@
     let textColor = 'text-cyanAcc';
     let textColor50 = 'text-cyanAcc/50';
     onMount(() => {
-        setTimeout(() => {
+        if (dialog.timeout) {
+            show = true; 
+            return;
+        }
+        dialog.timeout = setTimeout(() => {
             show = true;
             console.log("start", dialog.id)
             closeDialog(dialog.id, dialog.duration);
@@ -28,9 +32,7 @@
     async function closeDialog(id, duration) {        
         await new Promise((resolve) => setTimeout(resolve, duration));
         show = false;
-        await new Promise((resolve) => setTimeout(resolve, 300));
-        expended = false;
-        await new Promise((resolve) => setTimeout(resolve, 200));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         console.log("end", id)
         DialogDelegate.remove(id);
     }
@@ -59,7 +61,7 @@
             break;
     }
 </script>
-<button id={dialog.id} class={` z-[100] w-full ${expended?"":"h-0 p-0"} py-5 shadow-2xl shadow-black/20 pl-7 justify-center flex flex-col ${bgColor} rounded-l-[30px] ${show?"" : " translate-x-full"} transition-all duration-300`}
+<button id={dialog.id} class={` z-[100] w-full ${expended?" h-fit":"h-0 p-0"} py-5 shadow-2xl shadow-black/20 pl-7 justify-center flex flex-col ${bgColor} rounded-l-[30px] ${show?"" : " translate-x-full"} transition-all duration-300`}
 on:click={() => {
     show = false;
     closeDialog(dialog.id, 0);
